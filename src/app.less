@@ -1,0 +1,26 @@
+@import './style/var';
+
+view, div {
+  box-sizing: border-box;
+}
+
+page {
+  font-size: @font-size-base;
+}
+
+html {
+  font-size: 14Px !important;
+}
+
+.scaling-image {
+  position: relative;
+  height: 0;
+  padding-bottom: 112%;
+  width: 100%;
+  image {
+    max-width: 100%;
+  }
+}
+
+@import 'style/layout';
+@import 'style/button';

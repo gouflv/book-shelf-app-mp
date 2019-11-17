@@ -1,78 +1,46 @@
-import { ComponentType } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { observer, inject } from '@tarojs/mobx'
-
 import './index.less'
+import Taro, { Component, Config } from '@tarojs/taro'
+import { View, Image, Button } from '@tarojs/components'
+import { observer } from '@tarojs/mobx'
+import { BG_COLOR } from '../../config'
+import ShelfBooks from './ShelfBooks/index'
+import UserBooks from './UserBooks'
+import { AtModal } from 'taro-ui'
 
-type PageStateProps = {
-  counterStore: {
-    counter: number,
-    increment: Function,
-    decrement: Function,
-    incrementAsync: Function
-  }
-}
-
-interface Index {
-  props: PageStateProps;
-}
-
-@inject('counterStore')
 @observer
 class Index extends Component {
-
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
   config: Config = {
-    navigationBarTitleText: '首页'
-  }
-
-  componentWillMount () { }
-
-  componentWillReact () {
-    console.log('componentWillReact')
-  }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  increment = () => {
-    const { counterStore } = this.props
-    counterStore.increment()
-  }
-
-  decrement = () => {
-    const { counterStore } = this.props
-    counterStore.decrement()
-  }
-
-  incrementAsync = () => {
-    const { counterStore } = this.props
-    counterStore.incrementAsync()
+    backgroundColor: BG_COLOR
   }
 
   render () {
-    const { counterStore: { counter } } = this.props
     return (
       <View className='index'>
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
-        <Text>{counter}</Text>
+        <View className='deposit-tip'>
+          <View className='content'>
+            <Image src={require('../../assets/home_icon_prompt@3x.png')} mode='aspectFit' className='icon' />
+            借书请先缴纳押金
+          </View>
+          <Button size='mini' className='btn-primary'>缴纳押金</Button>
+        </View>
+        <View className='space' />
+        <View className='page-section'>
+          <ShelfBooks />
+        </View>
+        <View className='space space--text'>
+          <View className='text'>你已看过的书</View>
+        </View>
+        <View className='page-section'>
+          <UserBooks />
+        </View>
+        <View className='space' />
+
+        <AtModal isOpened>
+
+        </AtModal>
       </View>
     )
   }
 }
 
-export default Index  as ComponentType
+export default Index

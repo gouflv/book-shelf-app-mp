@@ -1,0 +1,19 @@
+@import 'var';
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-primary {
+  border-color: @orange;
+  color: #fff;
+  background-color: @orange;
+  &::after {
+    display: none;
+  }
+  &--plain {
+    color: @orange;
+    background-color: transparent;
+  }
+}
