@@ -1,25 +1,13 @@
 @import './style/var';
 
-view, div {
-  box-sizing: border-box;
-}
-
 page {
+  font-family: sans-serif;
   font-size: $font-size-base;
+  color: #333;
 }
 
-html {
-  font-size: 14Px !important;
-}
-
-.scaling-image {
-  position: relative;
-  height: 0;
-  padding-bottom: 112%;
-  width: 100%;
-  image {
-    max-width: 100%;
-  }
+view {
+  box-sizing: border-box;
 }
 
 @import 'style/layout';

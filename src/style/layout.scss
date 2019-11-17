@@ -13,16 +13,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $gray-text;
+    color: $color-gray;
     &::before,
     &::after {
       content: ' ';
       width: 90px;
-      height: 1PX;
-      background-color: $gray-text;
+      height: 1Px;
+      background-color: #e0e0e0;
     }
     .text {
       margin: 0 20px;
+    }
+  }
+  &--large {
+    padding: 36px 30px;
+    &::before,
+    &::after {
+      flex: auto;
+      width: auto;
     }
   }
 }
