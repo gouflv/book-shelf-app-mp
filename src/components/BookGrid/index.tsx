@@ -6,11 +6,16 @@ const BookGrid: Taro.FC<{
   items: any[]
   onBorrowClick: (item) => void
 }> = props => {
+
+  function onItemClick(item) {
+    Taro.navigateTo({ url: `/pages/book/index?id=${item}` })
+  }
+
   return (
     <View className='book-grid'>
-      {Array.from(Array(8)).map(i => (
+      {Array.from(Array(8)).map((_, i) => (
         <View className='book-grid__item-wrapper' key={i}>
-          <View className='book-grid__item'>
+          <View className='book-grid__item' onClick={() => onItemClick(i)}>
             <View className='thumb'>
               <Image
                 className='image'
@@ -20,10 +25,10 @@ const BookGrid: Taro.FC<{
               />
             </View>
             <View className='content'>
-              <View className='title'>书名</View>
+              <View className='title'>书名{i}</View>
               <View className='action'>
                 <Button size='mini' onClick={() => props.onBorrowClick(i)}>
-                  00 借阅
+                  0{i} 借阅
                 </Button>
               </View>
             </View>

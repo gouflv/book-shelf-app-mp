@@ -1,16 +1,22 @@
 import './index.scss'
 import Taro, { useState } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
-import { observer } from '@tarojs/mobx'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import { BG_COLOR } from '../../config'
 import BookGrid from '../../components/BookGrid'
 
 const Index: Taro.FC = () => {
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
+  const [borrowItem, setBorrowItem] = useState(null)
+
+  function onBorrowClick(item) {
+    console.log(item)
+    setBorrowItem(item)
+    setBorrowConfirmVisible(true)
+  }
 
   return (
-    <View className='index'>
+    <View className='page-index'>
       <View className='deposit-tip'>
         <View className='content'>
           <Image src={require('../../assets/home_icon_prompt@3x.png')} mode='aspectFit' className='icon' />
@@ -28,7 +34,7 @@ const Index: Taro.FC = () => {
             <View className='type-filter__item'>中班</View>
             <View className='type-filter__item'>大班</View>
           </View>
-          <BookGrid items={[]} onBorrowClick={() => setBorrowConfirmVisible(true)} />
+          <BookGrid items={[]} onBorrowClick={item => onBorrowClick(item)} />
         </View>
       </View>
 
@@ -36,13 +42,13 @@ const Index: Taro.FC = () => {
         <View className='text'>你已看过的书</View>
       </View>
       <View className='page-section'>
-        <BookGrid items={[]} onBorrowClick={() => setBorrowConfirmVisible(true)} />
+        <BookGrid items={[]} onBorrowClick={item => onBorrowClick(item)} />
       </View>
       <View className='space' />
 
       <BorrowBookConfirm
         visible={borrowConfirmVisible}
-        book={{}}
+        book={borrowItem}
         onConfirm={() => { /*TODO*/ }}
         onCancel={() => setBorrowConfirmVisible(false)}
       />
@@ -54,4 +60,4 @@ Index.config = {
   backgroundColor: BG_COLOR
 }
 
-export default observer(Index)
+export default Index
