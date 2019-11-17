@@ -1,0 +1,9 @@
+@mixin thumb($h) {
+  margin-bottom: 10px;
+  width: 100%;
+  height: $h;
+  .image {
+    width: 100%;
+    height: 100%;
+  }
+}

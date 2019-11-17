@@ -1,0 +1,31 @@
+@import '../../style/var';
+@import '../../style/book';
+
+.borrow-book-confirm {
+  .book-item {
+    margin-bottom: 20px;
+    .thumb {
+      @include thumb(260px);
+      margin-bottom: 40px;
+    }
+    .content {
+      text-align: center;
+    }
+  }
+  .desc {
+    margin-bottom: 30px;
+    font-size: $font-size-large;
+    text-align: center;
+    color: $orange;
+    font-weight: bold;
+  }
+  .btn {
+    height: 75px;
+    line-height: 75px;
+    font-size: $font-size-large;
+    border-color: $orange;
+    border-radius: 100px;
+    background-color: $orange;
+    color: #fff;
+  }
+}

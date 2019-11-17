@@ -1,0 +1,14 @@
+.modal-container {
+  position: relative;
+  padding: 70px 30px 40px;
+}
+
+.close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+}

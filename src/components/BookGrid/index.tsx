@@ -1,8 +1,8 @@
-import './BookGrid.scss'
+import './index.scss'
 import Taro, { Component } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 
-export default class BookGrid extends Component {
+export default class Index extends Component {
   static options = {
     addGlobalClass: true
   }

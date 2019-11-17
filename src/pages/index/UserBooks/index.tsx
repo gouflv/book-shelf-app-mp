@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
-import BookGrid from '../../../components/BookGrid/BookGrid'
+import BookGrid from '../../../components/BookGrid'
 
 export default class UserBooks extends Component {
   render() {

@@ -1,11 +1,11 @@
 import './index.scss'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Image, Button } from '@tarojs/components'
+import { Button, Image, View } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
 import { BG_COLOR } from '../../config'
 import ShelfBooks from './ShelfBooks/index'
 import UserBooks from './UserBooks'
-import { AtModal } from 'taro-ui'
+import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 
 @observer
 class Index extends Component {
@@ -35,9 +35,7 @@ class Index extends Component {
         </View>
         <View className='space' />
 
-        <AtModal isOpened>
-          ModalClose
-        </AtModal>
+        <BorrowBookConfirm />
       </View>
     )
   }

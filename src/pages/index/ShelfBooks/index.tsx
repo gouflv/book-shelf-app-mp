@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { Component, Config, ComponentOptions } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { BG_COLOR } from '../../../config'
-import BookGrid from '../../../components/BookGrid/BookGrid'
+import BookGrid from '../../../components/BookGrid'
 
 export default class ShelfBooks extends Component {
   config: Config = {
