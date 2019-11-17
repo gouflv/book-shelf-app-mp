@@ -6,14 +6,14 @@
 }
 
 .btn-primary {
-  border-color: @orange;
+  border-color: $orange;
   color: #fff;
-  background-color: @orange;
+  background-color: $orange;
   &::after {
     display: none;
   }
   &--plain {
-    color: @orange;
+    color: $orange;
     background-color: transparent;
   }
 }

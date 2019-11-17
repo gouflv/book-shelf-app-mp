@@ -21,8 +21,7 @@
     "dev:alipay": "npm run build:alipay -- --watch",
     "dev:tt": "npm run build:tt -- --watch",
     "dev:h5": "npm run build:h5 -- --watch",
-    "dev:rn": "npm run build:rn -- --watch",
-    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
+    "dev:rn": "npm run build:rn -- --watch"
   },
   "author": "",
   "license": "MIT",
@@ -47,7 +46,8 @@
   "devDependencies": {
     "@tarojs/plugin-babel": "1.3.25",
     "@tarojs/plugin-csso": "1.3.25",
-    "@tarojs/plugin-less": "1.3.25",
+    "@tarojs/plugin-less": "^1.3.25",
+    "@tarojs/plugin-sass": "^1.3.25",
     "@tarojs/plugin-uglifyjs": "1.3.25",
     "@tarojs/webpack-runner": "1.3.25",
     "@types/react": "16.3.14",

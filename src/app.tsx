@@ -4,7 +4,7 @@ import Index from './pages/index'
 
 import counterStore from './store/counter'
 
-import './app.less'
+import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：

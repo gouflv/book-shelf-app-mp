@@ -1,4 +1,4 @@
-import './index.less'
+import './index.scss'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image, Button } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
@@ -36,7 +36,7 @@ class Index extends Component {
         <View className='space' />
 
         <AtModal isOpened>
-
+          ModalClose
         </AtModal>
       </View>
     )

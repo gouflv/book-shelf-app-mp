@@ -3,7 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import './wallet.less'
+import './wallet.scss'
 
 type PageStateProps = {
   counterStore: {

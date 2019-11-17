@@ -1,4 +1,4 @@
-import './BookGrid.less'
+import './BookGrid.scss'
 import Taro, { Component } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 

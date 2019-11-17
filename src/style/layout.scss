@@ -6,20 +6,20 @@
 
 .space {
   height: 20px;
-  background-color: @bg-color;
+  background-color: $bg-color;
   &--text {
     height: auto;
     padding: 18px 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: @gray-text;
+    color: $gray-text;
     &::before,
     &::after {
       content: ' ';
       width: 90px;
       height: 1PX;
-      background-color: @gray-text;
+      background-color: $gray-text;
     }
     .text {
       margin: 0 20px;

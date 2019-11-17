@@ -1,4 +1,4 @@
-import './index.less'
+import './index.scss'
 import Taro, { Component, Config, ComponentOptions } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { BG_COLOR } from '../../../config'

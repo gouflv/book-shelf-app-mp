@@ -1120,14 +1120,14 @@
   dependencies:
     csso "^3.5.0"
 
-"@tarojs/plugin-less@1.3.25":
+"@tarojs/plugin-less@^1.3.25":
   version "1.3.25"
   resolved "https://registry.yarnpkg.com/@tarojs/plugin-less/-/plugin-less-1.3.25.tgz#79d16715efd9dca8d9943c99db838710a7d42d24"
   integrity sha512-y1LslqWEYK3uT892ADz7lGzNqI2v1jgZdCl+bYA0+bRNvF5ImQbaEM6rPpu5Je69TI30SXROEBsPSziQjlEryA==
   dependencies:
     less "^3.0.4"
 
-"@tarojs/plugin-sass@1.3.25":
+"@tarojs/plugin-sass@1.3.25", "@tarojs/plugin-sass@^1.3.25":
   version "1.3.25"
   resolved "https://registry.yarnpkg.com/@tarojs/plugin-sass/-/plugin-sass-1.3.25.tgz#f1e2932f46819da7b9e89f4a985be70b3dacd0a9"
   integrity sha512-82z3EOR8V+GDb8vwg1xg+8LcIhW5bMT+J/8zo3bbwGLGpekyk4zLlqP8P2rNhDlBhClw+Mx/yXGxMkY972g1tQ==

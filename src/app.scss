@@ -5,7 +5,7 @@ view, div {
 }
 
 page {
-  font-size: @font-size-base;
+  font-size: $font-size-base;
 }
 
 html {
@@ -24,3 +24,4 @@ html {
 
 @import 'style/layout';
 @import 'style/button';
+@import '~taro-ui/dist/style/index.scss';

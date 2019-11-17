@@ -26,7 +26,7 @@
     }
     .content {
       .title {
-        font-size: @font-size-small;
+        font-size: $font-size-small;
       }
     }
     .action {
@@ -34,8 +34,8 @@
       button {
         display: block;
         width: 100%;
-        border-color: @orange;
-        color: @orange;
+        border-color: $orange;
+        color: $orange;
         background-color: transparent;
       }
     }
