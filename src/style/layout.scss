@@ -34,3 +34,12 @@
     }
   }
 }
+
+.card {
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 14Px;
+  &-body {
+    padding: 20px;
+  }
+}

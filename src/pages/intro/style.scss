@@ -1,0 +1,57 @@
+@import '../../style/var';
+
+.page-intro {
+  padding: 24px 30px;
+  min-height: 100vh;
+  background: $bg-color;
+
+  .site-info {
+    .card-body {
+      display: flex;
+      align-items: center;
+    }
+    .icon {
+      margin-right: 12px;
+      image {
+        width: 60px;
+        height: 60px;
+      }
+    }
+    .content {
+      flex: auto;
+      .name {
+        font-size: $font-size-base + 2;
+        font-weight: bold;
+      }
+      .more {
+        display: flex;
+        align-items: flex-end;
+        .left {
+          margin-right: auto;
+          font-size: $font-size-small;
+          color: $blue;
+        }
+        .right {
+          font-size: $font-size-small;
+          color: $text-gray;
+        }
+      }
+    }
+  }
+
+  .swiper {
+    height: 580px;
+    image {
+      height: 580px;
+    }
+  }
+
+  .scan-btn {
+    display: flex;
+    justify-content: center;
+    image {
+      width: 195px;
+      height: 185px;
+    }
+  }
+}

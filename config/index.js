@@ -1,5 +1,5 @@
 const config = {
-  projectName: 'shelf-client-taro',
+  projectName: '葫芦弟弟借书馆',
   date: '2019-11-14',
   designWidth: 750,
   deviceRatio: {

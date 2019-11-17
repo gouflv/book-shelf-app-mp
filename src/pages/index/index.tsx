@@ -2,7 +2,6 @@ import './index.scss'
 import Taro, { useState } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
-import { BG_COLOR } from '../../config'
 import BookGrid from '../../components/BookGrid'
 
 const Index: Taro.FC = () => {
@@ -54,10 +53,6 @@ const Index: Taro.FC = () => {
       />
     </View>
   )
-}
-
-Index.config = {
-  backgroundColor: BG_COLOR
 }
 
 export default Index
