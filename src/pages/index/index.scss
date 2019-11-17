@@ -3,7 +3,7 @@
 .deposit-tip {
   display: flex;
   align-items: center;
-  padding: 24px 30px;
+  padding: 16px 30px 24px;
   .content {
     flex: 1;
     display: flex;
@@ -12,6 +12,36 @@
       margin-right: 8px;
       width: 44px;
       height: 44px;
+    }
+  }
+}
+
+.type-filter {
+  display: flex;
+  justify-content: center;
+  margin-top: -16px;
+  margin-bottom: 40px;
+
+  &__item {
+    margin: 0 32px;
+    padding: 16px;
+    white-space: nowrap;
+    position: relative;
+
+    &--active {
+      font-weight: bold;
+
+      &::after {
+        content: '';
+        width: 70%;
+        height: 4px;
+        background-color: $orange;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 8px auto 0;
+      }
     }
   }
 }

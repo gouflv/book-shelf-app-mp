@@ -1,5 +1,9 @@
 @import 'var';
 
+.btn::after {
+  display: none;
+}
+
 .btn-block {
   display: block;
   width: 100%;
