@@ -27,6 +27,9 @@ class App extends Component {
     pages: [
       //HOME
       'pages/intro/index',
+      'pages/site-map/index',
+      'pages/index/preview-only',
+
       'pages/index/index',
       'pages/book/index',
 
@@ -47,6 +50,11 @@ class App extends Component {
       ],
       color: '#929592',
       selectedColor: '#F1B400'
+    },
+    permission: {
+      'scope.userLocation': {
+        desc: '查找附近的借书馆'
+      }
     }
   }
 

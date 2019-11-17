@@ -1,8 +1,22 @@
 import './style.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useEffect } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 
 const Intro: Taro.FC = () => {
+
+  useEffect(() => {
+    Taro.getLocation({
+      type: 'gcj02',
+      success(res) {
+        console.log(res)
+      }
+    })
+  }, [])
+
+  function openSiteMap() {
+    Taro.navigateTo({ url: '/pages/site-map/index' })
+  }
+
   return (
     <View className='page-intro'>
       <View className='card site-info'>
@@ -14,7 +28,7 @@ const Intro: Taro.FC = () => {
             <View className='name'>金山小金星幼儿园</View>
             <View className='more'>
               <View className='left'>距离你250m</View>
-              <View className='right'>查看附近借书馆</View>
+              <View className='right' onClick={openSiteMap}>查看附近借书馆</View>
             </View>
           </View>
         </View>

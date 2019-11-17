@@ -4,6 +4,7 @@ import { Button, Image, View } from '@tarojs/components'
 
 const BookGrid: Taro.FC<{
   items: any[]
+  readonly?: boolean
   onBorrowClick: (item) => void
 }> = props => {
 
@@ -26,11 +27,13 @@ const BookGrid: Taro.FC<{
             </View>
             <View className='content'>
               <View className='title'>书名{i}</View>
-              <View className='action'>
-                <Button size='mini' onClick={() => props.onBorrowClick(i)}>
-                  0{i} 借阅
-                </Button>
-              </View>
+              {!props.readonly && (
+                <View className='action'>
+                  <Button size='mini' onClick={() => props.onBorrowClick(i)}>
+                    0{i} 借阅
+                  </Button>
+                </View>
+              )}
             </View>
           </View>
         </View>
