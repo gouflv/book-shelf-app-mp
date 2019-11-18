@@ -1,4 +1,4 @@
-import './style.scss'
+import './index.scss'
 import Taro, { useEffect } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 

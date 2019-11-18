@@ -1,4 +1,4 @@
-import './style.scss'
+import './index.scss'
 import Taro, { useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Map, View } from '@tarojs/components'
 
