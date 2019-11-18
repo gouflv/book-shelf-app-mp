@@ -5,13 +5,14 @@ import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 const Intro: Taro.FC = () => {
 
   useEffect(() => {
-    Taro.getLocation({
-      type: 'gcj02',
-      success(res) {
-        console.log(res)
-      }
-    })
+    fetchClosestSite()
   }, [])
+
+  async function fetchClosestSite() {
+    const res = await Taro.getLocation({ type: 'gcj02' })
+    console.log(res)
+    //TODO
+  }
 
   function openSiteMap() {
     Taro.navigateTo({ url: '/pages/site-map/index' })

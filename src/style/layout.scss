@@ -39,6 +39,11 @@
   margin-bottom: 24px;
   background-color: #fff;
   border-radius: 14Px;
+
+  &--shadow {
+    box-shadow: 0 0 6Px rgba(#000, 0.1);
+  }
+
   &-body {
     padding: 20px;
   }
