@@ -39,19 +39,19 @@ const SiteMap: Taro.FC = () => {
         />
       )}
       <View className='footer'>
-        <View className='card card--shadow site-info'>
-          <View className='site-info__main'>
-            <View className='icon'>
+        <View className='card card--shadow site-info-wrapper'>
+          <View className='site-info'>
+            <View className='site-info__hd'>
               <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' />
             </View>
-            <View className='content'>
+            <View className='site-info__bd'>
               <View className='name'>金山小金星幼儿园</View>
               <View className='more'>
                 <View className='left'>距离你250m</View>
               </View>
             </View>
           </View>
-          <View className='site-info__footer'>
+          <View className='site-info-footer'>
             <Button className='btn-primary btn--round' size='mini' onClick={openNavigation}>
               <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
               导航

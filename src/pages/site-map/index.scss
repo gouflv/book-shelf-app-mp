@@ -1,9 +1,12 @@
 @import '../../style/site';
 
 .page-size-map {
-  .site-info {
+  .site-info-wrapper {
     margin-bottom: 0;
     padding: 30px 20px;
+    .site-info {
+      padding: 0;
+    }
   }
 
   .footer {
