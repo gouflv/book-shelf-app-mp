@@ -26,6 +26,7 @@ class App extends Component {
    */
   config: Config = {
     pages: [
+      'pages/book/comments/index',
       //HOME
       'pages/intro/index',
       'pages/site-map/index',
@@ -34,8 +35,8 @@ class App extends Component {
       'pages/index/index',
       'pages/book/index',
 
-      'pages/wallet/wallet',
-      'pages/user/user',
+      'pages/wallet/index',
+      'pages/user/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -46,8 +47,8 @@ class App extends Component {
     tabBar: {
       list: [
         { text: '借书', pagePath: 'pages/index/index', iconPath: 'assets/tab_books_normal@3x.png', selectedIconPath: 'assets/tab_books_selected@3x.png' },
-        { text: '钱包', pagePath: 'pages/wallet/wallet', iconPath: 'assets/tab_wallet_normal@3x.png', selectedIconPath: 'assets/tab_wallet_selected@3x.png' },
-        { text: '我的', pagePath: 'pages/user/user', iconPath: 'assets/tab_me_normal@3x.png', selectedIconPath: 'assets/tab_me_selected@3x.png' },
+        { text: '钱包', pagePath: 'pages/wallet/index', iconPath: 'assets/tab_wallet_normal@3x.png', selectedIconPath: 'assets/tab_wallet_selected@3x.png' },
+        { text: '我的', pagePath: 'pages/user/index', iconPath: 'assets/tab_me_normal@3x.png', selectedIconPath: 'assets/tab_me_selected@3x.png' },
       ],
       color: '#929592',
       selectedColor: '#F1B400'

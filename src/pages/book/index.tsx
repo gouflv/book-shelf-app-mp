@@ -1,4 +1,4 @@
-import './style.scss'
+import './index.scss'
 import Taro, { useState } from '@tarojs/taro'
 import { View, Image, Swiper, SwiperItem, RichText, Button } from '@tarojs/components'
 

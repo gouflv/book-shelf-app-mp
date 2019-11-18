@@ -1,4 +1,5 @@
 @import '../../style/var';
+@import './comment';
 
 .page-detail {
   .banner {
@@ -73,37 +74,6 @@
       .more {
         font-size: $font-size-small - 2;
         color: $text-gray;
-      }
-    }
-    .list {
-    }
-    .comment {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 40px;
-      .thumb {
-        margin-right: 24px;
-        .avatar {
-          width: 56px;
-          height: 56px;
-          border-radius: 56px;
-        }
-      }
-      .content {
-        flex: auto;
-        font-size: $font-size-base - 2;
-        .user {
-          display: flex;
-          align-items: center;
-          padding-top: 4px;
-          margin-bottom: 10px;
-          color: $text-gray;
-          .date {
-            margin-left: 10px;
-            color: #c7c7c7;
-            font-size: $font-size-small - 2;
-          }
-        }
       }
     }
   }
