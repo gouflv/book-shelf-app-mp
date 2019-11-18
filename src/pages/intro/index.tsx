@@ -21,7 +21,7 @@ const Intro: Taro.FC = () => {
   return (
     <View className='page-intro'>
       <View className='card site-info'>
-        <View className='card-body'>
+        <View className='site-info__main'>
           <View className='icon'>
             <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' />
           </View>

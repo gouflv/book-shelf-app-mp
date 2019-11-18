@@ -40,28 +40,26 @@ const SiteMap: Taro.FC = () => {
       )}
       <View className='footer'>
         <View className='card card--shadow site-info'>
-          <View className='card-body'>
-            <View className='site-info__main'>
-              <View className='icon'>
-                <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' />
-              </View>
-              <View className='content'>
-                <View className='name'>金山小金星幼儿园</View>
-                <View className='more'>
-                  <View className='left'>距离你250m</View>
-                </View>
+          <View className='site-info__main'>
+            <View className='icon'>
+              <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' />
+            </View>
+            <View className='content'>
+              <View className='name'>金山小金星幼儿园</View>
+              <View className='more'>
+                <View className='left'>距离你250m</View>
               </View>
             </View>
-            <View className='site-info__footer'>
-              <Button className='btn-primary btn--round' size='mini' onClick={openNavigation}>
-                <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
-                导航
-              </Button>
-              <Button className='btn-primary btn--round' size='mini' onClick={openSite}>
-                <Image src={require('../../assets/navigation_icon2@3x.png')} mode='aspectFit' className='icon' />
-                详情
-              </Button>
-            </View>
+          </View>
+          <View className='site-info__footer'>
+            <Button className='btn-primary btn--round' size='mini' onClick={openNavigation}>
+              <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
+              导航
+            </Button>
+            <Button className='btn-primary btn--round' size='mini' onClick={openSite}>
+              <Image src={require('../../assets/navigation_icon2@3x.png')} mode='aspectFit' className='icon' />
+              详情
+            </Button>
           </View>
         </View>
       </View>
