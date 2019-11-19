@@ -82,7 +82,7 @@ const Page: Taro.FC = () => {
         </View>
       </View>
 
-      <View className='page-section rules' style={{ paddingTop: 0 }}>
+      <View className='page-section rules'>
         <View className='section-header'>
           购卡须知
         </View>

@@ -90,6 +90,7 @@
     padding: 10px 30px;
     background-color: #fff;
     box-shadow: 0 -2Px 6Px rgba(#000, 0.05);
+    @include safe-padding-bottom(10px);
   }
   &.has-footer {
     margin-bottom: 140px;

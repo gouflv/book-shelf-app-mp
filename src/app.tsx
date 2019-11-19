@@ -35,8 +35,9 @@ class App extends Component {
       // 'pages/book/index',
       // 'pages/book/comments/index',
 
-      'pages/buy-card/index',
+      'pages/temp-cards/index',
       'pages/wallet/index',
+      'pages/buy-card/index',
 
       'pages/user/index',
     ],

@@ -10,3 +10,10 @@ $bg-color: #f9f9f9;
 $font-size-small: 26px;
 $font-size-base: 28px;
 $font-size-large: 32px;
+$font-size-xlarge: 36px;
+
+//env(safe-area-inset-bottom)
+@mixin safe-padding-bottom($value) {
+  padding-bottom: $value;
+  padding-bottom: calc(#{$value} + env(safe-area-inset-bottom));
+}
