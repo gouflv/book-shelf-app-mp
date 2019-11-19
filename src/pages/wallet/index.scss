@@ -1,5 +1,9 @@
 @import '../../style/var';
 
+.page-section:first-child {
+  padding-top: 20px;
+}
+
 .user-card {
   position: relative;
   padding-bottom: 44%;
