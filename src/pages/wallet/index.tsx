@@ -33,11 +33,11 @@ const Page: Taro.FC = () => {
           <View className='card card--shadow'>
             <View className='cell-group'>
               <View className='cell'>
-                <View className='cell__hd'>
+                <View className='cell__bd'>
                   <View className='label'>借阅卡</View>
                   <View className='desc orange'>5折起</View>
                 </View>
-                <View className='cell__bd'>
+                <View className='cell__ft'>
                   <Button className='btn-primary' size='mini'>购买</Button>
                 </View>
               </View>
@@ -53,10 +53,10 @@ const Page: Taro.FC = () => {
 
           <View className='card card--shadow cell-group'>
             <View className='cell'>
-              <View className='cell__hd'>
+              <View className='cell__bd'>
                 <View className='label'>余额</View>
               </View>
-              <View className='cell__bd'>
+              <View className='cell__ft'>
                 <View className='red'>100.2</View>
               </View>
               <View className='cell__link'>
@@ -65,10 +65,10 @@ const Page: Taro.FC = () => {
             </View>
 
             <View className='cell'>
-              <View className='cell__hd'>
+              <View className='cell__bd'>
                 <View className='label'>借阅次卡</View>
               </View>
-              <View className='cell__bd'>
+              <View className='cell__ft'>
                 <View className='red'>2张可用</View>
               </View>
               <View className='cell__link'>
@@ -77,10 +77,10 @@ const Page: Taro.FC = () => {
             </View>
 
             <View className='cell'>
-              <View className='cell__hd'>
+              <View className='cell__bd'>
                 <View className='label'>押金</View>
               </View>
-              <View className='cell__bd'>
+              <View className='cell__ft'>
                 <View className='red'>100</View>
               </View>
               <View className='cell__link'>

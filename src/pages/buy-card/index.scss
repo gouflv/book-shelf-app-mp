@@ -1,0 +1,78 @@
+@import '../../style/var';
+
+.page-buy-card {
+  margin-bottom: 140px;
+}
+
+.page-section:first-child {
+  padding-top: 20px;
+}
+
+.card {
+  padding: 0 16px;
+  .cell {
+    padding: 24px 0;
+  }
+
+  .label {
+    font-size: 36px;
+    &-unit {
+      font-size: $font-size-base;
+    }
+  }
+  .money {
+    font-size: 36px;
+    &-unit {
+      font-size: 20px;
+    }
+    &-desc {
+      margin-top: 8px;
+      font-size: 22px;
+      color: #666;
+    }
+  }
+
+  &--checked {
+    border: 1rpx solid $orange;
+    box-shadow: 0 0 8Px rgba($orange, 0.1);
+  }
+}
+
+.rules {
+  .section-header {
+    font-weight: normal;
+  }
+  &-content {
+    margin-bottom: 24px;
+    font-size: $font-size-small;
+    color: #999;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: #fff;
+  box-shadow: 0 -2Px 6Px rgba(#000, 0.05);
+
+  display: flex;
+  align-items: center;
+  padding: 10px 30px;
+
+  .left {
+    margin-right: auto;
+  }
+
+  .money {
+    font-size: 36px;
+    &-unit {
+      font-size: 24px;
+    }
+  }
+
+  button {
+    margin: 0;
+    width: 200px;
+  }
+}

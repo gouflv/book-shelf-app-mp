@@ -14,11 +14,18 @@ page, view {
 .orange {
   color: $orange;
 }
+.gray {
+  color: $text-gray;
+}
 .blue {
   color: $blue;
 }
 .red {
   color: $red;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 //#region btn
@@ -57,6 +64,13 @@ page, view {
   .section-header {
     margin-bottom: 22px;
     font-size: 36px;
+    font-weight: bold;
+    .desc {
+      margin-left: 20px;
+      font-size: $font-size-base;
+      font-weight: normal;
+      color: $text-gray;
+    }
   }
 }
 
@@ -118,14 +132,18 @@ page, view {
   }
 
   &__hd {
-    flex: 1;
-    font-size: $font-size-large;
-    .desc {
-      margin-top: 2px;
-      font-size: $font-size-base;
-    }
+    flex: 0 0 auto;
+    margin-right: 16px;
   }
   &__bd {
+    flex: 1 0 auto;
+    font-size: $font-size-large;
+    .desc {
+      margin-top: 4px;
+      font-size: $font-size-base - 2;
+    }
+  }
+  &__ft {
     flex: 1 0 auto;
     font-size: $font-size-large - 2;
     text-align: right;
@@ -134,6 +152,7 @@ page, view {
     }
   }
   &__link {
+    flex: 0 0 auto;
     display: flex;
     align-items: center;
     margin-left: 10px;
