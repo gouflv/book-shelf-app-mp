@@ -1,8 +1,11 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useState } from '@tarojs/taro'
 import { View, Text, RichText, Button } from '@tarojs/components'
+import SCheckbox from '../../components/SCheckbox'
 
 const Page: Taro.FC = () => {
+  const [currentChecked, setCurrentChecked] = useState<number>(0)
+
   return (
     <View className='page-buy-card'>
 
@@ -14,7 +17,7 @@ const Page: Taro.FC = () => {
         <View className='card card--shadow card--checked'>
           <View className='cell'>
             <View className='cell__hd'>
-
+              <SCheckbox value={currentChecked === 1} onChange={() => setCurrentChecked(1)} />
             </View>
             <View className='cell__bd'>
               <View className='label bold'>
@@ -34,7 +37,7 @@ const Page: Taro.FC = () => {
         <View className='card card--shadow'>
           <View className='cell'>
             <View className='cell__hd'>
-
+              <SCheckbox value={currentChecked === 2} onChange={() => setCurrentChecked(2)} />
             </View>
             <View className='cell__bd'>
               <View className='label bold'>
