@@ -1,3 +1,4 @@
+@import '~taro-ui/dist/style/index.scss';
 @import './style/var';
 
 page {
@@ -10,6 +11,136 @@ page, view {
   box-sizing: border-box;
 }
 
-@import 'style/layout';
-@import 'style/button';
-@import '~taro-ui/dist/style/index.scss';
+.orange {
+  color: $orange;
+}
+.blue {
+  color: $blue;
+}
+.red {
+  color: $red;
+}
+
+//#region btn
+.btn {
+  &::after {
+    display: none;
+  }
+  &--round {
+    border-radius: 100px;
+  }
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.btn-primary {
+  border-color: $orange;
+  color: #fff;
+  background-color: $orange;
+  &::after {
+    display: none;
+  }
+  &--plain {
+    color: $orange;
+    background-color: transparent;
+  }
+}
+//#endregion
+
+//#region layout
+.page-section {
+  padding: 30px;
+
+  .section-header {
+    margin-bottom: 22px;
+    font-size: 36px;
+  }
+}
+
+.space {
+  height: 20px;
+  background-color: $bg-color;
+  &--text {
+    height: auto;
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $gray;
+    &::before,
+    &::after {
+      content: ' ';
+      width: 90px;
+      height: 1Px;
+      background-color: #e0e0e0;
+    }
+    .text {
+      margin: 0 20px;
+    }
+  }
+  &--large {
+    padding: 36px 30px;
+    &::before,
+    &::after {
+      flex: auto;
+      width: auto;
+    }
+  }
+}
+
+.card {
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 10Px;
+
+  &--shadow {
+    box-shadow: 0 0 8Px rgba(#000, 0.08);
+  }
+
+  &-body {
+    padding: 20px;
+  }
+}
+
+.cell-group {
+  padding: 0 30px;
+}
+.cell {
+  display: flex;
+  align-items: center;
+  padding: 36px 0;
+  border-bottom: 1rpx solid $gray;
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  &__hd {
+    flex: 1;
+    font-size: $font-size-large;
+    .desc {
+      margin-top: 2px;
+      font-size: $font-size-base;
+    }
+  }
+  &__bd {
+    flex: 1 0 auto;
+    font-size: $font-size-large - 2;
+    text-align: right;
+    button {
+      vertical-align: middle;
+    }
+  }
+  &__link {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    image {
+      width: 10px * 2;
+      height: 18px * 2;
+    }
+  }
+}
+//#endregion

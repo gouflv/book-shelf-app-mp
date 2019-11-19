@@ -1,0 +1,54 @@
+@import '../../style/var';
+
+.user-card {
+  position: relative;
+  padding-bottom: 44%;
+  height: 0;
+  margin-bottom: 20px;
+  .bg {
+    image {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+    }
+  }
+  .user {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 38px 30px 30px 40px;
+    color: #fff;
+    text-shadow: 0 0 8Px rgba(#000, 0.04);
+    &__hd {
+      flex: auto;
+      display: flex;
+      .thumb {
+        flex: 0 0 100px;
+        height: 100px;
+        margin-right: 20px;
+        border: 2Px solid rgba(#ffe491, 1);
+        border-radius: 100%;
+        overflow: hidden;
+        image {
+          width: 100px;
+          height: 100px;
+        }
+      }
+      .name {
+        margin-top: 6px;
+        font-size: 36px;
+      }
+    }
+    &__ft {
+      text-align: right;
+    }
+  }
+}

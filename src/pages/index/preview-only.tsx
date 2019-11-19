@@ -32,4 +32,8 @@ const Index: Taro.FC = () => {
   )
 }
 
+Index.config = {
+  navigationBarTitleText: '网点详情'
+}
+
 export default Index

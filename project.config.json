@@ -1,8 +1,8 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "shelf-client-taro",
+  "projectname": "葫芦弟弟借书馆",
   "description": "",
-  "appid": "touristappid",
+  "appid": "wxc9dd6c06d3ea952a",
   "setting": {
     "urlCheck": true,
     "es6": false,

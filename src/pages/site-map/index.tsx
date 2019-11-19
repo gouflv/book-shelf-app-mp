@@ -67,4 +67,8 @@ const SiteMap: Taro.FC = () => {
   )
 }
 
+SiteMap.config = {
+  navigationBarTitleText: '网点导航'
+}
+
 export default SiteMap

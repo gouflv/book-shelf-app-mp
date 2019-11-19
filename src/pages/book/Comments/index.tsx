@@ -31,4 +31,8 @@ const Comments: Taro.FC = () => {
   )
 }
 
+Comments.config = {
+  navigationBarTitleText: '商品评价'
+}
+
 export default Comments
