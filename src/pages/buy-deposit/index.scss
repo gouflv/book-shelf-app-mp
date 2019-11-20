@@ -1,0 +1,33 @@
+@import '../../style/var';
+
+.page-banner {
+  padding: 60px 0;
+  image {
+    margin-bottom: 2px;
+    width: 120px;
+    height: 120px;
+  }
+  .money {
+    @include money(64px);
+    font-weight: bold;
+    .money-unit {
+      margin-right: 10px;
+    }
+  }
+  .title {
+    margin-top: -8px;
+    margin-bottom: 20px;
+    font-size: $font-size-small;
+    color: #666;
+  }
+  .desc {
+    font-size: $font-size-small;
+    color: #999;
+  }
+}
+
+.card {
+  .money {
+    @include money();
+  }
+}

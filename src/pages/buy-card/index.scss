@@ -21,10 +21,7 @@
     }
   }
   .money {
-    font-size: $font-size-xlarge;
-    &-unit {
-      font-size: 20px;
-    }
+    @include money();
     &-desc {
       margin-top: 8px;
       font-size: 22px;
@@ -67,10 +64,7 @@
   }
 
   .money {
-    font-size: $font-size-xlarge;
-    &-unit {
-      font-size: 24px;
-    }
+    @include money();
   }
 
   button {

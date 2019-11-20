@@ -17,20 +17,19 @@
       margin-left: 0;
     }
 
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-76%);
-      height: 1Px;
-      width: 30%;
-      margin: 0 auto;
-      background-color: $orange;
-    }
-
     &--active {
       font-weight: bold;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-76%);
+        height: 1Px;
+        width: 30%;
+        margin: 0 auto;
+        background-color: $orange;
+      }
     }
   }
 }
@@ -80,18 +79,6 @@ $bleed: 5px;
       letter-spacing: 2px;
       -webkit-writing-mode: vertical-rl;
     }
-  }
-}
-
-.rules {
-  padding-top: 0;
-  .section-header {
-    font-weight: normal;
-  }
-  &-content {
-    margin-bottom: 24px;
-    font-size: $font-size-small;
-    color: #999;
   }
 }
 

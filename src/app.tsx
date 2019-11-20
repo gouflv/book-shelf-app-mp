@@ -26,20 +26,21 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      //HOME
-      // 'pages/intro/index',
-      // 'pages/site-map/index',
-      // 'pages/index/preview-only',
+      // 'pages/intro/index', //引导
+      // 'pages/site-map/index', //网点
+      // 'pages/index/preview-only', //网点页
       //
-      // 'pages/index/index',
-      // 'pages/book/index',
-      // 'pages/book/comments/index',
+      // 'pages/index/index', //网点首页
+      // 'pages/book/index', //图书页
+      // 'pages/book/comments/index', //评论
 
-      'pages/temp-cards/index',
-      'pages/wallet/index',
-      'pages/buy-card/index',
+      'pages/deposit/index', //押金
+      'pages/buy-deposit/index', //押金支付
+      'pages/wallet/index', //钱包
+      'pages/buy-card/index', //购卡
+      'pages/temp-cards/index', //次卡
 
-      'pages/user/index',
+      'pages/user/index', //
     ],
     window: {
       backgroundTextStyle: 'light',

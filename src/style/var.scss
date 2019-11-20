@@ -12,8 +12,14 @@ $font-size-base: 28px;
 $font-size-large: 32px;
 $font-size-xlarge: 36px;
 
-//env(safe-area-inset-bottom)
 @mixin safe-padding-bottom($value) {
   padding-bottom: $value;
   padding-bottom: calc(#{$value} + env(safe-area-inset-bottom));
+}
+@mixin money($base: $font-size-xlarge) {
+  font-size: $base;
+  &-unit {
+    margin-right: $base * 0.1;
+    font-size: $base * 0.666;
+  }
 }

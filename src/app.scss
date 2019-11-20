@@ -24,6 +24,9 @@ page, view {
   color: $red;
 }
 
+.center {
+  text-align: center;
+}
 .bold {
   font-weight: bold;
 }
@@ -163,3 +166,26 @@ page, view {
   }
 }
 //#endregion
+
+.page--gray {
+  background: $bg-color;
+  min-height: 100vh;
+}
+
+.buy-rules {
+  padding-top: 0;
+  .section-header {
+    font-weight: normal;
+  }
+  &-content {
+    margin-bottom: 24px;
+    font-size: $font-size-small;
+    color: #999;
+  }
+}
+
+.page-banner {
+  padding: 30px 0;
+  text-align: center;
+  background-color: #fff;
+}

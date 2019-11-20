@@ -28,7 +28,7 @@ const Page: Taro.FC = () => {
             </View>
             <View className='cell__ft'>
               <View className='money red bold'>
-                <Text className='money-unit'>$</Text>100
+                <Text className='money-unit'>¥</Text>100
               </View>
               <View className='money-desc'>每天1.2元</View>
             </View>
@@ -48,7 +48,7 @@ const Page: Taro.FC = () => {
             </View>
             <View className='cell__ft'>
               <View className='money red bold'>
-                <Text className='money-unit'>$</Text>100
+                <Text className='money-unit'>¥</Text>100
               </View>
               <View className='money-desc'>每天1.2元</View>
             </View>
@@ -75,21 +75,21 @@ const Page: Taro.FC = () => {
             </View>
             <View className='cell__ft'>
               <View className='money red bold'>
-                <Text className='money-unit'>$</Text>100
+                <Text className='money-unit'>¥</Text>100
               </View>
             </View>
           </View>
         </View>
       </View>
 
-      <View className='page-section rules'>
+      <View className='page-section buy-rules'>
         <View className='section-header'>
           购卡须知
         </View>
-        <View className='rules-content'>
+        <View className='buy-rules-content'>
           <RichText nodes='买借阅卡时优先使用用户余额抵扣' />
         </View>
-        <View className='rules-content'>
+        <View className='buy-rules-content'>
           确认购买即视为已同意<Text className='orange'>《借阅卡卡权益及服务规则》</Text>
         </View>
       </View>
@@ -99,7 +99,7 @@ const Page: Taro.FC = () => {
           <View>
             共计：
             <Text className='money red'>
-              <Text className='money-unit'>$</Text>90.99
+              <Text className='money-unit'>¥</Text>90.99
             </Text>
           </View>
           <View>账户余额可抵扣: 9元</View>
