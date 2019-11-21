@@ -17,7 +17,7 @@ const Page: Taro.FC = () => {
             <View className='user'>
               <View className='user__hd'>
                 <View className='thumb'>
-                  <Image src='//placehold.it/200' mode='aspectFit' />
+                  <Image src='//placehold.it/200' mode='aspectFill' />
                 </View>
                 <View className='content'>
                   <View className='name'>哦哦</View>
@@ -38,7 +38,13 @@ const Page: Taro.FC = () => {
                   <View className='desc orange'>5折起</View>
                 </View>
                 <View className='cell__ft'>
-                  <Button className='btn-primary' size='mini'>购买</Button>
+                  <Button
+                    className='btn-primary'
+                    size='mini'
+                    onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
+                  >
+                    购买
+                  </Button>
                 </View>
               </View>
             </View>
@@ -52,7 +58,7 @@ const Page: Taro.FC = () => {
         <View className='section-body'>
 
           <View className='card card--shadow cell-group'>
-            <View className='cell'>
+            <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/balance/index' })}>
               <View className='cell__bd'>
                 <View className='label'>余额</View>
               </View>
@@ -64,7 +70,7 @@ const Page: Taro.FC = () => {
               </View>
             </View>
 
-            <View className='cell'>
+            <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/temp-cards/index' })}>
               <View className='cell__bd'>
                 <View className='label'>借阅次卡</View>
               </View>
@@ -76,7 +82,7 @@ const Page: Taro.FC = () => {
               </View>
             </View>
 
-            <View className='cell'>
+            <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/deposit/index' })}>
               <View className='cell__bd'>
                 <View className='label'>押金</View>
               </View>
