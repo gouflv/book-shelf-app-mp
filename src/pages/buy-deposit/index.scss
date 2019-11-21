@@ -10,9 +10,6 @@
   .money {
     @include money(64px);
     font-weight: bold;
-    .money-unit {
-      margin-right: 10px;
-    }
   }
   .title {
     margin-top: -8px;

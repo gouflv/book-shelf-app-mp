@@ -2,6 +2,7 @@ $orange: #f1b400;
 $blue: #358bce;
 $gray: #e0e0e0;
 $red: #f05e0e;
+$green: #6ed786;
 
 $text-gray: #999;
 
@@ -21,5 +22,8 @@ $font-size-xlarge: 36px;
   &-unit {
     margin-right: $base * 0.1;
     font-size: $base * 0.666;
+  }
+  &-unit--large {
+    font-size: $base * 0.8;
   }
 }
