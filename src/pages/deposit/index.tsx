@@ -58,7 +58,7 @@ const Page: Taro.FC = () => {
               <View className='cell__bd orange'>
                 退回押金
               </View>
-              <View className='cell-ft'></View>
+              <View className='cell-ft' />
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
               </View>

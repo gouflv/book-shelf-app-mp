@@ -1,0 +1,93 @@
+@import '../../style/var';
+
+.banner {
+  position: relative;
+  padding-bottom: 43.33%;
+  height: 0;
+  background-color: #f6b810;
+  .bg {
+    image {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+    }
+  }
+  .content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    color: #fff;
+    .thumb {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 16px;
+      border: 2Px solid rgba(#ffe491, 1);
+      border-radius: 100%;
+      overflow: hidden;
+      image {
+        width: 120px;
+        height: 120px;
+      }
+    }
+    .name {
+      font-size: $font-size-xlarge;
+    }
+    .desc {
+      font-size: $font-size-small;
+    }
+  }
+}
+
+.menu {
+  position: relative;
+  margin: -30px 30px 0;
+  z-index: 2;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-around;
+  .item {
+    .thumb {
+      position: relative;
+      image {
+        display: block;
+        margin: 0 auto 10px;
+        width: 66px;
+        height: 66px;
+      }
+      .badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(20%, -30%);
+        height: 24px;
+        line-height: 24px;
+        min-width: 24px;
+        background-color: $red;
+        border-radius: 30px;
+        text-align: center;
+        color: #fff;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.card {
+  .cell__hd {
+    image {
+      display: block;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
