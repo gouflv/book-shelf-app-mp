@@ -1,4 +1,3 @@
-import './ModalWithClose.scss'
 import _omit from 'lodash/omit'
 import Taro, { Component } from '@tarojs/taro'
 import { AtModal } from 'taro-ui'
@@ -10,7 +9,7 @@ export interface MWCProps extends AtModalProps {
   onCancel: CommonEventFunction
 }
 
-export default class ModalWithClose extends Component<MWCProps> {
+export default class Popup extends Component<MWCProps> {
   static options = {
     addGlobalClass: true
   }

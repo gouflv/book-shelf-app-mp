@@ -26,7 +26,8 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/user/index', //
+      // DEBUG
+      'pages/profile/index', //
 
       'pages/intro/index', //引导
       'pages/site-map/index', //网点
@@ -44,7 +45,7 @@ class App extends Component {
       'pages/deposit/index', //押金
       'pages/buy-deposit/index', //押金支付
 
-      // 'pages/user/index', //
+      'pages/user/index', //
     ],
     window: {
       backgroundTextStyle: 'light',

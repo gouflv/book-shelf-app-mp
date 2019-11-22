@@ -1,0 +1,46 @@
+@import '../../style/var';
+
+.cell {
+  padding: 20px 0;
+  border-bottom: 0;
+  &__hd {
+    image {
+      display: block;
+      width: 34px;
+      height: 34px;
+    }
+  }
+  &__bd {
+    line-height: 82px;
+  }
+}
+
+.avatar {
+  image {
+    display: inline-block;
+    vertical-align: middle;
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+  }
+}
+
+.space {
+  margin: 0 -30px;
+  padding: 0 30px;
+  line-height: 62px;
+  color: $text-gray;
+  font-size: 24px;
+}
+
+.popup-modal {
+  .at-modal__container {
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    transform: none;
+    border-radius: 10Px 10Px 0 0;
+  }
+}

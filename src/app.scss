@@ -78,7 +78,7 @@ page, view {
 }
 
 .space {
-  height: 20px;
+  min-height: 20px;
   background-color: $bg-color;
   &--text {
     height: auto;
@@ -167,6 +167,7 @@ page, view {
 }
 //#endregion
 
+//#region component
 .page--gray {
   background: $bg-color;
   min-height: 100vh;
@@ -189,3 +190,25 @@ page, view {
   text-align: center;
   background-color: #fff;
 }
+
+.modal {
+  &-container {
+    position: relative;
+    padding: 26px 30px 40px;
+  }
+  &-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    .icon {
+      width: 36px;
+      height: 36px;
+    }
+  }
+  &-header {
+    font-size: 34px;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+//#endregion
