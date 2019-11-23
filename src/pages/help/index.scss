@@ -1,0 +1,48 @@
+@import '../../style/var';
+
+.page {
+  padding: 30px;
+}
+
+.card-group-title {
+  margin-bottom: 16px;
+  padding-left: 16px;
+  font-size: $font-size-large;
+}
+
+.menu {
+  position: relative;
+  margin-bottom: 40px;
+  padding: 20px 0;
+  display: flex;
+  justify-content: space-around;
+  .item {
+    .thumb {
+      position: relative;
+      image {
+        display: block;
+        margin: 0 auto 10px;
+        width: 66px;
+        height: 66px;
+      }
+    }
+  }
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  padding: 16px 30px;
+  @include safe-padding-bottom(16px);
+  display: flex;
+  .btn {
+    flex: 1;
+    margin-left: 30px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
