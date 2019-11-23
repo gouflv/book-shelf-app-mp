@@ -14,7 +14,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
-      'pages/help/index',
+      'pages/share-land/index',
 
       'pages/intro/index', //引导
       'pages/index/index',
@@ -39,9 +39,11 @@ class App extends Component {
       // 'pages/pay-overdue/index', //支付逾期
       //5
       // 'pages/help/index',
-      'pages/feedback/return/index',
-      'pages/feedback/payment/index',
-      'pages/feedback/shelf/index',
+      // 'pages/feedback/return/index',
+      // 'pages/feedback/payment/index',
+      // 'pages/feedback/shelf/index',
+      //6
+      'pages/share/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -60,9 +62,15 @@ class App extends Component {
     },
     permission: {
       'scope.userLocation': {
-        desc: '查找附近的借书馆'
+        desc: '你的位置信息将用查找附近的借书馆'
       }
     }
+  }
+
+  componentWillMount() {
+    const { shareTicket } = this.$router.params
+    console.log('shareTicket', shareTicket)
+    // TODO
   }
 
   componentDidMount () {}

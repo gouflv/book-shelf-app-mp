@@ -1,0 +1,90 @@
+@import '../../style/var';
+
+.page {
+  position: relative;
+  height: 100vh;
+}
+
+.top {
+  padding-top: 60px;
+  padding-bottom: 60px;
+  .thumb {
+    margin: 0 auto 12px;
+    display: block;
+    width: 120px;
+    height: 120px;
+    border-radius: 120px;
+  }
+  .title {
+    font-size: $font-size-small;
+    text-align: center;
+  }
+}
+
+.ticket-container {
+  position: relative;
+  width: 646px;
+  height: 488px;
+  margin: 0 auto 40px;
+  .bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .ticket {
+    position: absolute;
+    display: flex;
+    width: 580px;
+    padding-top: 58px;
+    padding-left: 60px;
+    &__hd {
+      width: 148px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 58px;
+      .unit {
+        font-size: 30px;
+      }
+    }
+    &__bd {
+      flex: 1;
+      height: 170px;
+      padding-left: 50px;
+      display: flex;
+      align-items: center;
+      font-size: 30px;
+    }
+  }
+
+  .ticket-desc {
+    position: absolute;
+    top: 320px;
+    right: 40px;
+    bottom: 0;
+    left: 40px;
+    font-size: 26px;
+    color: #666;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  .btn {
+    display: inline-block;
+    padding: 0 50px;
+  }
+}
+
+.page-bg {
+  position: absolute;
+  left: 10px;
+  bottom: 0;
+  width: 95px;
+  height: 132px;
+}

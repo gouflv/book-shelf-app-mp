@@ -1,0 +1,50 @@
+@import '../../style/var';
+
+.banner {
+  position: relative;
+  height: 750px;
+  margin-bottom: 24px;
+  .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 750px;
+  }
+  .content {
+    position: absolute;
+    top: 280px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    text-align: center;
+    .title {
+      margin-bottom: 8px;
+    }
+    .desc {
+      margin-bottom: 30px;
+      font-size: 26px;
+    }
+    .btn {
+      display: inline-block;
+      vertical-align: middle;
+      padding: 0 70px;
+    }
+  }
+}
+
+.card-group-title {
+  margin-bottom: 16px;
+  padding-left: 16px;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.cell {
+  .thumb {
+    width: 74px;
+    height: 74px;
+    border-radius: 100%;
+  }
+}
