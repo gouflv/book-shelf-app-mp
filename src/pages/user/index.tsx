@@ -19,21 +19,21 @@ const Page: Taro.FC = () => {
       </View>
 
       <View className='card card--shadow menu'>
-        <View className='item'>
+        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tag=2` })}>
           <View className='thumb'>
             <Image src={require('../../assets/me_icon_borrowing@3x.png')} mode='aspectFit' />
             <View className='badge'>1</View>
           </View>
           <View className='name'>借阅中</View>
         </View>
-        <View className='item'>
+        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tag=3` })}>
           <View className='thumb'>
             <Image src={require('../../assets/me_icon_overdue@3x.png')} mode='aspectFit' />
             <View className='badge'>2</View>
           </View>
           <View className='name'>已逾期</View>
         </View>
-        <View className='item'>
+        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tag=4` })}>
           <View className='thumb'>
             <Image src={require('../../assets/me_icon_completed@3x.png')} mode='aspectFit' />
           </View>

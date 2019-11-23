@@ -27,7 +27,6 @@ class App extends Component {
   config: Config = {
     pages: [
       // DEBUG
-      'pages/pay-overdue/index', //支付逾期
 
       //1
       'pages/intro/index', //引导
@@ -45,11 +44,11 @@ class App extends Component {
       'pages/profile/index', //个人
       'pages/order/index', //订单
       'pages/buy-book/index', //购书
-      // 'pages/pay-overdue/index', //支付逾期
+      'pages/pay-overdue/index', //支付逾期
 
       'pages/index/index',
       'pages/wallet/index',
-      'pages/user/index', //
+      'pages/user/index'
     ],
     window: {
       backgroundTextStyle: 'light',

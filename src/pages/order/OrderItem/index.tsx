@@ -3,6 +3,7 @@ import Taro from '@tarojs/taro'
 import { View, Text, Image, Button } from '@tarojs/components'
 
 const OrderItem: Taro.FC = () => {
+  // @ts-ignore
   // eslint-disable-next-line react/no-multi-comp
   const renderAction = () => {
     return (
@@ -15,10 +16,22 @@ const OrderItem: Taro.FC = () => {
             </Text>
           </View>
           <View className='btns'>
-            <Button size='mini' className='btn btn-primary btn-primary--plain btn--round'>
+            <Button
+              size='mini'
+              className='btn btn-primary btn-primary--plain btn--round'
+              onClick={
+                () => Taro.navigateTo({ url: `/pages/pay-overdue/index?id=1` })
+              }
+            >
               逾期支付
             </Button>
-            <Button size='mini' className='btn btn-primary btn--round'>
+            <Button
+              size='mini'
+              className='btn btn-primary btn--round'
+              onClick={
+                () => Taro.navigateTo({ url: `/pages/buy-book/index?id=1` })
+              }
+            >
               买下
             </Button>
             <Button size='mini' className='btn btn--plain btn--round'>
@@ -30,6 +43,7 @@ const OrderItem: Taro.FC = () => {
     )
   }
 
+  // @ts-ignore
   // eslint-disable-next-line react/no-multi-comp
   const renderBuyFlag = () => (
     <View className='flag-buy'>
@@ -53,7 +67,7 @@ const OrderItem: Taro.FC = () => {
             2019-12-12
           </View>
           <View className='flex-grow' />
-          {renderBuyFlag()}
+          {renderAction()}
         </View>
       </View>
     </View>
