@@ -8,6 +8,7 @@
 .top {
   padding-top: 60px;
   padding-bottom: 60px;
+  text-align: center;
   .thumb {
     margin: 0 auto 12px;
     display: block;
@@ -17,7 +18,9 @@
   }
   .title {
     font-size: $font-size-small;
-    text-align: center;
+  }
+  .title2 {
+    font-size: 30px;
   }
 }
 
@@ -32,6 +35,8 @@
     right: 0;
     bottom: 0;
     left: 0;
+    width: auto;
+    height: auto;
   }
 
   .ticket {
@@ -72,12 +77,40 @@
   }
 }
 
+.result-container {
+  position: relative;
+  width: 646px;
+  height: 488px;
+  margin: 0 auto 40px;
+  .bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: auto;
+  }
+  .content {
+    position: absolute;
+    top: 250px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+    .desc {
+      margin-top: 16px;
+      font-size: $font-size-small;
+    }
+  }
+}
+
 .footer {
   display: flex;
   justify-content: center;
   .btn {
     display: inline-block;
-    padding: 0 50px;
+    min-width: 340px;
   }
 }
 

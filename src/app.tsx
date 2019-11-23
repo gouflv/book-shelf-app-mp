@@ -14,7 +14,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
-      'pages/share-land/index',
+      'pages/deposit/index',
 
       'pages/intro/index', //引导
       'pages/index/index',
@@ -43,7 +43,9 @@ class App extends Component {
       // 'pages/feedback/payment/index',
       // 'pages/feedback/shelf/index',
       //6
-      'pages/share/index',
+      // 'pages/share/index',
+      // 'pages/share-land/index',
+      // 'pages/share-land/index',
     ],
     window: {
       backgroundTextStyle: 'light',

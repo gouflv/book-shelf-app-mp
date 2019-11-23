@@ -1,8 +1,19 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
+import { AtModal, AtModalAction, AtModalContent } from 'taro-ui'
 
 const Page: Taro.FC = () => {
+  const [confirmVisible, setConfirmVisible] = useState(true)
+
+  function onGetBackClick() {
+    setConfirmVisible(true)
+  }
+
+  function submitGetBack() {
+    // TODO
+  }
+
   return (
     <View className='page page--gray'>
       <View className='page-banner'>
@@ -54,7 +65,7 @@ const Page: Taro.FC = () => {
       <View className='page-section' style={{ paddingTop: 0 }}>
         <View className='card'>
           <View className='cell-group'>
-            <View className='cell'>
+            <View className='cell' onClick={onGetBackClick}>
               <View className='cell__bd orange'>
                 退回押金
               </View>
@@ -66,6 +77,23 @@ const Page: Taro.FC = () => {
           </View>
         </View>
       </View>
+
+      <AtModal
+        isOpened={confirmVisible}
+        className='get-back-confirm'
+        onCancel={() => submitGetBack()}
+        onConfirm={() => setConfirmVisible(false)}
+      >
+        <AtModalContent>
+          <View className='title'>是否确认退还押金？</View>
+          <Image src={require('../../assets/deposit_icon_sad@3x.png')} mode='aspectFit' className='img' />
+          <View className='content red'>再给宝宝多看两本书吧</View>
+        </AtModalContent>
+        <AtModalAction>
+          <Button className='gray'>想好了，退押金</Button>
+          <Button className='orange'>不退了，留下</Button>
+        </AtModalAction>
+      </AtModal>
     </View>
   )
 }

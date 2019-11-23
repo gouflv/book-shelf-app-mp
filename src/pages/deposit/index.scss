@@ -48,3 +48,24 @@
     }
   }
 }
+
+.get-back-confirm {
+  .title {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    text-align: center;
+  }
+  image {
+    display: block;
+    margin: 0 auto 16px;
+    width: 210px;
+    height: 210px;
+  }
+  .content {
+    margin-bottom: 30px;
+    font-size: $font-size-small;
+    text-align: center;
+    color: #e16866;
+  }
+}
