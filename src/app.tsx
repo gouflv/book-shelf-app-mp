@@ -3,6 +3,7 @@ import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { onError, Provider } from '@tarojs/mobx'
 import Index from './pages/index'
+import { showToast } from './utils'
 
 onError(error => {
   console.log('mobx global error listener:', error)
@@ -14,7 +15,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
-      'pages/deposit/index',
+      'pages/profile-chpwd/index',
 
       'pages/intro/index', //引导
       'pages/index/index',
@@ -69,10 +70,18 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     const { shareTicket } = this.$router.params
     console.log('shareTicket', shareTicket)
-    // TODO
+
+    const { code, errMsg } = await Taro.login()
+    if (!code) {
+      showToast({ title: errMsg })
+      return
+    }
+    console.log('login', code)
+
+    //TODO server login
   }
 
   componentDidMount () {}
