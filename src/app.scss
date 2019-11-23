@@ -23,12 +23,19 @@ page, view {
 .red {
   color: $red;
 }
+.green {
+  color: $green;
+}
 
 .center {
   text-align: center;
 }
 .bold {
   font-weight: bold;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 
 //#region btn
@@ -38,6 +45,9 @@ page, view {
   }
   &--round {
     border-radius: 100px;
+  }
+  &--plain {
+    border: 1rpx solid $gray;
   }
 }
 
@@ -56,6 +66,7 @@ page, view {
   &--plain {
     color: $orange;
     background-color: transparent;
+    border: 1rpx solid $orange;
   }
 }
 //#endregion
@@ -171,6 +182,42 @@ page, view {
 .page--gray {
   background: $bg-color;
   min-height: 100vh;
+}
+
+.top-tabbar {
+  display: flex;
+  justify-content: center;
+  height: 70px;
+  padding-left: 30px;
+  border-bottom: 1Px solid $gray;
+  background-color: #fff;
+  .item {
+    position: relative;
+    text-align: center;
+    line-height: 70px;
+    margin-left: 70px;
+    z-index: 1;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &--active {
+      font-weight: bold;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 1Px;
+        width: 30%;
+        min-width: 30px;
+        margin: 0 auto;
+        background-color: $orange;
+      }
+    }
+  }
 }
 
 .buy-rules {

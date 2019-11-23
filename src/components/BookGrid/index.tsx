@@ -29,7 +29,7 @@ const BookGrid: Taro.FC<{
               <View className='title'>书名{i}</View>
               {!props.readonly && (
                 <View className='action'>
-                  <Button size='mini' onClick={() => props.onBorrowClick(i)}>
+                  <Button className='btn' size='mini' onClick={() => props.onBorrowClick(i)}>
                     0{i} 借阅
                   </Button>
                 </View>

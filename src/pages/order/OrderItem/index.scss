@@ -1,0 +1,96 @@
+@import '../../../style/var';
+
+.order-item {
+  margin-bottom: 20px;
+  min-height: 340px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 8Px;
+
+  &--shrink {
+    min-height: 0;
+  }
+
+  &__hd {
+    padding-top: 26px;
+    padding-bottom: 20px;
+    border-bottom: 1rpx solid $gray;
+    display: flex;
+    align-items: center;
+    font-size: 26px;
+    .date {
+    }
+    .state {
+      margin-left: auto;
+    }
+  }
+  &__bd {
+    flex: auto;
+    display: flex;
+    padding: 20px 0;
+    position: relative;
+    .thumb {
+      flex: 0 0 130px;
+      height: 160px;
+      margin-right: 25px;
+    }
+    .content {
+      flex: 1 0 auto;
+      display: flex;
+      flex-direction: column;
+      .title {
+        margin-bottom: 16px;
+        font-size: $font-size-large;
+      }
+      .desc {
+        display: flex;
+        align-items: center;
+        color: $text-gray;
+        font-size: 24px;
+      }
+      .actions {
+        font-size: 24px;
+        text-align: right;
+        .state {
+          margin-bottom: 10px;
+        }
+        .btns {
+          .btn {
+            margin-left: 14px;
+            vertical-align: middle;
+            line-height: 1.9;
+          }
+          .btn-primary--plain {
+            padding: 0 18px;
+          }
+        }
+      }
+    }
+  }
+
+  //com
+  .money {
+    margin-left: 10px;
+    @include money($font-size-base);
+  }
+
+  .icon-card-1,
+  .icon-card-2 {
+    margin-right: 6px;
+    width: 76px;
+    height: 26px;
+  }
+
+  .flag-buy {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    .icon {
+      width: 84px;
+      height: 84px;
+    }
+  }
+}
+

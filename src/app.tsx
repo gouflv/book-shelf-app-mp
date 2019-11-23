@@ -27,24 +27,25 @@ class App extends Component {
   config: Config = {
     pages: [
       // DEBUG
-      'pages/profile/index', //
+      'pages/order/index', //订单
 
       'pages/intro/index', //引导
       'pages/site-map/index', //网点
       'pages/index/preview-only', //网点页
-
-      'pages/index/index', //网点首页
       'pages/book/index', //图书页
       'pages/book/comments/index', //评论
 
 
-      'pages/wallet/index', //钱包
       'pages/buy-card/index', //购卡
       'pages/balance/index', //余额
       'pages/temp-cards/index', //次卡
       'pages/deposit/index', //押金
       'pages/buy-deposit/index', //押金支付
 
+      'pages/profile/index', //个人
+
+      'pages/index/index', //网点首页
+      'pages/wallet/index', //钱包
       'pages/user/index', //
     ],
     window: {
@@ -55,7 +56,7 @@ class App extends Component {
     },
     tabBar: {
       list: [
-        { text: '借书', pagePath: 'pages/index/index', iconPath: 'assets/tab_books_normal@3x.png', selectedIconPath: 'assets/tab_books_selected@3x.png' },
+        // { text: '借书', pagePath: 'pages/index/index', iconPath: 'assets/tab_books_normal@3x.png', selectedIconPath: 'assets/tab_books_selected@3x.png' },
         { text: '钱包', pagePath: 'pages/wallet/index', iconPath: 'assets/tab_wallet_normal@3x.png', selectedIconPath: 'assets/tab_wallet_selected@3x.png' },
         { text: '我的', pagePath: 'pages/user/index', iconPath: 'assets/tab_me_normal@3x.png', selectedIconPath: 'assets/tab_me_selected@3x.png' },
       ],
