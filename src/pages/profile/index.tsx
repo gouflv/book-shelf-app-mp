@@ -117,7 +117,7 @@ const Page: Taro.FC = () => {
           <View className='cell__bd'>女宝</View>
         </View>
         <Button
-          className='btn-primary btn-block btn--round'
+          className='btn-primary btn-block'
           style={{ marginTop: '20rpx' }}
           onClick={() => onFormChange()}
         >

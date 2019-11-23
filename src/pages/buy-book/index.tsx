@@ -62,7 +62,7 @@ const Page: Taro.FC = () => {
             </Text>
           </View>
         </View>
-        <Button className='btn btn-primary btn--round'>确认支付</Button>
+        <Button className='btn btn-primary'>确认支付</Button>
       </View>
     </View>
   )

@@ -1,54 +1,47 @@
+import './app.scss'
 import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { onError, Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
-import AppStore from './store/app'
-
-import './app.scss'
-
 onError(error => {
   console.log('mobx global error listener:', error)
 })
 
-const store = {
-  AppStore
-}
+const store = {}
 
 class App extends Component {
 
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
   config: Config = {
     pages: [
-      // DEBUG
+      'pages/help/index',
 
-      //1
       'pages/intro/index', //引导
-      'pages/site-map/index', //网点
-      'pages/index/preview-only', //网点页
-      'pages/book/index', //图书页
-      'pages/book/comments/index', //评论
-      //2
-      'pages/buy-card/index', //购卡
-      'pages/balance/index', //余额
-      'pages/temp-cards/index', //次卡
-      'pages/deposit/index', //押金
-      'pages/buy-deposit/index', //押金支付
-      //3
-      'pages/profile/index', //个人
-      'pages/order/index', //订单
-      'pages/buy-book/index', //购书
-      'pages/pay-overdue/index', //支付逾期
-
       'pages/index/index',
       'pages/wallet/index',
-      'pages/user/index'
+      'pages/user/index',
+      // //1
+      // 'pages/site-map/index', //网点
+      // 'pages/index/preview-only', //网点页
+      // 'pages/book/index', //图书页
+      // 'pages/book/comments/index', //评论
+      // //2
+      // 'pages/buy-card/index', //购卡
+      // 'pages/balance/index', //余额
+      // 'pages/temp-cards/index', //次卡
+      // 'pages/deposit/index', //押金
+      // 'pages/buy-deposit/index', //押金支付
+      // //3
+      // 'pages/profile/index', //个人
+      // //4
+      // 'pages/order/index', //订单
+      // 'pages/buy-book/index', //购书
+      // 'pages/pay-overdue/index', //支付逾期
+      //5
+      // 'pages/help/index',
+      'pages/feedback/return/index',
+      'pages/feedback/payment/index',
+      'pages/feedback/shelf/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -80,11 +73,9 @@ class App extends Component {
 
   componentDidCatchError () {}
 
-  // 在 App 类中的 render() 函数没有实际作用
-  // 请勿修改此函数
   render () {
     return (
-      <Provider store={store}>
+      <Provider value={store}>
         <Index />
       </Provider>
     )

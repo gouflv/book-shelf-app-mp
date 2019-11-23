@@ -18,7 +18,7 @@ const OrderItem: Taro.FC = () => {
           <View className='btns'>
             <Button
               size='mini'
-              className='btn btn-primary btn-primary--plain btn--round'
+              className='btn btn-primary btn-primary--plain'
               onClick={
                 () => Taro.navigateTo({ url: `/pages/pay-overdue/index?id=1` })
               }

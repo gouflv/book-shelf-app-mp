@@ -52,11 +52,11 @@ const SiteMap: Taro.FC = () => {
             </View>
           </View>
           <View className='site-info-footer'>
-            <Button className='btn-primary btn--round' size='mini' onClick={openNavigation}>
+            <Button className='btn-primary' size='mini' onClick={openNavigation}>
               <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
               导航
             </Button>
-            <Button className='btn-primary btn--round' size='mini' onClick={openSite}>
+            <Button className='btn-primary' size='mini' onClick={openSite}>
               <Image src={require('../../assets/navigation_icon2@3x.png')} mode='aspectFit' className='icon' />
               详情
             </Button>

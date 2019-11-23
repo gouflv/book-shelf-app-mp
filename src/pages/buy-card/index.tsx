@@ -104,7 +104,7 @@ const Page: Taro.FC = () => {
           </View>
           <View className='desc'>账户余额可抵扣: 9元</View>
         </View>
-        <Button className='btn btn-primary btn--round'>购买</Button>
+        <Button className='btn btn-primary'>购买</Button>
       </View>
     </View>
   )

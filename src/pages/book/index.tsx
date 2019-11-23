@@ -75,7 +75,7 @@ const BookDetail: Taro.FC = () => {
       </View>
 
       <View className="footer">
-        <Button className='btn btn-primary btn--round'>立即购买</Button>
+        <Button className='btn btn-primary'>立即购买</Button>
       </View>
     </View>
   )
