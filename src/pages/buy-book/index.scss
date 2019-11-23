@@ -1,0 +1,23 @@
+@import '../../style/var';
+
+.page-section {
+  padding: 20px 30px;
+}
+
+.cell-group {
+  padding: 0 20px;
+}
+.cell {
+  padding: 20px 0;
+  font-size: 30px;
+
+  .money {
+    @include money($font-size-base);
+  }
+
+  &.summary {
+    .money {
+      @include money();
+    }
+  }
+}

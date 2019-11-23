@@ -1,0 +1,32 @@
+@import '../../style/var';
+
+.page-section {
+  padding: 20px 30px;
+}
+
+.card-group-desc {
+  margin-bottom: 8px;
+  padding-left: 16px;
+  color: $text-gray;
+}
+
+.cell-group {
+  padding: 0 20px;
+}
+.cell {
+  padding: 20px 0;
+  font-size: 30px;
+
+  .cell-hd-ext {
+    font-size: $font-size-small;
+  }
+  .money {
+    @include money($font-size-base);
+  }
+
+  &.summary {
+    .money {
+      @include money();
+    }
+  }
+}

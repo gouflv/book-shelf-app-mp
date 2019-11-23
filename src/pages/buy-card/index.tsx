@@ -94,17 +94,17 @@ const Page: Taro.FC = () => {
         </View>
       </View>
 
-      <View className='footer'>
+      <View className='payment-footer'>
         <View className='left'>
           <View>
             共计：
-            <Text className='money red'>
-              <Text className='money-unit'>¥</Text>90.99
+            <Text className='money red bold'>
+              <Text className='money-unit money-unit--large'>¥</Text>90.99
             </Text>
           </View>
-          <View>账户余额可抵扣: 9元</View>
+          <View className='desc'>账户余额可抵扣: 9元</View>
         </View>
-        <Button className='btn-primary btn--round'>购买</Button>
+        <Button className='btn btn-primary btn--round'>购买</Button>
       </View>
     </View>
   )

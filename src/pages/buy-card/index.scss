@@ -46,29 +46,3 @@
     color: #999;
   }
 }
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100vw;
-  background-color: #fff;
-  box-shadow: 0 -2Px 6Px rgba(#000, 0.05);
-
-  display: flex;
-  align-items: center;
-  padding: 10px 30px;
-  @include safe-padding-bottom(10px);
-
-  .left {
-    margin-right: auto;
-  }
-
-  .money {
-    @include money();
-  }
-
-  button {
-    margin: 0;
-    width: 200px;
-  }
-}
