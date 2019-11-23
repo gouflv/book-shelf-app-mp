@@ -1,6 +1,6 @@
 import './index.scss'
 import Taro from '@tarojs/taro'
-import { Image, View, Text, Button } from '@tarojs/components'
+import { Image, View, Text, Button, Picker } from '@tarojs/components'
 
 import useState = Taro.useState
 import ModalWithClose from '../../components/Modal/ModalWithClose'
@@ -74,7 +74,7 @@ const Page: Taro.FC = () => {
         </View>
         <View className='cell' onClick={() => setGenderVisible(true)}>
           <View className='cell__hd'>
-            <Image src={require('../../assets/personal_icon_name@3x.png')} mode='aspectFit' />
+            <Image src={require('../../assets/personal_icon_gender@3x.png')} mode='aspectFit' />
           </View>
           <View className='cell__bd'>宝宝性别</View>
           <View className='cell__ft'>
@@ -87,13 +87,15 @@ const Page: Taro.FC = () => {
         </View>
         <View className='cell'>
           <View className='cell__hd'>
-            <Image src={require('../../assets/personal_icon_phone@3x.png')} mode='aspectFit' />
+            <Image src={require('../../assets/personal_icon_birthday@3x.png')} mode='aspectFit' />
           </View>
           <View className='cell__bd'>宝宝生日</View>
-          <View className='cell__ft'>
-            <Text className='gray'>请填写宝宝生日</Text>
-            {/*<Text>2019年1月1日</Text>*/}
-          </View>
+          <Picker mode='date' value={'2019-01-01'} onChange={() => {}}>
+            <View className='cell__ft'>
+              <Text className='gray'>请填写宝宝生日</Text>
+              {/*<Text>2019年1月1日</Text>*/}
+            </View>
+          </Picker>
           <View className='cell__link'>
             <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
           </View>

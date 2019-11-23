@@ -191,10 +191,14 @@ page, view {
   background-color: #fff;
 }
 
+.popup-modal {
+  //TODO slideUp
+}
 .modal {
   &-container {
     position: relative;
     padding: 26px 30px 40px;
+    @include safe-padding-bottom(40px);
   }
   &-close {
     position: absolute;
