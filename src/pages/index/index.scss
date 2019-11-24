@@ -1,49 +1,74 @@
 @import '../../style/var';
+@import '../../style/site';
 
-.page-index {
-  .deposit-tip {
+.deposit-tip {
+  display: flex;
+  align-items: center;
+  padding: 16px 30px 24px;
+  .content {
+    flex: 1;
     display: flex;
     align-items: center;
-    padding: 16px 30px 24px;
-    .content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      .icon {
-        margin-right: 8px;
-        width: 44px;
-        height: 44px;
+    .icon {
+      margin-right: 8px;
+      width: 44px;
+      height: 44px;
+    }
+  }
+}
+
+.type-filter {
+  display: flex;
+  justify-content: center;
+  margin-top: -16px;
+  margin-bottom: 40px;
+
+  &__item {
+    margin: 0 32px;
+    padding: 16px;
+    white-space: nowrap;
+    position: relative;
+
+    &--active {
+      font-weight: bold;
+
+      &::after {
+        content: '';
+        width: 70%;
+        height: 4px;
+        background-color: $orange;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 8px auto 0;
       }
     }
   }
+}
 
-  .type-filter {
-    display: flex;
-    justify-content: center;
-    margin-top: -16px;
-    margin-bottom: 40px;
-
-    &__item {
-      margin: 0 32px;
-      padding: 16px;
-      white-space: nowrap;
-      position: relative;
-
-      &--active {
-        font-weight: bold;
-
-        &::after {
-          content: '';
-          width: 70%;
-          height: 4px;
-          background-color: $orange;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          margin: 8px auto 0;
-        }
-      }
+.footer {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  left: 20px;
+  background-color: #fff;
+  border-radius: 8Px;
+  box-shadow: 0 0 10Px rgba(#000, 0.1);
+  .site-info__bd {
+    .more {
+      align-items: flex-start;
+    }
+    .icon {
+      vertical-align: middle;
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
     }
   }
+}
+
+.page--has-footer {
+  margin-bottom: 180px;
+  margin-bottom: calc(180px + env(safe-area-inset-bottom));
 }

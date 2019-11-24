@@ -4,6 +4,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { onError, Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 import { showToast } from './utils'
+import { store as app } from './store/app'
 
 onError(error => {
   console.log('mobx global error listener:', error)
@@ -15,26 +16,26 @@ class App extends Component {
 
   config: Config = {
     pages: [
-      'pages/profile-chpwd/index',
 
-      'pages/intro/index', //引导
-      'pages/index/index',
+      'pages/index/introGuard',
       'pages/wallet/index',
       'pages/user/index',
-      // //1
-      // 'pages/site-map/index', //网点
-      // 'pages/index/preview-only', //网点页
-      // 'pages/book/index', //图书页
-      // 'pages/book/comments/index', //评论
-      // //2
-      // 'pages/buy-card/index', //购卡
-      // 'pages/balance/index', //余额
-      // 'pages/temp-cards/index', //次卡
-      // 'pages/deposit/index', //押金
-      // 'pages/buy-deposit/index', //押金支付
-      // //3
-      // 'pages/profile/index', //个人
-      // //4
+
+      //1
+      'pages/site-map/index', //网点
+      'pages/index/preview-only', //网点页
+      'pages/book/index', //图书页
+      'pages/book/comments/index', //评论
+      //2
+      'pages/buy-card/index', //购卡
+      'pages/balance/index', //余额
+      'pages/temp-cards/index', //次卡
+      'pages/deposit/index', //押金
+      'pages/buy-deposit/index', //押金支付
+      //3
+      'pages/profile/index', //个人
+      'pages/profile-chpwd/index',
+      //4
       // 'pages/order/index', //订单
       // 'pages/buy-book/index', //购书
       // 'pages/pay-overdue/index', //支付逾期
@@ -46,7 +47,6 @@ class App extends Component {
       //6
       // 'pages/share/index',
       // 'pages/share-land/index',
-      // 'pages/share-land/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -56,7 +56,7 @@ class App extends Component {
     },
     tabBar: {
       list: [
-        { text: '借书', pagePath: 'pages/index/index', iconPath: 'assets/tab_books_normal@3x.png', selectedIconPath: 'assets/tab_books_selected@3x.png' },
+        { text: '借书', pagePath: 'pages/index/introGuard', iconPath: 'assets/tab_books_normal@3x.png', selectedIconPath: 'assets/tab_books_selected@3x.png' },
         { text: '钱包', pagePath: 'pages/wallet/index', iconPath: 'assets/tab_wallet_normal@3x.png', selectedIconPath: 'assets/tab_wallet_selected@3x.png' },
         { text: '我的', pagePath: 'pages/user/index', iconPath: 'assets/tab_me_normal@3x.png', selectedIconPath: 'assets/tab_me_selected@3x.png' },
       ],
@@ -81,7 +81,7 @@ class App extends Component {
     }
     console.log('login', code)
 
-    //TODO server login
+    app.wxLogin()
   }
 
   componentDidMount () {}

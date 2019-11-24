@@ -4,18 +4,19 @@ import { View, Image, Swiper, SwiperItem, RichText, Button } from '@tarojs/compo
 
 const BookDetail: Taro.FC = () => {
   const [swiperIndex, onSwiperIndexChange] = useState(0)
+
   return (
-    <View className='page-detail has-footer'>
+    <View className='page page--has-footer'>
       <View className='banner'>
         <Swiper className='swiper' circular onChange={e => onSwiperIndexChange(e.detail.current)}>
           <SwiperItem>
-            <Image src='//placehold.it/750x740' />
+            <Image src='//placehold.it/750x740' className='image' />
           </SwiperItem>
           <SwiperItem>
-            <Image src='//placehold.it/750x740' />
+            <Image src='//placehold.it/750x740' className='image' />
           </SwiperItem>
           <SwiperItem>
-            <Image src='//placehold.it/750x740/fff' />
+            <Image src='//placehold.it/750x740/fff' className='image' />
           </SwiperItem>
         </Swiper>
         <View className='indicator'>

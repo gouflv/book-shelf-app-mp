@@ -6,6 +6,10 @@ import classNames from 'classnames'
 const Page: Taro.FC = () => {
   const [tab, setTab] = useState<1 | 2>(1)
 
+  function onBuyCardClick() {
+    Taro.navigateTo({ url: '/pages/buy-card/index' })
+  }
+
   return (
     <View>
 
@@ -81,7 +85,7 @@ const Page: Taro.FC = () => {
             </View>
           </View>
           <View className='footer'>
-            <Button className='btn-primary'>购买阅读卡</Button>
+            <Button className='btn-primary' onClick={onBuyCardClick}>购买阅读卡</Button>
           </View>
         </View>
       )}

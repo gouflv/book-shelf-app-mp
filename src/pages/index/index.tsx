@@ -58,5 +58,8 @@ const Index: Taro.FC = () => {
 Index.config = {
   navigationBarTitleText: '葫芦弟弟借书馆'
 }
+Index.options = {
+  addGlobalClass: true
+}
 
 export default Index

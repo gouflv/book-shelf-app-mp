@@ -4,7 +4,7 @@ import { Button, Image, Text, View } from '@tarojs/components'
 import { AtModal, AtModalAction, AtModalContent } from 'taro-ui'
 
 const Page: Taro.FC = () => {
-  const [confirmVisible, setConfirmVisible] = useState(true)
+  const [confirmVisible, setConfirmVisible] = useState(false)
 
   function onGetBackClick() {
     setConfirmVisible(true)
@@ -81,8 +81,6 @@ const Page: Taro.FC = () => {
       <AtModal
         isOpened={confirmVisible}
         className='get-back-confirm'
-        onCancel={() => submitGetBack()}
-        onConfirm={() => setConfirmVisible(false)}
       >
         <AtModalContent>
           <View className='title'>是否确认退还押金？</View>
@@ -90,8 +88,8 @@ const Page: Taro.FC = () => {
           <View className='content red'>再给宝宝多看两本书吧</View>
         </AtModalContent>
         <AtModalAction>
-          <Button className='gray'>想好了，退押金</Button>
-          <Button className='orange'>不退了，留下</Button>
+          <Button className='gray' onClick={submitGetBack}>想好了，退押金</Button>
+          <Button className='orange' onClick={() => setConfirmVisible(false)}>不退了，留下</Button>
         </AtModalAction>
       </AtModal>
     </View>

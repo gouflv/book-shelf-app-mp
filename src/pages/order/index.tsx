@@ -1,11 +1,15 @@
 import './index.scss'
-import Taro, { useState } from '@tarojs/taro'
+import Taro, { useState, useDidShow } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import OrderItem from './OrderItem'
 
 const Page: Taro.FC = () => {
   const [tab, setTab] = useState<1 | 2 | 3 | 4>(1)
+
+  useDidShow(() => {
+    console.log('didShow')
+  })
 
   return (
     <View className='page--gray'>

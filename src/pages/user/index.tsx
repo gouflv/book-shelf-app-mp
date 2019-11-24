@@ -1,3 +1,4 @@
+import './index.scss'
 import Taro from '@tarojs/taro'
 import { Image, View, Text } from '@tarojs/components'
 

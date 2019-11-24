@@ -6,7 +6,7 @@
   padding: 20px;
   &__hd {
     margin-right: 12px;
-    image {
+    .icon {
       width: 60px;
       height: 60px;
     }
@@ -21,6 +21,7 @@
       display: flex;
       align-items: flex-end;
       .left {
+        margin-top: 8px;
         margin-right: auto;
         font-size: $font-size-small;
         color: $blue;
@@ -36,7 +37,8 @@
 .site-info-footer {
   margin-top: 30px;
   display: flex;
-  button {
+
+  .btn {
     flex: 1 1 auto;
     display: flex;
     align-items: center;

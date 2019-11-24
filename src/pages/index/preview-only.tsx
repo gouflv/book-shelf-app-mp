@@ -1,11 +1,26 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
-import { Button, View } from '@tarojs/components'
+import { observer } from '@tarojs/mobx'
+import Taro, { useContext, useEffect } from '@tarojs/taro'
+import { Button, Image, View } from '@tarojs/components'
 import BookGrid from '../../components/BookGrid'
+import AppStore from '../../store/app'
 
 const Index: Taro.FC = () => {
+  const { location, getUserLocation } = useContext(AppStore)
+
+  useEffect(() => {
+    getUserLocation()
+  }, [getUserLocation])
+
+  function openNavigation() {
+    console.log(location)
+    if (location) {
+      Taro.openLocation(location)
+    }
+  }
+
   return (
-    <View className='page-index'>
+    <View className='page page--has-footer'>
       <View className='page-section'>
         <View className='shop-book-list'>
           <View className='type-filter'>
@@ -26,7 +41,23 @@ const Index: Taro.FC = () => {
       </View>
 
       <View className='footer'>
-        <Button className='btn-primary'>导航</Button>
+        <View className='site-info'>
+          <View className='site-info__hd'>
+            <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' className='icon' />
+          </View>
+          <View className='site-info__bd'>
+            <View className='name'>金山小金星幼儿园</View>
+            <View className='more'>
+              <View className='left'>距离你250m</View>
+              <View className='right'>
+                <Button className='btn btn-primary' size='mini' onClick={openNavigation}>
+                  <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
+                  导航
+                </Button>
+              </View>
+            </View>
+          </View>
+        </View>
       </View>
     </View>
   )
@@ -36,4 +67,4 @@ Index.config = {
   navigationBarTitleText: '网点详情'
 }
 
-export default Index
+export default observer(Index)

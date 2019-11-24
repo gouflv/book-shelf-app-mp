@@ -1,40 +1,33 @@
 import './index.scss'
-import Taro, { useEffect, useState } from '@tarojs/taro'
+import { observer } from '@tarojs/mobx'
+import Taro, { useEffect, useContext } from '@tarojs/taro'
 import { Button, Image, Map, View } from '@tarojs/components'
-
-interface LocationParam {
-  latitude: number
-  longitude: number
-}
+import AppStore from '../../store/app'
 
 const SiteMap: Taro.FC = () => {
-  const [userLocation, setUserLocation] = useState<LocationParam>()
+  const { location, getUserLocation, setPreviewSite } = useContext(AppStore)
 
   useEffect(() => {
     getUserLocation()
   }, [])
 
-  async function getUserLocation() {
-    const loc = await Taro.getLocation({ type: 'gcj02' })
-    setUserLocation(loc)
-  }
-
   function openNavigation() {
-    if (userLocation) {
-      Taro.openLocation(userLocation)
+    if (location) {
+      Taro.openLocation(location)
     }
   }
 
   function openSite() {
+    setPreviewSite({ siteId: 1 })
     Taro.navigateTo({ url: '/pages/index/preview-only' })
   }
 
   return (
     <View className='page-size-map'>
-      {userLocation && (
+      {location && (
         <Map
-          latitude={userLocation.latitude}
-          longitude={userLocation.longitude}
+          latitude={location.latitude}
+          longitude={location.longitude}
           style={{ width: '100vw', height: '100vh' }}
         />
       )}
@@ -42,7 +35,7 @@ const SiteMap: Taro.FC = () => {
         <View className='card card--shadow site-info-wrapper'>
           <View className='site-info'>
             <View className='site-info__hd'>
-              <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' />
+              <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' className='icon' />
             </View>
             <View className='site-info__bd'>
               <View className='name'>金山小金星幼儿园</View>
@@ -52,11 +45,11 @@ const SiteMap: Taro.FC = () => {
             </View>
           </View>
           <View className='site-info-footer'>
-            <Button className='btn-primary' size='mini' onClick={openNavigation}>
+            <Button className='btn btn-primary' size='mini' onClick={openNavigation}>
               <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
               导航
             </Button>
-            <Button className='btn-primary' size='mini' onClick={openSite}>
+            <Button className='btn btn-primary' size='mini' onClick={openSite}>
               <Image src={require('../../assets/navigation_icon2@3x.png')} mode='aspectFit' className='icon' />
               详情
             </Button>
@@ -71,4 +64,4 @@ SiteMap.config = {
   navigationBarTitleText: '网点导航'
 }
 
-export default SiteMap
+export default observer(SiteMap)

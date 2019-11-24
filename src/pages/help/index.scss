@@ -37,10 +37,13 @@
   background-color: #fff;
   padding: 16px 30px;
   @include safe-padding-bottom(16px);
+  box-shadow: $foot-shadow;
   display: flex;
+
   .btn {
     flex: 1;
     margin-left: 30px;
+
     &:first-child {
       margin-left: 0;
     }

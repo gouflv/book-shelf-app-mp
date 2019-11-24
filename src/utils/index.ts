@@ -1,10 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 import Taro from '@tarojs/taro'
 
-export async function showLoading() {
+export async function showLoading(props?: Partial<Taro.showLoading.Param>) {
   return Taro.showLoading({
     mask: true,
-    title: ''
+    title: '',
+    ...props
   })
 }
 

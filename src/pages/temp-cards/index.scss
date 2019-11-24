@@ -62,6 +62,6 @@ $bleed: 5px;
   width: 100vw;
   padding: 10px 30px;
   background-color: #fff;
-  box-shadow: 0 -2Px 6Px rgba(#000, 0.05);
+  box-shadow: $foot-shadow;
   @include safe-padding-bottom(10px);
 }

@@ -75,6 +75,13 @@ page, view {
 //#endregion
 
 //#region layout
+.page {
+  &--has-footer {
+    margin-bottom: 140px;
+    margin-bottom: calc(140px + env(safe-area-inset-bottom));
+  }
+}
+
 .page-section {
   padding: 30px;
 
@@ -319,7 +326,7 @@ page, view {
   left: 0;
   width: 100vw;
   background-color: #fff;
-  box-shadow: 0 -2Px 6Px rgba(#000, 0.05);
+  box-shadow: $foot-shadow;
 
   display: flex;
   align-items: center;

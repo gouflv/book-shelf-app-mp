@@ -39,4 +39,5 @@
   padding: 10px 30px;
   @include safe-padding-bottom(10px);
   background-color: #fff;
+  box-shadow: $foot-shadow;
 }
