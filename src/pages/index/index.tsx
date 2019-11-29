@@ -51,9 +51,9 @@ const Index: Taro.FC = () => {
         <View className='shop-book-list'>
           <ScrollView>
             <View className='type-filter'>
-              {cabinetList.map(data => (
+              {cabinetList.map((data, index) => (
                 <View
-                  key={data.eqId}
+                  key={index}
                   className={classNames([
                     'type-filter__item',
                     {'type-filter__item--active': data.eqCode === cabinetCode}

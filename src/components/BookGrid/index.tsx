@@ -29,7 +29,7 @@ const BookGrid: Taro.FC<{
             <View className='content'>
               <View className='title'>{data.booksName}</View>
               {!props.readonly && (
-                <View className='action'>
+                <View className='action' onClick={e => e.stopPropagation()}>
                   <Button className='btn' size='mini' onClick={() => props.onBorrowClick(data)}>
                     {numeral(data.boxNum).format('00')}号 借阅
                   </Button>
