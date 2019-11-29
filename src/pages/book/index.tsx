@@ -1,35 +1,50 @@
 import './index.scss'
-import Taro, { useState } from '@tarojs/taro'
+import Taro, { useState, useRouter, useEffect } from '@tarojs/taro'
 import { View, Image, Swiper, SwiperItem, RichText, Button } from '@tarojs/components'
+import { POST } from '../../utils'
+import { Book } from '../../typing'
 
 const BookDetail: Taro.FC = () => {
-  const [swiperIndex, onSwiperIndexChange] = useState(0)
+  const { params } = useRouter()
 
+  const [swiperIndex, onSwiperIndexChange] = useState(0)
+  const [book, setBook] = useState<Book>()
+
+  useEffect(() => {
+    fetch()
+  }, [])
+
+  async function fetch() {
+    const data = await POST('book/getBookDetail', {
+      data: { booksId: params.id }
+    })
+    setBook(data)
+  }
+
+  if (!book) {
+    return
+  }
   return (
     <View className='page page--has-footer'>
       <View className='banner'>
         <Swiper className='swiper' circular onChange={e => onSwiperIndexChange(e.detail.current)}>
           <SwiperItem>
-            <Image src='//placehold.it/750x740' className='image' />
-          </SwiperItem>
-          <SwiperItem>
-            <Image src='//placehold.it/750x740' className='image' />
-          </SwiperItem>
-          <SwiperItem>
-            <Image src='//placehold.it/750x740/fff' className='image' />
+            <Image src={book.booksImg} className='image' />
           </SwiperItem>
         </Swiper>
         <View className='indicator'>
-          {swiperIndex+1}/{3}
+          {swiperIndex+1}/{1}
         </View>
       </View>
 
       <View className='main'>
         <View className='content'>
           <View className='title'>
-            商品信息来源于后台，评价内容来源于线上商城商品评论
+            {book.booksName}
           </View>
-          <View className='ext'>被借了: 999次</View>
+          {book.borrowTotal &&
+            <View className='ext'>被借了: {book.borrowTotal}次</View>
+          }
         </View>
         <View className='desc'>
           商品信息来源于后台，评价内容来源于线上商城商品评论商品信息来源于后台，评价内容来源于线上商城商品评论

@@ -2,15 +2,16 @@ import './index.scss'
 import Taro from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import numeral from 'numeral'
+import { CabinetBook } from '../../typing'
 
 const BookGrid: Taro.FC<{
-  items: any[]
+  items: CabinetBook[]
   readonly?: boolean
   onBorrowClick: (item) => void
 }> = props => {
 
-  function onItemClick(item) {
-    Taro.navigateTo({ url: `/pages/book/index?id=${item}` })
+  function onItemClick(item: CabinetBook) {
+    Taro.navigateTo({ url: `/pages/book/index?id=${item.bookId}` })
   }
 
   return (

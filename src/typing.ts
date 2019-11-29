@@ -45,11 +45,18 @@ export interface Cabinet {
   networkName: string
 }
 
-export interface Book {
+export interface CabinetBook {
   bookId: string
   booksImg: string
   booksName: string
-
   cabinetNum: string
   boxNum: string
+}
+
+export interface Book {
+  booksId: string
+  booksName: string
+  booksImg: string
+  totalPrice: string
+  borrowTotal: string
 }
