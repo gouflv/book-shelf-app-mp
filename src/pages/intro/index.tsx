@@ -1,17 +1,18 @@
 import './index.scss'
-import Taro, { useEffect } from '@tarojs/taro'
+import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
 import { showToast } from '../../utils'
+import AppStore from '../../store/app'
 
 const Intro: Taro.FC = () => {
+  const { location, getUserLocation } = useContext(AppStore)
 
   useEffect(() => {
     fetchClosestSite()
-  }, [])
+  }, [fetchClosestSite])
 
   async function fetchClosestSite() {
-    const res = await Taro.getLocation({ type: 'gcj02' })
-    console.log(res)
+    await getUserLocation()
     //TODO
   }
 

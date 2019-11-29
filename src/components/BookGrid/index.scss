@@ -3,12 +3,14 @@
 .book-grid {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-end;
   margin-left: -30px;
   margin-right: -30px;
   margin-bottom: -40px;
 
   &__item-wrapper {
     flex: 0 0 33.33%;
+    max-width: 33.33%;
   }
 
   &__item {
@@ -26,7 +28,9 @@
     }
     .content {
       .title {
-        font-size: $font-size-small -2 ;
+        font-size: $font-size-small - 2;
+        height: ($font-size-small - 2) * 1.4 * 2;
+        @include line(2);
       }
     }
     .action {

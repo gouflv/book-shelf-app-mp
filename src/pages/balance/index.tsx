@@ -54,7 +54,7 @@ const Page: Taro.FC = () => {
 }
 
 Page.config = {
-  navigationBarTitleText: '我的押金'
+  navigationBarTitleText: '我的余额'
 }
 
 export default Page

@@ -1,8 +1,16 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useContext } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
+import AppStore from '../../store/app'
+import { observer } from '@tarojs/mobx'
 
 const Page: Taro.FC = () => {
+  const { user } = useContext(AppStore)
+
+
+  if (!user) {
+    return <View />
+  }
   return (
     <View className='page-wallet'>
 
@@ -17,11 +25,11 @@ const Page: Taro.FC = () => {
             <View className='user'>
               <View className='user__hd'>
                 <View className='thumb'>
-                  <Image src='//placehold.it/200' mode='aspectFill' />
+                  <Image src={user.image || '//placehold.it/200'} mode='aspectFill' />
                 </View>
                 <View className='content'>
-                  <View className='name'>哦哦</View>
-                  <View className='desc'>2019-12-22到期</View>
+                  <View className='name'>{user.nickName}</View>
+                  <View className='desc'>{user.effectiveTimes}到期</View>
                 </View>
               </View>
               <View className='user__ft'>
@@ -63,7 +71,7 @@ const Page: Taro.FC = () => {
                 <View className='label'>余额</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>100.2</View>
+                <View className='red'>{user.balance}</View>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
@@ -75,7 +83,7 @@ const Page: Taro.FC = () => {
                 <View className='label'>借阅次卡</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>2张可用</View>
+                <View className='red'>{user.lendingCardTotal}张可用</View>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
@@ -87,7 +95,7 @@ const Page: Taro.FC = () => {
                 <View className='label'>押金</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>100</View>
+                <View className='red'>{user.depositTotal}</View>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
@@ -105,4 +113,4 @@ Page.config = {
   navigationBarTitleText: '我的钱包'
 }
 
-export default Page
+export default observer(Page)

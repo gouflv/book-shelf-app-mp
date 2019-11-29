@@ -1,8 +1,15 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useContext } from '@tarojs/taro'
 import { Image, View, Text } from '@tarojs/components'
+import { observer } from '@tarojs/mobx'
+import AppStore from '../../store/app'
 
 const Page: Taro.FC = () => {
+  const { user } = useContext(AppStore)
+
+  if (!user) {
+    return <View />
+  }
   return (
     <View className='page--gray'>
 
@@ -12,10 +19,10 @@ const Page: Taro.FC = () => {
         </View>
         <View className='content'>
           <View className='thumb'>
-            <Image src='//placehold.it/200' mode='aspectFill' />
+            <Image src={user.image || '//placehold.it/200'} mode='aspectFill' />
           </View>
-          <View className='name'>用户A</View>
-          <View className='desc'>宝宝已经开了21本书</View>
+          <View className='name'>{user.nickName}</View>
+          <View className='desc'>宝宝已经看了21本书</View>
         </View>
       </View>
 
@@ -45,7 +52,7 @@ const Page: Taro.FC = () => {
       <View className='page-section'>
         <View className='card card--shadow'>
           <View className='cell-group'>
-            <View className='cell'>
+            <View className='cell' onClick={() => Taro.switchTab({ url: '/pages/wallet/index' })}>
               <View className='cell__hd'>
                 <Image src={require('../../assets/me_icon_wallet@3x.png')} mode='aspectFit' />
               </View>
@@ -54,7 +61,7 @@ const Page: Taro.FC = () => {
                 <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
               </View>
             </View>
-            <View className='cell'>
+            <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/share/index' })}>
               <View className='cell__hd'>
                 <Image src={require('../../assets/me_icon_invite@3x.png')} mode='aspectFit' />
               </View>
@@ -66,7 +73,7 @@ const Page: Taro.FC = () => {
                 <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
               </View>
             </View>
-            <View className='cell'>
+            <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/help/index' })}>
               <View className='cell__hd'>
                 <Image src={require('../../assets/me_icon_customerservice@3x.png')} mode='aspectFit' />
               </View>
@@ -88,4 +95,4 @@ Page.config = {
   navigationBarBackgroundColor: '#f6b810'
 }
 
-export default Page
+export default observer(Page)

@@ -1,16 +1,38 @@
 import './index.scss'
-import Taro, { useState } from '@tarojs/taro'
-import { Button, Image, View } from '@tarojs/components'
+import Taro, { useEffect, useState } from '@tarojs/taro'
+import { Button, Image, ScrollView, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
+import { useCabinetBooks, useCabinetList } from './store'
+import classNames from 'classnames'
 
 const Index: Taro.FC = () => {
+  const { cabinetList, fetchCabinetList } = useCabinetList()
+  const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
+
+  const [cabinetCode, setCabinetCode] = useState<string>()
+
+  // initial
+  useEffect(() => {
+    initial()
+  }, [])
+
+  useEffect(() => {
+    cabinetCode && fetchCabinetBook({ eqCode: cabinetCode })
+  }, [cabinetCode])
+
+  async function initial() {
+    await fetchCabinetList()
+    setCabinetCode('T738')
+  }
+
+
+  // borrow
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState(null)
-
-  function onBorrowClick(item) {
-    console.log(item)
-    setBorrowItem(item)
+  function onBorrowClick(book) {
+    console.log(book)
+    setBorrowItem(book)
     setBorrowConfirmVisible(true)
   }
 
@@ -27,13 +49,31 @@ const Index: Taro.FC = () => {
 
       <View className='page-section'>
         <View className='shop-book-list'>
-          <View className='type-filter'>
-            <View className='type-filter__item type-filter__item--active'>全部</View>
-            <View className='type-filter__item'>小班</View>
-            <View className='type-filter__item'>中班</View>
-            <View className='type-filter__item'>大班</View>
-          </View>
-          <BookGrid items={[]} onBorrowClick={item => onBorrowClick(item)} />
+          <ScrollView>
+            <View className='type-filter'>
+              {cabinetList.map(data => (
+                <View
+                  key={data.eqId}
+                  className={classNames([
+                    'type-filter__item',
+                    {'type-filter__item--active': data.eqCode === cabinetCode}
+                  ])}
+                  onClick={() => setCabinetCode(data.eqCode)}
+                >
+                  {data.eqName}
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+          <ScrollView>
+            <View className='type-filter'>
+              <View className='type-filter__item type-filter__item--active'>全部</View>
+              <View className='type-filter__item'>小班</View>
+              <View className='type-filter__item'>中班</View>
+              <View className='type-filter__item'>大班</View>
+            </View>
+          </ScrollView>
+          <BookGrid items={cabinetBookItems} onBorrowClick={item => onBorrowClick(item)} />
         </View>
       </View>
 

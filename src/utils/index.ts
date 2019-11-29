@@ -1,6 +1,8 @@
 /* eslint-disable import/prefer-default-export */
 import Taro from '@tarojs/taro'
 
+export * from './ajax'
+
 export async function showLoading(props?: Partial<Taro.showLoading.Param>) {
   return Taro.showLoading({
     mask: true,

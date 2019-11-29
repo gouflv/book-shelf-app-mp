@@ -3,7 +3,6 @@ import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { onError, Provider } from '@tarojs/mobx'
 import Index from './pages/index'
-import { showToast } from './utils'
 import { store as app } from './store/app'
 
 onError(error => {
@@ -73,15 +72,7 @@ class App extends Component {
   async componentWillMount() {
     const { shareTicket } = this.$router.params
     console.log('shareTicket', shareTicket)
-
-    const { code, errMsg } = await Taro.login()
-    if (!code) {
-      showToast({ title: errMsg })
-      return
-    }
-    console.log('login', code)
-
-    app.wxLogin()
+    app.login()
   }
 
   componentDidMount () {}
