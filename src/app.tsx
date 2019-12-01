@@ -35,17 +35,17 @@ class App extends Component {
       'pages/profile/index', //个人
       'pages/profile-chpwd/index',
       //4
-      // 'pages/order/index', //订单
-      // 'pages/buy-book/index', //购书
-      // 'pages/pay-overdue/index', //支付逾期
+      'pages/order/index', //订单
+      'pages/buy-book/index', //购书
+      'pages/pay-overdue/index', //支付逾期
       //5
-      // 'pages/help/index',
-      // 'pages/feedback/return/index',
-      // 'pages/feedback/payment/index',
-      // 'pages/feedback/shelf/index',
+      'pages/help/index',
+      'pages/feedback/return/index',
+      'pages/feedback/payment/index',
+      'pages/feedback/shelf/index',
       //6
-      // 'pages/share/index',
-      // 'pages/share-land/index',
+      'pages/share/index',
+      'pages/share-land/index',
     ],
     window: {
       backgroundTextStyle: 'light',

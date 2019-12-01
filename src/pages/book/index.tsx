@@ -22,7 +22,7 @@ const BookDetail: Taro.FC = () => {
   }
 
   if (!book) {
-    return
+    return <View />
   }
   return (
     <View className='page page--has-footer'>
@@ -59,7 +59,7 @@ const BookDetail: Taro.FC = () => {
             评价
             <View className='count'>(15)</View>
           </View>
-          <View className='more'>
+          <View className='more' onClick={() => Taro.navigateTo({ url: '/pages/book/comments/index' })}>
             查看全部 <View className='icon-more' />
           </View>
         </View>
