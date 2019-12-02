@@ -9,7 +9,7 @@ const Intro: Taro.FC = () => {
 
   useEffect(() => {
     fetchClosestSite()
-  }, [fetchClosestSite])
+  }, [])
 
   async function fetchClosestSite() {
     await getUserLocation()
