@@ -43,7 +43,7 @@ const Index: Taro.FC = () => {
           <Image src={require('../../assets/home_icon_prompt@3x.png')} mode='aspectFit' className='icon' />
           借书请先缴纳押金
         </View>
-        <Button size='mini' className='btn-primary'>缴纳押金</Button>
+        <Button size='mini' openType={'getPhoneNumber'} className='btn-primary'>缴纳押金</Button>
       </View>
       <View className='space' />
 

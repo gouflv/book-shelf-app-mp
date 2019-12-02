@@ -22,7 +22,7 @@ const BookDetail: Taro.FC = () => {
   }
 
   if (!book) {
-    return
+    return <View />
   }
   return (
     <View className='page page--has-footer'>
