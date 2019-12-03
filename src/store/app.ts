@@ -2,6 +2,7 @@ import Taro, { createContext } from '@tarojs/taro'
 import { action, computed, observable } from 'mobx'
 import { hideLoading, POST, showLoading, showToast } from '../utils'
 import { User } from '../typing'
+import RouterInfo = Taro.RouterInfo
 
 interface LocationParam {
   latitude: number
@@ -12,6 +13,21 @@ class AppStore {
   @observable
   loading = true
 
+  @observable
+  scene: number
+
+  @observable
+  shareTicket: string | undefined
+
+  init(params: RouterInfo['params']) {
+    console.log('init', params)
+    this.scene = params.scene as number
+    this.shareTicket = params.shareTicket
+  }
+
+  @computed get isBoundSite() {
+    return !!~[1011, 1012, 1013].indexOf(this.scene)
+  }
 
   //#region user
 
@@ -62,6 +78,7 @@ class AppStore {
   @observable location: LocationParam | null = null
 
   @observable siteList = []
+  @observable currentSite = null
   @observable previewSite = null
 
   @action.bound

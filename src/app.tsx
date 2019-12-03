@@ -71,8 +71,8 @@ class App extends Component {
   }
 
   async componentWillMount() {
-    const { shareTicket } = this.$router.params
-    console.log('shareTicket', shareTicket)
+    const params = this.$router.params
+    app.init(params)
     app.login()
   }
 
