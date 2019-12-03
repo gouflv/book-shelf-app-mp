@@ -1,14 +1,19 @@
 import './index.scss'
-import Taro, { useState, useDidShow } from '@tarojs/taro'
+import Taro, { useDidShow, useEffect, useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import OrderItem from './OrderItem'
+import { usePagination } from '../../store/usePagaination'
 
 const Page: Taro.FC = () => {
   const [tab, setTab] = useState<1 | 2 | 3 | 4>(1)
 
+  const { items, fetchNext, fetchStart, isFinish, isEmpty, loading } = usePagination({
+    url: 'account/getOrderPageList'
+  })
+
   useDidShow(() => {
-    console.log('didShow')
+    fetchStart()
   })
 
   return (
@@ -40,10 +45,14 @@ const Page: Taro.FC = () => {
         </View>
       </View>
 
+      isFinish:{isFinish}
+      isEmpty:{isEmpty}
+      loading:{loading}
+
       <View className='page-container'>
-        <OrderItem />
-        <OrderItem />
-        <OrderItem />
+        {items.map(item => (
+          <OrderItem key={item.orderNo} data={item} />
+        ))}
       </View>
     </View>
   )

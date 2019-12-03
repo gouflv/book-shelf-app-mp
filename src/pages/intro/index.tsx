@@ -5,16 +5,11 @@ import { showToast } from '../../utils'
 import AppStore from '../../store/app'
 
 const Intro: Taro.FC = () => {
-  const { location, getUserLocation } = useContext(AppStore)
+  const { fetchClosestSite } = useContext(AppStore)
 
   useEffect(() => {
     fetchClosestSite()
   }, [])
-
-  async function fetchClosestSite() {
-    await getUserLocation()
-    //TODO
-  }
 
   function openSiteMap() {
     Taro.navigateTo({ url: '/pages/site-map/index' })

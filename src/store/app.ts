@@ -21,7 +21,7 @@ class AppStore {
   @observable user: User | null = null
 
   @computed get isUserBoundSite() {
-    return true
+    return false
   }
 
   @action.bound
@@ -61,6 +61,7 @@ class AppStore {
 
   @observable location: LocationParam | null = null
 
+  @observable siteList = []
   @observable previewSite = null
 
   @action.bound
@@ -74,6 +75,19 @@ class AppStore {
   @action.bound
   setPreviewSite(site) {
     this.previewSite = site
+  }
+
+  @action.bound
+  async fetchClosestSite() {
+    await this.getUserLocation()
+    const data = await POST('book/networkAllList', {
+      data: {
+        state: 1,
+        ...this.location
+      }
+    })
+    console.log(data)
+    this.siteList = data
   }
 
   //#endregion

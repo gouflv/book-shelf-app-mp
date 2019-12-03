@@ -15,13 +15,14 @@ class App extends Component {
 
   config: Config = {
     pages: [
+      'pages/site-map/index', //网点
 
       'pages/index/introGuard',
       'pages/wallet/index',
       'pages/user/index',
 
       //1
-      'pages/site-map/index', //网点
+      // 'pages/site-map/index', //网点
       'pages/index/preview-only', //网点页
       'pages/book/index', //图书页
       'pages/book/comments/index', //评论

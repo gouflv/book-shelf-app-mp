@@ -1,15 +1,28 @@
 import './index.scss'
 import { observer } from '@tarojs/mobx'
-import Taro, { useEffect, useContext } from '@tarojs/taro'
+import Taro, { useState, useEffect, useContext } from '@tarojs/taro'
 import { Button, Image, Map, View } from '@tarojs/components'
 import AppStore from '../../store/app'
+import { marker } from '@tarojs/components/types/Map'
 
 const SiteMap: Taro.FC = () => {
-  const { location, getUserLocation, setPreviewSite } = useContext(AppStore)
+  const { location, getUserLocation, fetchClosestSite, setPreviewSite } = useContext(AppStore)
+
+  const [markers, setMarkers] = useState<marker[]>([])
 
   useEffect(() => {
-    getUserLocation()
-  }, [])
+    async function init() {
+      await getUserLocation()
+      // setMarkers([{
+      //   longitude: location.longitude,
+      //   latitude: location.latitude
+      // }])
+
+
+      await fetchClosestSite()
+    }
+    init()
+  }, [location])
 
   function openNavigation() {
     if (location) {
@@ -28,6 +41,7 @@ const SiteMap: Taro.FC = () => {
         <Map
           latitude={location.latitude}
           longitude={location.longitude}
+          markers={markers}
           style={{ width: '100vw', height: '100vh' }}
         />
       )}

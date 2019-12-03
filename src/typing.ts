@@ -60,3 +60,25 @@ export interface Book {
   totalPrice: string
   borrowTotal: string
 }
+
+// eslint-disable-next-line import/prefer-default-export
+export const enum CardType {
+  Member = '1',
+  Temp = '2'
+}
+
+export const enum OrderStatus {
+  Borrow = '0',
+  Overdue = '2',
+  Finish = '3'
+}
+
+export interface Order {
+  orderNo: string
+  goodsNames: string
+  lendingcardType: CardType
+  booksName: string
+  booksImg: string
+  createTime: string
+  status: OrderStatus
+}
