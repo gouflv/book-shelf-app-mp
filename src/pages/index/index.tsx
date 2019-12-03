@@ -3,11 +3,9 @@ import Taro, { useEffect, useState } from '@tarojs/taro'
 import { Button, Image, ScrollView, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
-import { useCabinetBooks, useCabinetList } from './store'
-import classNames from 'classnames'
+import { useCabinetBooks } from './store'
 
 const Index: Taro.FC = () => {
-  const { cabinetList, fetchCabinetList } = useCabinetList()
   const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
 
   const [cabinetCode, setCabinetCode] = useState<string>()
@@ -19,10 +17,9 @@ const Index: Taro.FC = () => {
 
   useEffect(() => {
     cabinetCode && fetchCabinetBook({ eqCode: cabinetCode })
-  }, [cabinetCode])
+  }, [cabinetCode, fetchCabinetBook])
 
   async function initial() {
-    await fetchCabinetList()
     setCabinetCode('T738')
   }
 
@@ -49,22 +46,6 @@ const Index: Taro.FC = () => {
 
       <View className='page-section'>
         <View className='shop-book-list'>
-          <ScrollView>
-            <View className='type-filter'>
-              {cabinetList.map((data, index) => (
-                <View
-                  key={index}
-                  className={classNames([
-                    'type-filter__item',
-                    {'type-filter__item--active': data.eqCode === cabinetCode}
-                  ])}
-                  onClick={() => setCabinetCode(data.eqCode)}
-                >
-                  {data.eqName}
-                </View>
-              ))}
-            </View>
-          </ScrollView>
           <ScrollView>
             <View className='type-filter'>
               <View className='type-filter__item type-filter__item--active'>全部</View>

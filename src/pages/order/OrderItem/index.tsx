@@ -1,8 +1,9 @@
 import './index.scss'
 import Taro from '@tarojs/taro'
 import { View, Text, Image, Button } from '@tarojs/components'
+import { Order, OrderStatus } from '../../../typing'
 
-const OrderItem: Taro.FC = () => {
+const OrderItem: Taro.FC<{ data: Order }> = props => {
   // @ts-ignore
   // eslint-disable-next-line react/no-multi-comp
   const renderAction = () => {
@@ -51,16 +52,25 @@ const OrderItem: Taro.FC = () => {
     </View>
   )
 
+  const { data } = props
   return (
     <View className='order-item order-item--shrink'>
       <View className='order-item__hd'>
-        <Text className='date'>2019-09-11 12:22:11</Text>
-        <Text className='state green'>借阅中</Text>
+        <Text className='date'>{data.createTime}</Text>
+        <Text className='state green'>
+          {
+            {
+              [OrderStatus.Borrow]: '借阅中',
+              [OrderStatus.Overdue]: '已逾期',
+              [OrderStatus.Finish]: '已完成'
+            }[data.status]
+          }
+        </Text>
       </View>
       <View className='order-item__bd'>
-        <Image className='thumb' src='//placehold.it/130x160' mode='aspectFit' />
+        <Image className='thumb' src={data.booksImg || '//placehold.it/130x160'} mode='aspectFit' />
         <View className='content'>
-          <View className='title'>體兩清開進起有候過特中</View>
+          <View className='title'>{data.goodsNames || data.booksName}</View>
           <View className='desc'>
             <Image src={require('../../../assets/order_icon_borrowcard@3x.png')} mode='aspectFit' className='icon-card-1' />
             到期时间:
