@@ -15,7 +15,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
-      'pages/site-map/index', //网点
+      'pages/login/index',
 
       'pages/index/introGuard',
       'pages/wallet/index',

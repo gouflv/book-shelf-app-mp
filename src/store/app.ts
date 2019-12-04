@@ -62,6 +62,7 @@ class AppStore {
     const data = await POST('base/login', {
       data: { code }
     })
+    console.log(data)
     //TODO save token
     return code
   }
