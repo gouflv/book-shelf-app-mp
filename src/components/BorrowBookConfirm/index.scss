@@ -2,7 +2,9 @@
 @import '../../style/book';
 
 .borrow-book-confirm {
+
   .book-item {
+    margin-top: 20px;
     margin-bottom: 20px;
     .thumb {
       @include thumb(260px);

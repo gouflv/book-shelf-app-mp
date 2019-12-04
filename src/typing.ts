@@ -59,6 +59,10 @@ export interface CabinetBook {
   booksName: string
   cabinetNum: string
   boxNum: string
+
+  eqCode: string
+  eqBoxId: string
+  rfidCode: string
 }
 
 export interface Book {

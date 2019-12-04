@@ -16,9 +16,11 @@ export async function hideLoading() {
 }
 
 export async function showToast(props: Taro.showToast.Param) {
-  return Taro.showToast({
-    icon: 'none',
-    duration: 2000,
-    ...props
-  })
+  setTimeout(() => {
+    Taro.showToast({
+      icon: 'none',
+      duration: 2000,
+      ...props
+    })
+  }, 100)
 }

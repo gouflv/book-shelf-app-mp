@@ -7,7 +7,7 @@ import { CabinetBook } from '../../typing'
 const BookGrid: Taro.FC<{
   items: CabinetBook[]
   readonly?: boolean
-  onBorrowClick: (item) => void
+  onBorrowClick: (item: CabinetBook) => void
 }> = props => {
 
   function onItemClick(item: CabinetBook) {

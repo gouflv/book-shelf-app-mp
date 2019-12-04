@@ -6,6 +6,8 @@ const Page: Taro.FC = () => {
 
   function onGetPhoneNumber({ encryptedData, iv }) {
     console.log(encryptedData, iv)
+    //TODO submit and reload user info
+    Taro.switchTab({ url: '/pages/index/introGuard' })
   }
 
   return (

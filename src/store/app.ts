@@ -37,7 +37,7 @@ class AppStore {
   @observable user: User | null = null
 
   @computed get isUserBoundSite() {
-    return !!this.scanCabinet
+    return true //!!this.scanCabinet
   }
 
   @action.bound
