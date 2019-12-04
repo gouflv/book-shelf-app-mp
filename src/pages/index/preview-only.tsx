@@ -4,18 +4,24 @@ import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import BookGrid from '../../components/BookGrid'
 import AppStore from '../../store/app'
+import { useCabinetBooks } from './store'
 
 const Index: Taro.FC = () => {
-  const { location, getUserLocation } = useContext(AppStore)
+  const { previewSite, previewCabinet } = useContext(AppStore)
+  const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
 
   useEffect(() => {
-    getUserLocation()
-  }, [getUserLocation])
+    fetchCabinetBook({ eqCode: previewCabinet.eqCode })
+  }, [])
 
   function openNavigation() {
-    console.log(location)
-    if (location) {
-      Taro.openLocation(location)
+    if (previewSite) {
+      Taro.openLocation({
+        latitude: parseFloat(previewSite.latitude),
+        longitude: parseFloat(previewSite.longitude),
+        name: previewSite.netName,
+        address: previewSite.address,
+      })
     }
   }
 
@@ -29,7 +35,7 @@ const Index: Taro.FC = () => {
             <View className='type-filter__item'>中班</View>
             <View className='type-filter__item'>大班</View>
           </View>
-          <BookGrid items={[]} onBorrowClick={() => {}} readonly />
+          <BookGrid items={cabinetBookItems} onBorrowClick={() => {}} readonly />
         </View>
       </View>
 

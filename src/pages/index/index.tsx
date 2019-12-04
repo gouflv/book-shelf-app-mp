@@ -1,27 +1,25 @@
 import './index.scss'
-import Taro, { useEffect, useState } from '@tarojs/taro'
+import Taro, { useEffect, useState, useContext } from '@tarojs/taro'
 import { Button, Image, ScrollView, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
 import { useCabinetBooks } from './store'
+import AppStore from '../../store/app'
+import { Cabinet } from '../../typing'
+import { observer } from '@tarojs/mobx'
 
 const Index: Taro.FC = () => {
+  const { scanCabinet, setScanCabinet } = useContext(AppStore)
   const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
-
-  const [cabinetCode, setCabinetCode] = useState<string>()
 
   // initial
   useEffect(() => {
-    initial()
+    setScanCabinet({ eqCode: 'T738' } as Cabinet)
   }, [])
 
   useEffect(() => {
-    cabinetCode && fetchCabinetBook({ eqCode: cabinetCode })
-  }, [cabinetCode, fetchCabinetBook])
-
-  async function initial() {
-    setCabinetCode('T738')
-  }
+    scanCabinet && fetchCabinetBook({ eqCode: scanCabinet.eqCode })
+  }, [scanCabinet])
 
 
   // borrow
@@ -83,4 +81,4 @@ Index.options = {
   addGlobalClass: true
 }
 
-export default Index
+export default observer(Index)

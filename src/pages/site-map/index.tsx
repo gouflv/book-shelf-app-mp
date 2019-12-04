@@ -1,15 +1,20 @@
 import './index.scss'
 import _find from 'lodash/find'
 import { observer } from '@tarojs/mobx'
-import Taro, { useState, useEffect, useContext } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Map, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { marker } from '@tarojs/components/types/Map'
+import { hideLoading, POST, showLoading, showToast } from '../../utils'
+import { AtActionSheet, AtActionSheetItem } from 'taro-ui'
+import { Cabinet } from '../../typing'
 
 const SiteMap: Taro.FC = () => {
-  const { location, siteList, previewSite, getUserLocation, fetchSites, setPreviewSite } = useContext(AppStore)
+  const { location, siteList, previewSite, getUserLocation, fetchSites, setPreviewSite, setPreviewCabinet } = useContext(AppStore)
 
   const [markers, setMarkers] = useState<marker[]>([])
+  const [cabinets, setCabinets] = useState<Cabinet[]>([])
+  const [cabinetsSelectVisible, setCabinetsSelectVisible] = useState(false)
 
   useEffect(() => {
     getUserLocation()
@@ -28,9 +33,9 @@ const SiteMap: Taro.FC = () => {
         ...siteList.map(s => {
           const active = previewSite && previewSite.netCode === s.netCode
           return {
-            id: s.netCode,
-            longitude: s.longitude,
-            latitude: s.latitude,
+            id: (s.netCode as any) as number,
+            longitude: parseFloat(s.longitude),
+            latitude: parseFloat(s.latitude),
             iconPath: active ?
               require('../../assets/navigation_position_selected@3x.png') :
               require('../../assets/navigation_position_normal@3x.png'),
@@ -58,14 +63,39 @@ const SiteMap: Taro.FC = () => {
   }
 
   function openNavigation() {
-    if (location) {
-      Taro.openLocation(location)
+    if (previewSite) {
+      Taro.openLocation({
+        latitude: parseFloat(previewSite.latitude),
+        longitude: parseFloat(previewSite.longitude),
+        name: previewSite.netName,
+        address: previewSite.address,
+      })
     }
   }
 
-  function openSiteCabinetSelect() {
-    // setPreviewSite({ siteId: 1 })
-    // Taro.navigateTo({ url: '/pages/index/preview-only' })
+  async function openSiteDetail() {
+    showLoading()
+    const items: Cabinet[] = await POST('book/getEquipmentListAll', {
+      data: {
+        networkCode: previewSite.netCode
+      }
+    })
+    hideLoading()
+    if (items.length === 1) {
+      setPreviewCabinet(items[0])
+      Taro.navigateTo({ url: '/pages/index/preview-only' })
+    } else if (items.length > 1) {
+      setCabinets(items)
+      setCabinetsSelectVisible(true)
+    } else {
+      showToast({ title: '暂无书柜' })
+    }
+  }
+
+  function onCabinetClick(item: Cabinet) {
+    setPreviewCabinet(item)
+    setCabinetsSelectVisible(false)
+    Taro.navigateTo({ url: '/pages/index/preview-only' })
   }
 
   return (
@@ -83,7 +113,7 @@ const SiteMap: Taro.FC = () => {
         />
       )}
 
-      {previewSite && (
+      {(previewSite && !cabinetsSelectVisible) && (
         <View className='footer'>
           <View className='card card--shadow site-info-wrapper'>
             <View className='site-info'>
@@ -102,7 +132,7 @@ const SiteMap: Taro.FC = () => {
                 <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
                 导航
               </Button>
-              <Button className='btn btn-primary' size='mini' onClick={openSiteCabinetSelect}>
+              <Button className='btn btn-primary' size='mini' onClick={openSiteDetail}>
                 <Image src={require('../../assets/navigation_icon2@3x.png')} mode='aspectFit' className='icon' />
                 详情
               </Button>
@@ -110,6 +140,18 @@ const SiteMap: Taro.FC = () => {
           </View>
         </View>
       )}
+
+      <AtActionSheet
+        title='请选择书柜'
+        isOpened={cabinetsSelectVisible}
+        onClose={() => setCabinetsSelectVisible(false)}
+      >
+        {cabinets.map(c => (
+          <AtActionSheetItem key={c.eqId} onClick={() => onCabinetClick(c)}>
+            {c.eqName}
+          </AtActionSheetItem>
+        ))}
+      </AtActionSheet>
     </View>
   )
 }

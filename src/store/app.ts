@@ -1,7 +1,7 @@
 import Taro, { createContext } from '@tarojs/taro'
 import { action, computed, observable } from 'mobx'
 import { hideLoading, POST, showLoading, showToast } from '../utils'
-import { Site, User } from '../typing'
+import { Cabinet, Site, User } from '../typing'
 import RouterInfo = Taro.RouterInfo
 
 interface LocationParam {
@@ -37,7 +37,7 @@ class AppStore {
   @observable user: User | null = null
 
   @computed get isUserBoundSite() {
-    return false
+    return !!this.scanCabinet
   }
 
   @action.bound
@@ -75,11 +75,35 @@ class AppStore {
 
   //#region site
 
+  /**
+   * 用户位置
+   */
   @observable location: LocationParam | null = null
 
+  /**
+   * 用户扫码进入的网点设备
+   */
+  @observable scanCabinet: Cabinet
+
+  /**
+   * 网点列表
+   */
   @observable siteList: Site[] = []
-  @observable currentSite: Site
+
+  /**
+   * 距离最近网点
+   */
+  @observable closestSite: Site
+
+  /**
+   * 地图选择的网点
+   */
   @observable previewSite: Site
+
+  /**
+   * 地图选择的网点设备
+   */
+  @observable previewCabinet: Cabinet
 
   @action.bound
   async getUserLocation() {
@@ -90,8 +114,18 @@ class AppStore {
   }
 
   @action.bound
+  setScanCabinet(cabinet: Cabinet) {
+    this.scanCabinet = cabinet
+  }
+
+  @action.bound
   setPreviewSite(site) {
     this.previewSite = site
+  }
+
+  @action.bound
+  setPreviewCabinet(cabinet) {
+    this.previewCabinet = cabinet
   }
 
   @action.bound

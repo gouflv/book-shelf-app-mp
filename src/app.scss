@@ -354,9 +354,19 @@ page, view {
 }
 //#endregion
 
-//#region for
+//#region form
 .input-placeholder,
 .textarea-placeholder {
   color: $text-gray;
 }
 //#endregion
+
+.at-action-sheet {
+  &__container {
+    margin: 20px;
+    width: calc(100% - 40px);
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+}

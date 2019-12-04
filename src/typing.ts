@@ -38,10 +38,11 @@ export interface User {
 }
 
 export interface Site {
-  netCode
-  netName
-  longitude
-  latitude
+  netCode: string
+  netName: string
+  address: string
+  longitude: string
+  latitude: string
 }
 
 export interface Cabinet {
