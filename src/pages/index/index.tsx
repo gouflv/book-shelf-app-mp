@@ -7,7 +7,6 @@ import { onBorrowConfirm, useCabinetBooks } from './store'
 import AppStore from '../../store/app'
 import { Cabinet, CabinetBook } from '../../typing'
 import { observer } from '@tarojs/mobx'
-import { hideLoading, POST, showLoading } from '../../utils'
 
 const Index: Taro.FC = () => {
   const { scanCabinet, setScanCabinet } = useContext(AppStore)

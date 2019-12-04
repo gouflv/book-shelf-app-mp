@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useDidShow, useEffect, useState } from '@tarojs/taro'
+import Taro, { useDidShow, useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import OrderItem from './OrderItem'
@@ -8,7 +8,7 @@ import { usePagination } from '../../store/usePagaination'
 const Page: Taro.FC = () => {
   const [tab, setTab] = useState<1 | 2 | 3 | 4>(1)
 
-  const { items, fetchNext, fetchStart, isFinish, isEmpty, loading } = usePagination({
+  const { items, fetchStart, isFinish, isEmpty, loading } = usePagination({
     url: 'account/getOrderPageList'
   })
 
