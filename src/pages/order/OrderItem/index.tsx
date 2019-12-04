@@ -53,6 +53,9 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
   )
 
   const { data } = props
+  if (!data) {
+    return <View />
+  }
   return (
     <View className='order-item order-item--shrink'>
       <View className='order-item__hd'>

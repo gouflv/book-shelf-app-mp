@@ -5,10 +5,10 @@ import { showToast } from '../../utils'
 import AppStore from '../../store/app'
 
 const Intro: Taro.FC = () => {
-  const { fetchClosestSite } = useContext(AppStore)
+  const { fetchSites } = useContext(AppStore)
 
   useEffect(() => {
-    fetchClosestSite()
+    fetchSites()
   }, [])
 
   function openSiteMap() {

@@ -37,6 +37,13 @@ export interface User {
   //#endregion
 }
 
+export interface Site {
+  netCode
+  netName
+  longitude
+  latitude
+}
+
 export interface Cabinet {
   eqId: string
   eqName: string

@@ -1,7 +1,7 @@
 import Taro, { createContext } from '@tarojs/taro'
 import { action, computed, observable } from 'mobx'
 import { hideLoading, POST, showLoading, showToast } from '../utils'
-import { User } from '../typing'
+import { Site, User } from '../typing'
 import RouterInfo = Taro.RouterInfo
 
 interface LocationParam {
@@ -77,9 +77,9 @@ class AppStore {
 
   @observable location: LocationParam | null = null
 
-  @observable siteList = []
-  @observable currentSite = null
-  @observable previewSite = null
+  @observable siteList: Site[] = []
+  @observable currentSite: Site
+  @observable previewSite: Site
 
   @action.bound
   async getUserLocation() {
@@ -95,7 +95,7 @@ class AppStore {
   }
 
   @action.bound
-  async fetchClosestSite() {
+  async fetchSites() {
     await this.getUserLocation()
     const data = await POST('book/networkAllList', {
       data: {
