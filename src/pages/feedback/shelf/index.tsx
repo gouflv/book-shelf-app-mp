@@ -42,7 +42,7 @@ const Page: Taro.FC = () => {
   return (
     <View className='page--gray'>
       <View className='banner'>
-        <Image src={require('../../../assets/details_icon_open@3x.png')} mode='aspectFit' className='icon' />
+        <Image src={require('../../../assets/details_icon_open@2x.png')} mode='aspectFit' className='icon' />
         <View className='title'>开柜异常</View>
       </View>
 
@@ -70,7 +70,7 @@ const Page: Taro.FC = () => {
                 <View className='cell__ft'>
                 </View>
                 <View className='cell__link'>
-                  <Image src={require('../../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                  <Image src={require('../../../assets/list_btn_more@2x.png')} mode='aspectFit' />
                 </View>
               </View>
             </Picker>
@@ -96,7 +96,7 @@ const Page: Taro.FC = () => {
                 <View className='cell__ft'>
                 </View>
                 <View className='cell__link'>
-                  <Image src={require('../../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                  <Image src={require('../../../assets/list_btn_more@2x.png')} mode='aspectFit' />
                 </View>
               </View>
             </Picker>

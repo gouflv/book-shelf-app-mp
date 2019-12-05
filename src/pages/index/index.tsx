@@ -36,7 +36,7 @@ const Index: Taro.FC = () => {
     <View className='page-index'>
       <View className='deposit-tip'>
         <View className='content'>
-          <Image src={require('../../assets/home_icon_prompt@3x.png')} mode='aspectFit' className='icon' />
+          <Image src={require('../../assets/home_icon_prompt@2x.png')} mode='aspectFit' className='icon' />
           借书请先缴纳押金
         </View>
         <Button size='mini' className='btn-primary'>缴纳押金</Button>

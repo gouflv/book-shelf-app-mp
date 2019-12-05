@@ -31,7 +31,7 @@ const Page: Taro.FC = () => {
       {tab === 1 && (
         <View className='t-card-list'>
           <View className='t-card'>
-            <Image src={require('../../assets/car_bg_use@3x.png')} mode='aspectFit' className='t-card__bg' />
+            <Image src={require('../../assets/car_bg_use@2x.png')} mode='aspectFit' className='t-card__bg' />
             <View className='t-card__wrapper'>
               <View className='t-card__bd'>
                 <View className='label'>
@@ -45,7 +45,7 @@ const Page: Taro.FC = () => {
             </View>
           </View>
           <View className='t-card'>
-            <Image src={require('../../assets/car_bg_use@3x.png')} mode='aspectFit' className='t-card__bg' />
+            <Image src={require('../../assets/car_bg_use@2x.png')} mode='aspectFit' className='t-card__bg' />
             <View className='t-card__wrapper'>
               <View className='t-card__bd'>
                 <View className='label'>
@@ -61,7 +61,7 @@ const Page: Taro.FC = () => {
       {tab === 2 && (
         <View className='t-card-list'>
           <View className='t-card'>
-            <Image src={require('../../assets/car_bg_expired@3x.png')} mode='aspectFit' className='t-card__bg' />
+            <Image src={require('../../assets/car_bg_expired@2x.png')} mode='aspectFit' className='t-card__bg' />
             <View className='t-card__wrapper'>
               <View className='t-card__bd'>
                 <View className='label gray'>

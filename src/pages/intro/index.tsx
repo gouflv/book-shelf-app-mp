@@ -31,7 +31,7 @@ const Intro: Taro.FC = () => {
       <View className='card'>
         <View className='site-info'>
           <View className='site-info__hd'>
-            <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' className='icon' />
+            <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
           </View>
           <View className='site-info__bd'>
             <View className='name'>金山小金星幼儿园</View>
@@ -57,7 +57,7 @@ const Intro: Taro.FC = () => {
       </View>
 
       <View className='scan-btn'>
-        <Image src={require('../../assets/home_btn_scanning@3x.png')} mode='aspectFit' className='icon' onClick={onScanClick} />
+        <Image src={require('../../assets/home_btn_scanning@2x.png')} mode='aspectFit' className='icon' onClick={onScanClick} />
       </View>
     </View>
   )

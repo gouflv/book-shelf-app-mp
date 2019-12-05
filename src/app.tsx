@@ -57,9 +57,9 @@ class App extends Component {
     },
     tabBar: {
       list: [
-        { text: '借书', pagePath: 'pages/index/introGuard', iconPath: 'assets/tab_books_normal@3x.png', selectedIconPath: 'assets/tab_books_selected@3x.png' },
-        { text: '钱包', pagePath: 'pages/wallet/index', iconPath: 'assets/tab_wallet_normal@3x.png', selectedIconPath: 'assets/tab_wallet_selected@3x.png' },
-        { text: '我的', pagePath: 'pages/user/index', iconPath: 'assets/tab_me_normal@3x.png', selectedIconPath: 'assets/tab_me_selected@3x.png' },
+        { text: '借书', pagePath: 'pages/index/introGuard', iconPath: 'assets/tab_books_normal@2x.png', selectedIconPath: 'assets/tab_books_selected@2x.png' },
+        { text: '钱包', pagePath: 'pages/wallet/index', iconPath: 'assets/tab_wallet_normal@2x.png', selectedIconPath: 'assets/tab_wallet_selected@2x.png' },
+        { text: '我的', pagePath: 'pages/user/index', iconPath: 'assets/tab_me_normal@2x.png', selectedIconPath: 'assets/tab_me_selected@2x.png' },
       ],
       color: '#929592',
       selectedColor: '#F1B400'

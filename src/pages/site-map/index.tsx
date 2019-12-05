@@ -37,8 +37,8 @@ const SiteMap: Taro.FC = () => {
             longitude: parseFloat(s.longitude),
             latitude: parseFloat(s.latitude),
             iconPath: active ?
-              require('../../assets/navigation_position_selected@3x.png') :
-              require('../../assets/navigation_position_normal@3x.png'),
+              require('../../assets/navigation_position_selected@2x.png') :
+              require('../../assets/navigation_position_normal@2x.png'),
             width: 30,
             height: 30,
             callout: {
@@ -118,7 +118,7 @@ const SiteMap: Taro.FC = () => {
           <View className='card card--shadow site-info-wrapper'>
             <View className='site-info'>
               <View className='site-info__hd'>
-                <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' className='icon' />
+                <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
               </View>
               <View className='site-info__bd'>
                 <View className='name'>金山小金星幼儿园</View>
@@ -129,7 +129,7 @@ const SiteMap: Taro.FC = () => {
             </View>
             <View className='site-info-footer'>
               <Button className='btn btn-primary' size='mini' onClick={openNavigation}>
-                <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
+                <Image src={require('../../assets/navigation_icon@2x.png')} mode='aspectFit' className='icon' />
                 导航
               </Button>
               <Button className='btn btn-primary' size='mini' onClick={openSiteDetail}>

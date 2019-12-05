@@ -16,9 +16,9 @@ const Comments: Taro.FC = () => {
               <View className='date'>2019-11-11</View>
 
               <View className='rate'>
-                <Image src={require('../../../assets/evaluate_icon_star@3x.png')} mode='aspectFit' />
-                <Image src={require('../../../assets/evaluate_icon_star@3x.png')} mode='aspectFit' />
-                <Image src={require('../../../assets/evaluate_icon_star@3x.png')} mode='aspectFit' />
+                <Image src={require('../../../assets/evaluate_icon_star@2x.png')} mode='aspectFit' />
+                <Image src={require('../../../assets/evaluate_icon_star@2x.png')} mode='aspectFit' />
+                <Image src={require('../../../assets/evaluate_icon_star@2x.png')} mode='aspectFit' />
               </View>
             </View>
             <View className='text'>

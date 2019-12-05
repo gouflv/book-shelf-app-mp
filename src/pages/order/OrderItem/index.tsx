@@ -48,7 +48,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
   // eslint-disable-next-line react/no-multi-comp
   const renderBuyFlag = () => (
     <View className='flag-buy'>
-      <Image src={require('../../../assets/order_icon_hasbought@3x.png')} className='icon' />
+      <Image src={require('../../../assets/order_icon_hasbought@2x.png')} className='icon' />
     </View>
   )
 
@@ -75,7 +75,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
         <View className='content'>
           <View className='title'>{data.goodsNames || data.booksName}</View>
           <View className='desc'>
-            <Image src={require('../../../assets/order_icon_borrowcard@3x.png')} mode='aspectFit' className='icon-card-1' />
+            <Image src={require('../../../assets/order_icon_borrowcard@2x.png')} mode='aspectFit' className='icon-card-1' />
             到期时间:
             2019-12-12
           </View>

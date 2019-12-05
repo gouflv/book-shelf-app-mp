@@ -22,7 +22,7 @@ const Page: Taro.FC = () => {
   return (
     <View>
       <View className='banner'>
-        <Image src={require('../../assets/invitefriends_bg@3x.png')} mode='aspectFit' className='bg' />
+        <Image src={require('../../assets/invitefriends_bg@2x.png')} mode='aspectFit' className='bg' />
         <View className='content'>
           <View className='title'>邀请新用户借书，各得五张免费借书卡</View>
           <View className='desc gray'>若你的借阅卡在有效期内，则获得5天延期</View>

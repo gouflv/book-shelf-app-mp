@@ -49,7 +49,7 @@ const Index: Taro.FC = () => {
       <View className='footer'>
         <View className='site-info'>
           <View className='site-info__hd'>
-            <Image src={require('../../assets/navigation_icon_position@3x.png')} mode='aspectFit' className='icon' />
+            <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
           </View>
           <View className='site-info__bd'>
             <View className='name'>金山小金星幼儿园</View>
@@ -57,7 +57,7 @@ const Index: Taro.FC = () => {
               <View className='left'>距离你250m</View>
               <View className='right'>
                 <Button className='btn btn-primary' size='mini' onClick={openNavigation}>
-                  <Image src={require('../../assets/navigation_icon@3x.png')} mode='aspectFit' className='icon' />
+                  <Image src={require('../../assets/navigation_icon@2x.png')} mode='aspectFit' className='icon' />
                   导航
                 </Button>
               </View>

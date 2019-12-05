@@ -23,7 +23,7 @@ const Page: Taro.FC = () => {
   return (
     <View className='page page--gray'>
       <View className='page-banner'>
-        <Image src={require('../../assets/deposit_bg@3x.png')} mode='aspectFill' className='bg' />
+        <Image src={require('../../assets/deposit_bg@2x.png')} mode='aspectFill' className='bg' />
         <View className='content'>
           <View className='top'>押金</View>
           <View className='money red'>
@@ -77,7 +77,7 @@ const Page: Taro.FC = () => {
               </View>
               <View className='cell-ft' />
               <View className='cell__link'>
-                <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
               </View>
             </View>
           </View>
@@ -90,7 +90,7 @@ const Page: Taro.FC = () => {
       >
         <AtModalContent>
           <View className='title'>是否确认退还押金？</View>
-          <Image src={require('../../assets/deposit_icon_sad@3x.png')} mode='aspectFit' className='img' />
+          <Image src={require('../../assets/deposit_icon_sad@2x.png')} mode='aspectFit' className='img' />
           <View className='content red'>再给宝宝多看两本书吧</View>
         </AtModalContent>
         <AtModalAction>

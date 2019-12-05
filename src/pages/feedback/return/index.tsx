@@ -29,7 +29,7 @@ const Page: Taro.FC = () => {
   return (
     <View className='page--gray'>
       <View className='banner'>
-        <Image src={require('../../../assets/details_icon_failed@3x.png')} mode='aspectFit' className='icon' />
+        <Image src={require('../../../assets/details_icon_failed@2x.png')} mode='aspectFit' className='icon' />
         <View className='title'>还书失败</View>
       </View>
 
@@ -52,7 +52,7 @@ const Page: Taro.FC = () => {
                   {currentOrder ? currentOrder.name : ''}
                 </View>
                 <View className='cell__link'>
-                  <Image src={require('../../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                  <Image src={require('../../../assets/list_btn_more@2x.png')} mode='aspectFit' />
                 </View>
               </View>
             </Picker>
@@ -71,7 +71,7 @@ const Page: Taro.FC = () => {
                   {currentDate}
                 </View>
                 <View className='cell__link'>
-                  <Image src={require('../../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                  <Image src={require('../../../assets/list_btn_more@2x.png')} mode='aspectFit' />
                 </View>
               </View>
             </Picker>

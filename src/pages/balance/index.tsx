@@ -6,7 +6,7 @@ const Page: Taro.FC = () => {
   return (
     <View className='page page--gray'>
       <View className='page-banner'>
-        <Image src={require('../../assets/balance_bg@3x.png')} mode='aspectFill' className='bg' />
+        <Image src={require('../../assets/balance_bg@2x.png')} mode='aspectFill' className='bg' />
         <View className='content'>
           <View className='top'>余额</View>
           <View className='money red'>

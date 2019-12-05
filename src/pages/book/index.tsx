@@ -55,7 +55,7 @@ const BookDetail: Taro.FC = () => {
       <View className='page-section comments'>
         <View className='header'>
           <View className='title'>
-            <Image src={require('../../assets/detail_icon_comment@3x.png')} mode='aspectFit' className='icon' />
+            <Image src={require('../../assets/detail_icon_comment@2x.png')} mode='aspectFit' className='icon' />
             评价
             <View className='count'>(15)</View>
           </View>

@@ -21,7 +21,7 @@ export default class ModalWithClose extends Component<MWCProps> {
       <AtModal {...modalProps}>
         <View className='modal-container'>
           <View className='modal-close' onClick={this.props.onCancel}>
-            <Image src={require('../../assets/popup_btn_close@3x.png')} className='icon' mode='aspectFill' />
+            <Image src={require('../../assets/popup_btn_close@2x.png')} className='icon' mode='aspectFill' />
           </View>
           {this.props.children}
         </View>

@@ -20,7 +20,7 @@ const Page: Taro.FC = () => {
 
           <View className='user-card'>
             <View className='bg'>
-              <Image src={require('../../assets/wallet_bg_car@3x.png')} mode='aspectFit' />
+              <Image src={require('../../assets/wallet_bg_car@2x.png')} mode='aspectFit' />
             </View>
             <View className='user'>
               <View className='user__hd'>
@@ -74,7 +74,7 @@ const Page: Taro.FC = () => {
                 <View className='red'>{user.balance}</View>
               </View>
               <View className='cell__link'>
-                <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
               </View>
             </View>
 
@@ -86,7 +86,7 @@ const Page: Taro.FC = () => {
                 <View className='red'>{user.lendingCardTotal}张可用</View>
               </View>
               <View className='cell__link'>
-                <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
               </View>
             </View>
 
@@ -98,7 +98,7 @@ const Page: Taro.FC = () => {
                 <View className='red'>{user.depositTotal}</View>
               </View>
               <View className='cell__link'>
-                <Image src={require('../../assets/list_btn_more@3x.png')} mode='aspectFit' />
+                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
               </View>
             </View>
 

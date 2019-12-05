@@ -11,7 +11,7 @@ const Page: Taro.FC = () => {
   return (
     <View className='page page--gray'>
       <View className='page-banner'>
-        <Image src={require('../../assets/pay_icon@3x.png')} mode='aspectFit' />
+        <Image src={require('../../assets/pay_icon@2x.png')} mode='aspectFit' />
         <View className='money red'>
           <Text className='money-unit'>¥</Text>
           199

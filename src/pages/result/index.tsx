@@ -14,7 +14,7 @@ const Page: Taro.FC = () => {
     <View className='page'>
       {type === 'pay' && (
         <View className='page-section'>
-          <Image src={require('../../assets/complete_icon@3x.png')} mode='aspectFit' className='icon' />
+          <Image src={require('../../assets/complete_icon@2x.png')} mode='aspectFit' className='icon' />
           <View className='money'>
             <Text className='money-unit'>¥</Text>
             19.9
@@ -32,7 +32,7 @@ const Page: Taro.FC = () => {
       )}
       {type === 'deposit' && (
         <View className='page-section'>
-          <Image src={require('../../assets/complete_icon@3x.png')} mode='aspectFit' className='icon' />
+          <Image src={require('../../assets/complete_icon@2x.png')} mode='aspectFit' className='icon' />
           <View className='money'>
             <Text className='money-unit'>¥</Text>
             19.9
@@ -50,7 +50,7 @@ const Page: Taro.FC = () => {
       )}
       {type === 'getBackDeposit' && (
         <View className='page-section'>
-          <Image src={require('../../assets/complete_icon@3x.png')} mode='aspectFit' className='icon' />
+          <Image src={require('../../assets/complete_icon@2x.png')} mode='aspectFit' className='icon' />
           <View className='money'>
             <Text className='money-unit'>¥</Text>
             19.9
@@ -69,7 +69,7 @@ const Page: Taro.FC = () => {
       )}
       {type === 'buyBook' && (
         <View className='page-section'>
-          <Image src={require('../../assets/complete_icon@3x.png')} mode='aspectFit' className='icon' />
+          <Image src={require('../../assets/complete_icon@2x.png')} mode='aspectFit' className='icon' />
           <View className='money'>
             <Text className='money-unit'>¥</Text>
             19.9
@@ -88,7 +88,7 @@ const Page: Taro.FC = () => {
       )}
       {type === 'payOverdue' && (
         <View className='page-section'>
-          <Image src={require('../../assets/complete_icon@3x.png')} mode='aspectFit' className='icon' />
+          <Image src={require('../../assets/complete_icon@2x.png')} mode='aspectFit' className='icon' />
           <View className='money'>
             <Text className='money-unit'>¥</Text>
             19.9

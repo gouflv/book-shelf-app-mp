@@ -13,7 +13,7 @@ const Page: Taro.FC = () => {
   return (
     <View className='page'>
       <View className='page-section'>
-        <Image src={require('../../assets/login@3x.png')} mode='aspectFit' className='top' />
+        <Image src={require('../../assets/login@2x.png')} mode='aspectFit' className='top' />
 
         <View>
           <Button
@@ -21,7 +21,7 @@ const Page: Taro.FC = () => {
             openType='getPhoneNumber'
             onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
           >
-            <Image src={require('../../assets/icon-wechat@3x.png')} mode='aspectFit' />
+            <Image src={require('../../assets/icon-wechat@2x.png')} mode='aspectFit' />
             微信授权快捷登录
           </Button>
         </View>

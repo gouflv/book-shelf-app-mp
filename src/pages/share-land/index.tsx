@@ -17,7 +17,7 @@ const Page: Taro.FC = () => {
       </View>
 
       <View className='ticket-container'>
-        <Image src={require('../../assets/invite_bg_rule@3x.png')} mode='aspectFit' className='bg' />
+        <Image src={require('../../assets/invite_bg_rule@2x.png')} mode='aspectFit' className='bg' />
         <View className='ticket'>
           <View className='ticket__hd'>
             5<Text className='unit'>张</Text>
@@ -47,7 +47,7 @@ const Page: Taro.FC = () => {
         </View>
       </View>
       <View className='result-container'>
-        <Image src={require('../../assets/invite_bg_received@3x.png')} mode='aspectFit' className='bg' />
+        <Image src={require('../../assets/invite_bg_received@2x.png')} mode='aspectFit' className='bg' />
         <View className='content'>
           <View className='title'>恭喜！领取成功！</View>
           <View className='desc gray'>
@@ -64,7 +64,7 @@ const Page: Taro.FC = () => {
   return (
     <View className='page'>
       {showResult ? renderResult() : renderIndex()}
-      <Image src={require('../../assets/invite_bg@3x.png')} mode='aspectFit' className='page-bg' />
+      <Image src={require('../../assets/invite_bg@2x.png')} mode='aspectFit' className='page-bg' />
     </View>
   )
 }
