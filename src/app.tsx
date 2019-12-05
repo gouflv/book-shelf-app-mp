@@ -16,8 +16,8 @@ class App extends Component {
   config: Config = {
     pages: [
 
-      'pages/index/introGuard',
       'pages/wallet/index',
+      'pages/index/introGuard',
       'pages/user/index',
       'pages/login/index',
 
@@ -52,7 +52,7 @@ class App extends Component {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: '葫芦弟弟借书馆',
       navigationBarTextStyle: 'black'
     },
     tabBar: {

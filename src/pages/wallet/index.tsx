@@ -5,10 +5,10 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 
 const Page: Taro.FC = () => {
-  const { user } = useContext(AppStore)
+  const { user, wallet } = useContext(AppStore)
 
 
-  if (!user) {
+  if (!user || !wallet) {
     return <View />
   }
   return (
@@ -29,7 +29,7 @@ const Page: Taro.FC = () => {
                 </View>
                 <View className='content'>
                   <View className='name'>{user.nickName}</View>
-                  <View className='desc'>{user.effectiveTimes}到期</View>
+                  <View className='desc'>{wallet.effectiveTimes}到期</View>
                 </View>
               </View>
               <View className='user__ft'>
@@ -71,7 +71,7 @@ const Page: Taro.FC = () => {
                 <View className='label'>余额</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>{user.balance}</View>
+                <View className='red'>{wallet.balance}</View>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
@@ -83,7 +83,7 @@ const Page: Taro.FC = () => {
                 <View className='label'>借阅次卡</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>{user.lendingCardTotal}张可用</View>
+                <View className='red'>{wallet.lendingCardTotal}张可用</View>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
@@ -95,7 +95,7 @@ const Page: Taro.FC = () => {
                 <View className='label'>押金</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>{user.depositTotal}</View>
+                <View className='red'>{wallet.depositTotal}</View>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />

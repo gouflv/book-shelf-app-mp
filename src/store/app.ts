@@ -1,7 +1,9 @@
 import Taro, { createContext } from '@tarojs/taro'
-import { action, computed, observable } from 'mobx'
+import { action, computed, observable, toJS } from 'mobx'
 import { hideLoading, POST, showLoading, showToast } from '../utils'
-import { Cabinet, Site, User } from '../typing'
+import { Cabinet, Site, User, Wallet } from '../typing'
+import _pick from 'lodash.pick'
+
 import RouterInfo = Taro.RouterInfo
 
 interface LocationParam {
@@ -35,6 +37,7 @@ class AppStore {
   token = 'eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJOMzU1MTM5NDc1MzQ1MDE4ODgwIiwiaWF0IjoxNTc0OTMzNTEwLCJleHAiOjE1NzU1MzgzMTB9.FAkNoiHiNV78RqBnB9xcgg1uLSLU2oKCW5OOQYnMF5m6qYN8rIfwTiz03nqeazgkkwm7DnK54DIqvgfgYe1tbPZSV6rI6oJiu4vP_yC9yoWFnJawzayxAASJlFy22jvqDKyOrrT7Szydd8F5jCI-4yJH07R6er3IXmCglp_Lo1GfnqquZWomvA2yOrYv2OUh6-bT-33Q9bhCPO3wuzSYBL6L2Da9fCoBJ_PMyGZbkjblS6961QwnPJOQdjLEdlcj4A7IP2hlh6hNNsRUWpiyrnX4n75fKXLaYtW_UQ7h2DOMXrdRY6K9n-b7Nin0onLFIDyOc9q2KSsc-cehdcE4nw'
 
   @observable user: User | null = null
+  @observable wallet: Wallet | null = null
 
   @computed get isUserBoundSite() {
     return true //!!this.scanCabinet
@@ -70,6 +73,21 @@ class AppStore {
   @action.bound
   async fetchUserInfo() {
     this.user = await POST('account/myAccount')
+    const wallet: Wallet = await POST('wallet/myWallet')
+    const walletExt: Wallet = await POST('wallet/myMemberAssetsParam')
+    this.wallet = {
+      ...wallet,
+      ..._pick(walletExt, [
+        'balance',
+        'depositTotal',
+        'depositBalance',
+        'depositOccupy',
+        'freeTotal',
+        'lendingcardTotal'
+      ])
+    }
+    console.debug(toJS(this.user))
+    console.debug(toJS(this.wallet))
   }
 
   //#endregion

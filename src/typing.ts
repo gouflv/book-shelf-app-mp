@@ -4,23 +4,6 @@ export interface User {
   unionId: string
   registerDate: string
 
-  //#region wallet
-
-  // 余额
-  balance: string
-  //押金
-  depositTotal: string
-  //卡有效期
-  effectiveTimes: string
-  lastConsumptionDate: string
-  lendingCardTotal: string
-
-  memberId: string
-  memberCode: string
-  memberSource: string
-
-  //#endregion
-
   //#region profile
 
   nickName: string
@@ -93,4 +76,23 @@ export interface Order {
   booksImg: string
   createTime: string
   status: OrderStatus
+}
+
+export interface Wallet {
+  // 余额
+  balance: string
+
+  //押金总额
+  depositTotal: string
+  //押金余额
+  depositBalance: string
+  //占用押金
+  depositOccupy: string
+
+  //卡有效期
+  effectiveTimes: string
+  //借阅卡数
+  lendingCardTotal: string
+  //免费卡数
+  freeTotal: string
 }
