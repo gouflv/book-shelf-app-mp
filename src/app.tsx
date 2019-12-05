@@ -47,6 +47,7 @@ class App extends Component {
       //6
       'pages/share/index',
       'pages/share-land/index',
+      'pages/result/index',
     ],
     window: {
       backgroundTextStyle: 'light',

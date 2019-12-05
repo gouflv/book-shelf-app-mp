@@ -3,6 +3,11 @@ import Taro from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
 
 const Page: Taro.FC = () => {
+
+  async function onPaymentClick() {
+    Taro.navigateTo({ url: '/pages/result/index?type=payOverdue' })
+  }
+
   return (
     <View className='page-section page--gray'>
 
@@ -80,7 +85,7 @@ const Page: Taro.FC = () => {
             </Text>
           </View>
         </View>
-        <Button className='btn btn-primary'>确认支付</Button>
+        <Button className='btn btn-primary' onClick={onPaymentClick}>确认支付</Button>
       </View>
     </View>
   )

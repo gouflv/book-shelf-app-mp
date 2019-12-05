@@ -3,6 +3,11 @@ import Taro from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 
 const Page: Taro.FC = () => {
+
+  async function onPaymentClick() {
+    Taro.navigateTo({ url: '/pages/result/index?type=deposit' })
+  }
+
   return (
     <View className='page page--gray'>
       <View className='page-banner'>
@@ -56,7 +61,7 @@ const Page: Taro.FC = () => {
         <View className='buy-rules-content center'>
           确认购买即视为已同意<Text className='orange'>《借阅卡卡权益及服务规则》</Text>
         </View>
-        <Button className='btn-block btn-primary'>
+        <Button className='btn-block btn-primary' onClick={onPaymentClick}>
           确认支付199元押金
         </Button>
       </View>

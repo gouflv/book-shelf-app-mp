@@ -6,6 +6,10 @@ import SCheckbox from '../../components/SCheckbox'
 const Page: Taro.FC = () => {
   const [currentChecked, setCurrentChecked] = useState<number>(0)
 
+  async function onPaymentClick() {
+    Taro.navigateTo({ url: '/pages/result/index?type=pay' })
+  }
+
   return (
     <View className='page-buy-card'>
 
@@ -104,7 +108,7 @@ const Page: Taro.FC = () => {
           </View>
           <View className='desc'>账户余额可抵扣: 9元</View>
         </View>
-        <Button className='btn btn-primary'>购买</Button>
+        <Button className='btn btn-primary' onClick={onPaymentClick}>购买</Button>
       </View>
     </View>
   )

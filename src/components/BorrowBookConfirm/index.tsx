@@ -11,6 +11,9 @@ const BorrowBookConfirm: Taro.FC<{
   onConfirm: () => void
   onCancel: () => void
 }> = props => {
+  if (!props.book) {
+    return <View />
+  }
   return (
     <ModalWithClose isOpened={props.visible} onCancel={() => props.onCancel()}>
       <View className='borrow-book-confirm'>

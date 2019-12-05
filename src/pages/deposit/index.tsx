@@ -10,8 +10,14 @@ const Page: Taro.FC = () => {
     setConfirmVisible(true)
   }
 
-  function submitGetBack() {
+  function onGetBackConfirm() {
     // TODO
+    setConfirmVisible(true)
+    Taro.navigateTo({ url: '/pages/result/index?type=getBackDeposit' })
+  }
+
+  function onDepositPaymentClick() {
+    Taro.navigateTo({ url: '/pages/buy-deposit/index' })
   }
 
   return (
@@ -24,7 +30,7 @@ const Page: Taro.FC = () => {
             <Text className='money-unit'>¥</Text>
             199
           </View>
-          <Button className='btn btn--round' size='mini'>补缴押金</Button>
+          <Button className='btn btn--round' size='mini' onClick={onDepositPaymentClick}>补缴押金</Button>
         </View>
       </View>
 
@@ -88,7 +94,7 @@ const Page: Taro.FC = () => {
           <View className='content red'>再给宝宝多看两本书吧</View>
         </AtModalContent>
         <AtModalAction>
-          <Button className='gray' onClick={submitGetBack}>想好了，退押金</Button>
+          <Button className='gray' onClick={onGetBackConfirm}>想好了，退押金</Button>
           <Button className='orange' onClick={() => setConfirmVisible(false)}>不退了，留下</Button>
         </AtModalAction>
       </AtModal>
