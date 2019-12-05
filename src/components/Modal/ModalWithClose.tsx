@@ -1,5 +1,5 @@
 import './ModalWithClose.scss'
-import _omit from 'lodash/omit'
+import _omit from 'lodash.omit'
 import Taro, { Component } from '@tarojs/taro'
 import { AtModal } from 'taro-ui'
 import { AtModalProps } from 'taro-ui/@types/modal'

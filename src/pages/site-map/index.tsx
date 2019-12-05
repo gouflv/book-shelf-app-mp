@@ -1,5 +1,5 @@
 import './index.scss'
-import _find from 'lodash/find'
+import _find from 'lodash.find'
 import { observer } from '@tarojs/mobx'
 import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Map, View } from '@tarojs/components'
