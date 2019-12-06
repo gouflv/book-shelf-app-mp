@@ -3,7 +3,7 @@ import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, ScrollView, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
-import { onBorrowConfirm, useCabinetBooks } from './store'
+import { checkBorrowAllow, onBorrowConfirm, useCabinetBooks } from './store'
 import AppStore from '../../store/app'
 import { Cabinet, CabinetBook } from '../../typing'
 import { observer } from '@tarojs/mobx'
@@ -27,7 +27,24 @@ const Index: Taro.FC = () => {
   // borrow
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<CabinetBook>()
-  function onBorrowClick(book) {
+  /*
+  * 1 需绑定手机号:确保借阅账户安全
+  * 2 每次最多只能借阅2本书:你还有未归还的书
+  * 3 你还有逾期费用未支付:请缴纳费用
+  * 4 缴纳押金:你还未交纳押金
+  * 5 押金不足:请补纳押金
+  * 6 借阅卡:你还未购买借阅卡
+  * */
+  async function onBorrowClick(book) {
+    const { error, title, content } = await checkBorrowAllow()
+    if (error) {
+      //TODO
+      Taro.showModal({
+        title,
+        content
+      })
+      return
+    }
     setBorrowItem(book)
     setBorrowConfirmVisible(true)
   }

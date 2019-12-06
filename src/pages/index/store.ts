@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { useState, useCallback } from '@tarojs/taro'
+import { useCallback, useState } from '@tarojs/taro'
 import { hideLoading, POST, showLoading } from '../../utils'
 import { CabinetBook } from '../../typing'
 
@@ -15,6 +15,19 @@ export const useCabinetBooks = () => {
     setItems(data)
   }, [])
   return { cabinetBookItems: items, fetchCabinetBook: fetch }
+}
+
+export const checkBorrowAllow = async () => {
+  try {
+    showLoading()
+    await POST('base/judgeBorrowing')
+    return { error: false }
+  } catch (e) {
+    const [title, content] = (e.message || '').split(':')
+    return { error: e.message, title, content }
+  } finally {
+    hideLoading()
+  }
 }
 
 export const onBorrowConfirm = async (borrowItem: CabinetBook) => {
