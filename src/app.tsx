@@ -6,7 +6,7 @@ import Index from './pages/index'
 import { store as app } from './store/app'
 
 onError(error => {
-  console.log('mobx global error listener:', error)
+  console.log('mobx error', error)
 })
 
 const store = {}
@@ -16,10 +16,11 @@ class App extends Component {
   config: Config = {
     pages: [
 
+      'pages/blank/index',
+      'pages/login/index',
       'pages/index/introGuard',
       'pages/wallet/index',
       'pages/user/index',
-      'pages/login/index',
 
       //1
       'pages/site-map/index', //网点

@@ -3,19 +3,19 @@ import Taro from '@tarojs/taro'
 
 export * from './ajax'
 
-export async function showLoading(props?: Partial<Taro.showLoading.Param>) {
-  return Taro.showLoading({
+export function showLoading(props?: Partial<Taro.showLoading.Param>) {
+  Taro.showLoading({
     mask: true,
     title: '',
     ...props
   })
 }
 
-export async function hideLoading() {
-  return Taro.hideLoading()
+export function hideLoading() {
+  Taro.hideLoading()
 }
 
-export async function showToast(props: Taro.showToast.Param) {
+export function showToast(props: Taro.showToast.Param) {
   setTimeout(() => {
     Taro.showToast({
       icon: 'none',

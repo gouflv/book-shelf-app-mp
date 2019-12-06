@@ -26,18 +26,27 @@ export const ajax = (url, options?: AjaxOptions) =>
       const { data, statusCode } = res
       if (statusCode === 401) {
         showToast({ title: data.message || '服务繁忙, 请稍后再试' })
-        reject({ handler: true, ...data })
+        reject({ handler: true })
       }
       if (statusCode === 500) {
         showToast({ title: '服务繁忙, 请稍后再试' })
         reject({ handler: true })
+      } else if (data.code !== 0) {
+        reject({ ...data, handler: false })
+      } else {
+        resolve(data.data)
       }
-      resolve(data.data)
     } catch (e) {
       showToast({ title: '网络开小差了' })
-      reject(e)
+      reject({ ...e, handler: true })
     }
   })
 
 export const GET = async (url, options?: AjaxOptions) => ajax(url, options)
 export const POST = async (url, options?: AjaxOptions) => ajax(url, { ...options, method: 'POST' })
+
+export const defaultErrorHandler = e => {
+  console.error(e)
+  if (e.handler) return
+  showToast({ title: e.message })
+}

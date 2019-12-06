@@ -2,7 +2,6 @@ import './index.scss'
 import Taro, { useContext } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
-import { hideLoading, showLoading } from '../../utils'
 
 const Page: Taro.FC = () => {
 
@@ -13,12 +12,7 @@ const Page: Taro.FC = () => {
       return
     }
     console.debug(encryptedData, iv)
-
-    showLoading()
     await loginWithPhoneData({ encryptedData, iv })
-    hideLoading()
-
-    // Taro.switchTab({ url: '/pages/index/introGuard' })
   }
 
   return (

@@ -1,6 +1,6 @@
 import Taro, { createContext } from '@tarojs/taro'
 import { action, computed, observable, toJS } from 'mobx'
-import { hideLoading, POST, showLoading, showToast } from '../utils'
+import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../utils'
 import { Cabinet, Site, User, Wallet } from '../typing'
 import _pick from 'lodash.pick'
 
@@ -12,29 +12,27 @@ interface LocationParam {
 }
 
 class AppStore {
-  @observable
-  loading = true
+  @observable loading = true
 
-  @observable
-  scene: number
-
-  @observable
-  shareTicket: string | undefined
+  @observable scene: number
+  @observable shareTicket: string | undefined
 
   init(params: RouterInfo['params']) {
     console.log('init', params)
     this.scene = params.scene as number
     this.shareTicket = params.shareTicket
 
-    if (!this.token) {
+    if (this.token) {
+      Taro.switchTab({ url: '/pages/index/introGuard' })
+    } else {
       Taro.redirectTo({ url: '/pages/login/index' })
     }
   }
 
   //#region user
 
-  @observable
-  token = Taro.getStorageSync('client_token')
+  @observable token = Taro.getStorageSync('client_token')
+  @observable openid = null
 
   @observable user: User | null = null
   @observable wallet: Wallet | null = null
@@ -47,20 +45,33 @@ class AppStore {
 
   @action.bound
   async loginWithPhoneData({ encryptedData, iv }) {
-    this.loading = true
-    const { code, errMsg } = await Taro.login()
-    if (!code) {
-      showToast({ title: errMsg })
-      throw new Error(errMsg)
+    showLoading()
+
+    try {
+      const { code, errMsg } = await Taro.login()
+      if (!code) {
+        showToast({ title: errMsg })
+        return
+      }
+      console.debug('code', code, '\nencryptedData', encryptedData, '\niv', iv)
+      const res = await POST('base/login', {
+        data: { code, encryptedData, iv }
+      })
+      console.log(res)
+      this.saveToken(res)
+      await this.fetchUserInfo()
+      Taro.switchTab({ url: '/pages/index/introGuard' })
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
     }
-    console.log('login', code)
-    const data = await POST('base/login', {
-      data: { code, encryptedData, iv }
-    })
-    console.log(data)
-    this.loading = false
-    //TODO save token
-    return code
+  }
+
+  @action.bound
+  saveToken({ clientToken }) {
+    this.token = clientToken
+    Taro.setStorageSync('client_token', clientToken)
   }
 
   @action.bound
@@ -143,14 +154,12 @@ class AppStore {
   @action.bound
   async fetchSites() {
     await this.getUserLocation()
-    const data = await POST('book/networkAllList', {
+    this.siteList = await POST('book/networkAllList', {
       data: {
         state: 1,
         ...this.location
       }
     })
-    console.log(data)
-    this.siteList = data
   }
 
   //#endregion
