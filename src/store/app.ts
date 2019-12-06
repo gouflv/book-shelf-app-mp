@@ -25,37 +25,29 @@ class AppStore {
     console.log('init', params)
     this.scene = params.scene as number
     this.shareTicket = params.shareTicket
-  }
 
-  @computed get isBoundSite() {
-    return !!~[1011, 1012, 1013].indexOf(this.scene)
+    if (!this.token) {
+      Taro.redirectTo({ url: '/pages/login/index' })
+    }
   }
 
   //#region user
 
   @observable
-  token = 'eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJOMzU1MTM5NDc1MzQ1MDE4ODgwIiwiaWF0IjoxNTc0OTMzNTEwLCJleHAiOjE1NzU1MzgzMTB9.FAkNoiHiNV78RqBnB9xcgg1uLSLU2oKCW5OOQYnMF5m6qYN8rIfwTiz03nqeazgkkwm7DnK54DIqvgfgYe1tbPZSV6rI6oJiu4vP_yC9yoWFnJawzayxAASJlFy22jvqDKyOrrT7Szydd8F5jCI-4yJH07R6er3IXmCglp_Lo1GfnqquZWomvA2yOrYv2OUh6-bT-33Q9bhCPO3wuzSYBL6L2Da9fCoBJ_PMyGZbkjblS6961QwnPJOQdjLEdlcj4A7IP2hlh6hNNsRUWpiyrnX4n75fKXLaYtW_UQ7h2DOMXrdRY6K9n-b7Nin0onLFIDyOc9q2KSsc-cehdcE4nw'
+  token = Taro.getStorageSync('client_token')
 
   @observable user: User | null = null
   @observable wallet: Wallet | null = null
 
   @computed get isUserBoundSite() {
-    return true //!!this.scanCabinet
+    // return !!~[1011, 1012, 1013].indexOf(this.scene)
+    // return !!this.scanCabinet
+    return true
   }
 
   @action.bound
-  async login() {
-    showLoading()
-
-    // await this.wxLogin()
-    await this.fetchUserInfo()
-
-    this.loading = false
-    hideLoading()
-  }
-
-  @action.bound
-  async wxLogin() {
+  async loginWithPhoneData({ encryptedData, iv }) {
+    this.loading = true
     const { code, errMsg } = await Taro.login()
     if (!code) {
       showToast({ title: errMsg })
@@ -63,9 +55,10 @@ class AppStore {
     }
     console.log('login', code)
     const data = await POST('base/login', {
-      data: { code }
+      data: { code, encryptedData, iv }
     })
     console.log(data)
+    this.loading = false
     //TODO save token
     return code
   }

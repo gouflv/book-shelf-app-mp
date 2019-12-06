@@ -1,19 +1,30 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useContext } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
+import AppStore from '../../store/app'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: Taro.FC = () => {
 
-  function onGetPhoneNumber({ encryptedData, iv }) {
-    console.log(encryptedData, iv)
-    //TODO submit and reload user info
-    Taro.switchTab({ url: '/pages/index/introGuard' })
+  const { loginWithPhoneData } = useContext(AppStore)
+
+  async function onGetPhoneNumber({ encryptedData, iv }) {
+    if (!encryptedData) {
+      return
+    }
+    console.debug(encryptedData, iv)
+
+    showLoading()
+    await loginWithPhoneData({ encryptedData, iv })
+    hideLoading()
+
+    // Taro.switchTab({ url: '/pages/index/introGuard' })
   }
 
   return (
     <View className='page'>
       <View className='page-section'>
-        <Image src={require('../../assets/login@2x.png')} mode='aspectFit' className='top' />
+        <Image src={require('../../assets/login@3x.jpg')} mode='aspectFit' className='top' />
 
         <View>
           <Button
@@ -21,7 +32,7 @@ const Page: Taro.FC = () => {
             openType='getPhoneNumber'
             onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
           >
-            <Image src={require('../../assets/icon-wechat@2x.png')} mode='aspectFit' />
+            <Image src={require('../../assets/icon-wechat@3x.png')} mode='aspectFit' />
             微信授权快捷登录
           </Button>
         </View>

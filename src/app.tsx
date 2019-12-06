@@ -16,8 +16,8 @@ class App extends Component {
   config: Config = {
     pages: [
 
-      'pages/wallet/index',
       'pages/index/introGuard',
+      'pages/wallet/index',
       'pages/user/index',
       'pages/login/index',
 
@@ -74,7 +74,6 @@ class App extends Component {
   async componentWillMount() {
     const params = this.$router.params
     app.init(params)
-    app.login()
   }
 
   componentDidMount () {}
