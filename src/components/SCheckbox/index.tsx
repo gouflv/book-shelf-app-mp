@@ -9,7 +9,7 @@ interface SCheckboxProps {
 
 const SCheckbox: Taro.FC<SCheckboxProps> = props => {
   function onClick() {
-    props.onChange(!props.value)
+    props.onChange && props.onChange(!props.value)
   }
 
   return props.value
