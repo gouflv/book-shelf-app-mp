@@ -24,7 +24,7 @@ export const checkBorrowAllow = async () => {
     return { error: false }
   } catch (e) {
     const [title, content] = (e.message || '').split(':')
-    return { error: e.message, title, content }
+    return { error: true, code: e.code, title, content }
   } finally {
     hideLoading()
   }

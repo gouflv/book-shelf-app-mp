@@ -17,12 +17,13 @@ class AppStore {
   @observable scene: number
   @observable shareTicket: string | undefined
 
-  init(params: RouterInfo['params']) {
+  async init(params: RouterInfo['params']) {
     console.log('init', params)
     this.scene = params.scene as number
     this.shareTicket = params.shareTicket
 
     if (this.token) {
+      await this.fetchUserInfo()
       Taro.switchTab({ url: '/pages/index/introGuard' })
     } else {
       Taro.redirectTo({ url: '/pages/login/index' })

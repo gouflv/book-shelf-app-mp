@@ -27,21 +27,30 @@ const Index: Taro.FC = () => {
   // borrow
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<CabinetBook>()
-  /*
-  * 1 需绑定手机号:确保借阅账户安全
-  * 2 每次最多只能借阅2本书:你还有未归还的书
-  * 3 你还有逾期费用未支付:请缴纳费用
-  * 4 缴纳押金:你还未交纳押金
-  * 5 押金不足:请补纳押金
-  * 6 借阅卡:你还未购买借阅卡
-  * */
+  const borrowErrorConfig = {
+    1: { type: '需绑定手机号', text: '查看', page: '/pages/login/index' },
+    2: { type: '每次最多只能借阅2本书', text: '查看', page: '/pages/order/index' },
+    3: { type: '你还有逾期费用未支付', text: '去支付', page: '/pages/order/index?tab=overdue' },
+    4: { type: '缴纳押金', text: '交押金', page: '/pages/buy-deposit/index' },
+    5: { type: '押金不足', text: '补押金', page: '/pages/buy-deposit/index' },
+    6: { type: '借阅卡', text: '去购买', page: '/pages/buy-card/index' }
+  }
   async function onBorrowClick(book) {
-    const { error, title, content } = await checkBorrowAllow()
+    const { error, code, title, content } = await checkBorrowAllow()
     if (error) {
-      //TODO
+      const config = borrowErrorConfig[code]
+      if (!config) {
+        console.error('handler undefined for', code)
+        return
+      }
       Taro.showModal({
         title,
-        content
+        content,
+        confirmText: config.text,
+      }).then(({ confirm }) => {
+        if (confirm) {
+          Taro.navigateTo({ url: config.page })
+        }
       })
       return
     }
