@@ -1,12 +1,15 @@
-import Taro, { useEffect } from '@tarojs/taro'
+import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import AppStore from '../../store/app'
 
 const Page: Taro.FC = () => {
 
+  const { token, fetchUserInfo } = useContext(AppStore)
+
   useEffect(() => {
     async function redirect() {
-      if (this.token) {
-        await this.fetchUserInfo()
+      if (token) {
+        await fetchUserInfo()
         Taro.switchTab({ url: '/pages/index/introGuard' })
       } else {
         Taro.redirectTo({ url: '/pages/login/index' })

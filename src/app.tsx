@@ -15,7 +15,7 @@ class App extends Component {
 
   config: Config = {
     pages: [
-      'pages/blank/index',
+      'pages/boot/index',
       'pages/login/index',
       'pages/index/introGuard',
       'pages/wallet/index',
