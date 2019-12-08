@@ -58,8 +58,8 @@ export interface Book {
 
 // eslint-disable-next-line import/prefer-default-export
 export const enum CardType {
-  Member = '1',
-  Temp = '2'
+  TIMES = '1',
+  DATE_RANGE = '2'
 }
 
 export const enum OrderStatus {

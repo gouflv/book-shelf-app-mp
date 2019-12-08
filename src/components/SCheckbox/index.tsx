@@ -4,7 +4,7 @@ import { Image } from '@tarojs/components'
 
 interface SCheckboxProps {
   value: boolean
-  onChange: (value) => void
+  onChange?: (value) => void
 }
 
 const SCheckbox: Taro.FC<SCheckboxProps> = props => {

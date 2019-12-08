@@ -1,12 +1,50 @@
 import './index.scss'
-import Taro, { useState } from '@tarojs/taro'
-import { View, Text, RichText, Button } from '@tarojs/components'
+import Taro, { useState, useEffect, useContext } from '@tarojs/taro'
+import { Button, RichText, Text, View } from '@tarojs/components'
 import SCheckbox from '../../components/SCheckbox'
+import { POST } from '../../utils'
+import numeral from 'numeral'
+import classNames from 'classnames'
+import AppStore from '../../store/app'
+import { observer } from '@tarojs/mobx'
+
+const CARD_ID = 'cfgLcId'
 
 const Page: Taro.FC = () => {
-  const [currentChecked, setCurrentChecked] = useState<number>(0)
+  const { wallet } = useContext(AppStore)
+
+  const [currentChecked, setCurrentChecked] = useState<any>()
+
+  const [rangeItems, setRangeItems] = useState<any[]>([])
+  const [timesItems, setTimesItems] = useState<any[]>([])
+
+  async function fetch() {
+    const item2 = await POST('wallet/configLendingcardList', {
+      data: { lendingcardType: 2 }
+    })
+    const item1 = await POST('wallet/configLendingcardList', {
+      data: { lendingcardType: 1 }
+    })
+    setRangeItems(item2)
+    setTimesItems(item1)
+  }
+  useEffect(() => {
+    fetch()
+  }, [])
+
+  function onItemCheck(item) {
+    setCurrentChecked({...item})
+  }
+
+  function isChecked(item) {
+    if (!currentChecked) {
+      return false
+    }
+    return currentChecked[CARD_ID] === item[CARD_ID]
+  }
 
   async function onPaymentClick() {
+    //TODO
     Taro.navigateTo({ url: '/pages/result/index?type=pay' })
   }
 
@@ -18,46 +56,36 @@ const Page: Taro.FC = () => {
           借阅卡
           <Text className='desc'>(不限次数, 每次借2本)</Text>
         </View>
-        <View className='card card--shadow card--checked'>
-          <View className='cell'>
-            <View className='cell__hd'>
-              <SCheckbox value={currentChecked === 1} onChange={() => setCurrentChecked(1)} />
-            </View>
-            <View className='cell__bd'>
-              <View className='label bold'>
-                30
-                <Text className='label-unit'>天</Text>
+        {rangeItems.map(item => (
+          <View
+            key={item.cfgLcId}
+            className={classNames('card card--shadow', { 'card--checked': isChecked(item) })}
+            onClick={() => onItemCheck(item)}
+          >
+            <View className='cell'>
+              <View className='cell__hd'>
+                <SCheckbox value={isChecked(item)} />
               </View>
-              <View className='desc gray'>月卡, 不限次数</View>
-            </View>
-            <View className='cell__ft'>
-              <View className='money red bold'>
-                <Text className='money-unit'>¥</Text>100
+              <View className='cell__bd'>
+                <View className='label bold'>
+                  {item.days}
+                  <Text className='label-unit'>天</Text>
+                </View>
+                <View className='desc gray'>{item.lendingcardName}</View>
               </View>
-              <View className='money-desc'>每天1.2元</View>
+              <View className='cell__ft'>
+                <View className='money red bold'>
+                  <Text className='money-unit'>¥</Text>{item.lendingcardPrice}
+                </View>
+                <View className='money-desc'>
+                  每天{
+                    numeral(item.lendingcardPrice).divide(item.days || 1).format('0[.]0')
+                  }元
+                </View>
+              </View>
             </View>
           </View>
-        </View>
-        <View className='card card--shadow'>
-          <View className='cell'>
-            <View className='cell__hd'>
-              <SCheckbox value={currentChecked === 2} onChange={() => setCurrentChecked(2)} />
-            </View>
-            <View className='cell__bd'>
-              <View className='label bold'>
-                30
-                <Text className='label-unit'>天</Text>
-              </View>
-              <View className='desc gray'>月卡, 不限次数</View>
-            </View>
-            <View className='cell__ft'>
-              <View className='money red bold'>
-                <Text className='money-unit'>¥</Text>100
-              </View>
-              <View className='money-desc'>每天1.2元</View>
-            </View>
-          </View>
-        </View>
+        ))}
       </View>
 
       <View className='page-section' style={{ paddingTop: 0 }}>
@@ -65,25 +93,31 @@ const Page: Taro.FC = () => {
           次卡
           <Text className='desc'>(长期有效, 每次借2本)</Text>
         </View>
-        <View className='card card--shadow card--checked'>
-          <View className='cell'>
-            <View className='cell__hd'>
-
-            </View>
-            <View className='cell__bd'>
-              <View className='label bold'>
-                30
-                <Text className='label-unit'>次卡</Text>
+        {timesItems.map(item => (
+          <View
+            key={item.cfgLcId}
+            className={classNames('card card--shadow', { 'card--checked': isChecked(item) })}
+            onClick={() => onItemCheck(item)}
+          >
+            <View className='cell'>
+              <View className='cell__hd'>
+                <SCheckbox value={isChecked(item)} />
               </View>
-              <View className='desc gray'>每次借3天, 周末不计费</View>
-            </View>
-            <View className='cell__ft'>
-              <View className='money red bold'>
-                <Text className='money-unit'>¥</Text>100
+              <View className='cell__bd'>
+                <View className='label bold'>
+                  {item.effectiveNum}
+                  <Text className='label-unit'>次卡</Text>
+                </View>
+                <View className='desc gray'>{item.lendingcardName}</View>
+              </View>
+              <View className='cell__ft'>
+                <View className='money red bold'>
+                  <Text className='money-unit'>¥</Text>{item.lendingcardPrice}
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        ))}
       </View>
 
       <View className='page-section buy-rules'>
@@ -98,18 +132,22 @@ const Page: Taro.FC = () => {
         </View>
       </View>
 
-      <View className='payment-footer'>
-        <View className='left'>
-          <View>
-            共计：
-            <Text className='money red bold'>
-              <Text className='money-unit money-unit--large'>¥</Text>90.99
-            </Text>
+      {currentChecked && (
+        <View className='payment-footer'>
+          <View className='left'>
+            <View>
+              共计：
+              <Text className='money red bold'>
+                <Text className='money-unit money-unit--large'>¥</Text>{currentChecked.lendingcardPrice}
+              </Text>
+            </View>
+            {wallet && (
+              <View className='desc'>账户余额可抵扣: {wallet.balance}元</View>
+            )}
           </View>
-          <View className='desc'>账户余额可抵扣: 9元</View>
+          <Button className='btn btn-primary' onClick={onPaymentClick}>购买</Button>
         </View>
-        <Button className='btn btn-primary' onClick={onPaymentClick}>购买</Button>
-      </View>
+      )}
     </View>
   )
 }
@@ -118,4 +156,4 @@ Page.config = {
   navigationBarTitleText: '借阅卡'
 }
 
-export default Page
+export default observer(Page)
