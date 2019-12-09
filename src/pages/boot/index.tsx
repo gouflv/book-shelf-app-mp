@@ -1,6 +1,7 @@
 import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import AppStore from '../../store/app'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: Taro.FC = () => {
 
@@ -9,10 +10,14 @@ const Page: Taro.FC = () => {
   useEffect(() => {
     async function redirect() {
       if (token) {
+        showLoading()
         await fetchUserInfo()
-        Taro.switchTab({ url: '/pages/index/introGuard' })
-        // Taro.switchTab({ url: '/pages/wallet/index' })
+        hideLoading()
+
+        // Taro.switchTab({ url: '/pages/index/introGuard' })
+        Taro.switchTab({ url: '/pages/wallet/index' })
         // Taro.redirectTo({ url: '/pages/login/index' })
+        // Taro.redirectTo({ url: '/pages/order/index' })
       } else {
         Taro.redirectTo({ url: '/pages/login/index' })
       }

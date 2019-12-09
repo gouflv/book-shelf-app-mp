@@ -1,11 +1,26 @@
 import './index.scss'
-import Taro, { useContext } from '@tarojs/taro'
+import Taro, { useContext, useState, useDidShow } from '@tarojs/taro'
 import { Image, View, Text } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
 import AppStore from '../../store/app'
+import { POST } from '../../utils'
 
 const Page: Taro.FC = () => {
   const { user } = useContext(AppStore)
+
+  const [notification, setNotification] = useState()
+  useDidShow(async () => {
+    const data = await POST('account/myOrder')
+    setNotification(data)
+  })
+
+  function showNotify(key: 'borrowingNum' | 'beOverdueNum') {
+    if (notification) {
+      const val = notification[key]
+      return val === '0' ? 0 : val
+    }
+    return 0
+  }
 
   if (!user) {
     return <View />
@@ -15,33 +30,39 @@ const Page: Taro.FC = () => {
 
       <View className='banner'>
         <View className='bg'>
-          <Image src={require('../../assets/wallet_bg_car@2x.png')} mode='scaleToFill' />
+          <Image src={require('../../assets/user-bg.jpg')} mode='scaleToFill' />
         </View>
         <View className='content'>
           <View className='thumb'>
             <Image src={user.image || '//placehold.it/200'} mode='aspectFill' />
           </View>
           <View className='name'>{user.nickName}</View>
-          <View className='desc'>宝宝已经看了21本书</View>
+          {notification && (
+            <View className='desc'>宝宝已经看了{notification.readNum}本书</View>
+          )}
         </View>
       </View>
 
       <View className='card card--shadow menu'>
-        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tag=2` })}>
+        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tab=2` })}>
           <View className='thumb'>
             <Image src={require('../../assets/me_icon_borrowing@2x.png')} mode='aspectFit' />
-            <View className='badge'>1</View>
+            {showNotify('borrowingNum') && (
+              <View className='badge'>{showNotify('borrowingNum')}</View>
+            )}
           </View>
           <View className='name'>借阅中</View>
         </View>
-        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tag=3` })}>
+        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tab=3` })}>
           <View className='thumb'>
             <Image src={require('../../assets/me_icon_overdue@2x.png')} mode='aspectFit' />
-            <View className='badge'>2</View>
+            {showNotify('beOverdueNum') && (
+              <View className='badge'>{showNotify('beOverdueNum')}</View>
+            )}
           </View>
           <View className='name'>已逾期</View>
         </View>
-        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tag=4` })}>
+        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tab=4` })}>
           <View className='thumb'>
             <Image src={require('../../assets/me_icon_completed@2x.png')} mode='aspectFit' />
           </View>
@@ -92,7 +113,8 @@ const Page: Taro.FC = () => {
 
 Page.config = {
   navigationBarTitleText: '',
-  navigationBarBackgroundColor: '#f6b810'
+  navigationBarBackgroundColor: '#f6b810',
+  navigationStyle: 'custom'
 }
 
 export default observer(Page)

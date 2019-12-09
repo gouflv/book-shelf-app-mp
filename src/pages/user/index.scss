@@ -2,8 +2,7 @@
 
 .banner {
   position: relative;
-  padding-bottom: 43.33%;
-  height: 0;
+  height: 440px;
   background-color: #f6b810;
   .bg {
     image {
@@ -18,9 +17,8 @@
   }
   .content {
     position: absolute;
-    top: 0;
     right: 0;
-    bottom: 0;
+    bottom: 70px;
     left: 0;
     display: flex;
     flex-direction: column;

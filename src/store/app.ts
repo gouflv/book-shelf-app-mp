@@ -34,7 +34,7 @@ class AppStore {
   @computed get isUserBoundDevice() {
     // return !!~[1011, 1012, 1013].indexOf(this.scene)
     // return !!this.scanCabinet
-    return false
+    return true
   }
 
   @computed get isUserHasDeposit() {

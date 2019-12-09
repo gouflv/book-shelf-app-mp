@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useDidShow, useState } from '@tarojs/taro'
+import Taro, { useDidShow, useEffect, useState } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import OrderItem from './OrderItem'
@@ -7,17 +7,28 @@ import { usePagination } from '../../store/usePagaination'
 
 const Page: Taro.FC = () => {
   const [tab, setTab] = useState<1 | 2 | 3 | 4>(1)
+  const [url, setUrl] = useState()
 
   const { items, fetchStart, isFinish, isEmpty, loading } = usePagination({
-    url: 'account/getOrderPageList'
+    url
   })
+
+  useEffect(() => {
+    let status = ''
+    if (tab === 2) status = '0'
+    if (tab === 3) status = '2'
+    if (tab === 4) status = '3'
+    setUrl(`account/getOrderPageList?status=${status}`)
+    fetchStart()
+  }, [tab])
 
   useDidShow(() => {
     fetchStart()
   })
 
-  return (
-    <View className='page--gray'>
+  // eslint-disable-next-line react/no-multi-comp
+  const renderTab = () => {
+    return (
       <View className='top-tabbar'>
         <View
           className={classNames('item', { 'item--active': tab === 1 })}
@@ -44,16 +55,34 @@ const Page: Taro.FC = () => {
           已完成
         </View>
       </View>
+    )
+  }
 
-      isFinish:{isFinish}
-      isEmpty:{isEmpty}
-      loading:{loading}
-
+  // eslint-disable-next-line react/no-multi-comp
+  const renderList = () => {
+    if (isEmpty) {
+      return <View className='list-empty'>暂无订单</View>
+    }
+    return (
       <View className='page-container'>
         {items.map(item => (
           <OrderItem key={item.orderNo} data={item} />
         ))}
+        {isFinish && (
+          <View className='list-finished'>已显示所有订单</View>
+        )}
       </View>
+    )
+  }
+
+  if (loading) {
+    return renderTab()
+  }
+
+  return (
+    <View className='page--gray'>
+      {renderTab()}
+      {renderList()}
     </View>
   )
 }

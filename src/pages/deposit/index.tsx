@@ -10,7 +10,7 @@ const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
 
   //#region list
-  const { items, loading, fetchStart, isEmpty } = usePagination({
+  const { items, loading, fetchStart, isEmpty, isFinish } = usePagination({
     url: 'wallet/depositRecordList'
   })
   useDidShow(() => {
@@ -34,10 +34,8 @@ const Page: Taro.FC = () => {
     Taro.navigateTo({ url: '/pages/buy-deposit/index' })
   }
 
+  // eslint-disable-next-line react/no-multi-comp
   const renderList = () => {
-    if (loading) {
-      return <View />
-    }
     if (isEmpty) {
       return <View className='list-empty'>暂无押金记录</View>
     }
@@ -63,6 +61,9 @@ const Page: Taro.FC = () => {
             </View>
           ))}
         </View>
+        {isFinish && (
+          <View className='list-finished'>到底了，我是有底线的</View>
+        )}
       </View>
     )
   }

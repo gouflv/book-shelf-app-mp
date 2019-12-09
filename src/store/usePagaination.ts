@@ -1,16 +1,12 @@
 import { defaultErrorHandler, hideLoading, POST, showLoading } from '../utils'
-import { useState, useEffect, useCallback, useReachBottom } from '@tarojs/taro'
+import { useCallback, useEffect, useReachBottom, useState } from '@tarojs/taro'
 
 interface usePaginationProps {
   url: string
-  getParams?: () => { [key: string]: any }
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const usePagination = (props: usePaginationProps) => {
-  const { url, getParams } = props
-  const params = getParams ? getParams() : null
-
+export const usePagination = ({ url }: usePaginationProps) => {
   const [items, setItems] = useState<any[]>([])
   const [index, setIndex] = useState(1)
   const [loading, setLoading] = useState(false)
@@ -22,18 +18,17 @@ export const usePagination = (props: usePaginationProps) => {
       const data = await POST(url, {
         data: {
           pageIndex: index,
-          pageSize: 10,
-          ...params
+          pageSize: 10
         }
       })
       const f_items = data.records
-      setItems(prevState => [...prevState, ...f_items])
-      if (!f_items.length) {
+      const n_items = [...items, ...f_items]
+      setItems(n_items)
+      if (n_items.length >= data.total) {
         setFinish(true)
       }
       if (index === 1 && !f_items.length) {
         setEmpty(true)
-        setFinish(true)
       }
     } catch (e) {
       defaultErrorHandler(e)
@@ -41,7 +36,7 @@ export const usePagination = (props: usePaginationProps) => {
       setLoading(false)
       hideLoading()
     }
-  }, [index, url])
+  }, [index, items, url])
 
   async function fetchStart() {
     showLoading()
@@ -58,10 +53,10 @@ export const usePagination = (props: usePaginationProps) => {
   }
 
   useEffect(() => {
-    if (loading && !isFinish) {
+    if (url && loading && !isFinish) {
       fetch()
     }
-  }, [fetch, isFinish, loading])
+  }, [fetch, isFinish, loading, url])
 
   useReachBottom(() => {
     if (!loading && !isFinish && !isEmpty) {

@@ -76,7 +76,11 @@ export interface Order {
   booksName: string
   booksImg: string
   createTime: string
+  expireTime: string
   status: OrderStatus
+
+  beOverdueNum: string
+  orderMoney: string
 }
 
 export interface Wallet {

@@ -30,7 +30,7 @@ const Index: Taro.FC = () => {
   const borrowErrorConfig = {
     1: { type: '需绑定手机号', text: '查看', page: '/pages/user-bind/index' },
     2: { type: '每次最多只能借阅2本书', text: '查看', page: '/pages/order/index' },
-    3: { type: '你还有逾期费用未支付', text: '去支付', page: '/pages/order/index?tab=overdue' },
+    3: { type: '你还有逾期费用未支付', text: '去支付', page: '/pages/order/index?tab=3' },
     4: { type: '缴纳押金', text: '交押金', page: '/pages/buy-deposit/index' },
     5: { type: '押金不足', text: '补押金', page: '/pages/buy-deposit/index' },
     6: { type: '借阅卡', text: '去购买', page: '/pages/buy-card/index' }

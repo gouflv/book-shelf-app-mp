@@ -7,11 +7,40 @@ import { observer } from '@tarojs/mobx'
 
 const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
-  const { items, fetchStart } = usePagination({ url: 'wallet/rechargeRecordList' })
+  const { items, fetchStart, isEmpty, isFinish } = usePagination({ url: 'wallet/rechargeRecordList' })
 
   useDidShow(() => {
     fetchStart()
   })
+
+  const renderList = () => {
+    if (isEmpty) {
+      return <View className='list-empty'>暂无记录</View>
+    }
+    return (
+      <View className='card'>
+        <View className='cell-group'>
+          {items.map(item => (
+            <View className='cell'>
+              <View className='cell__bd'>
+                <View className='label'>[缴纳]缴纳押金</View>
+                <Text className='desc gray'>2019/11/12 18:00</Text>
+              </View>
+              <View className='cell__ft'>
+                <View className='money red'>
+                  +<Text className='money-unit money-unit--large'>¥</Text>
+                  99
+                </View>
+              </View>
+            </View>
+          ))}
+        </View>
+        {isFinish && (
+          <View className='list-finished'>到底了，我是有底线的</View>
+        )}
+      </View>
+    )
+  }
 
   return (
     <View className='page page--gray'>
@@ -30,24 +59,7 @@ const Page: Taro.FC = () => {
         <View className='section-header'>
           余额记录
         </View>
-        <View className='card'>
-          <View className='cell-group'>
-            {items.map(item => (
-              <View className='cell'>
-                <View className='cell__bd'>
-                  <View className='label'>[缴纳]缴纳押金</View>
-                  <Text className='desc gray'>2019/11/12 18:00</Text>
-                </View>
-                <View className='cell__ft'>
-                  <View className='money red'>
-                    +<Text className='money-unit money-unit--large'>¥</Text>
-                    99
-                  </View>
-                </View>
-              </View>
-            ))}
-          </View>
-        </View>
+        {renderList()}
       </View>
     </View>
   )
