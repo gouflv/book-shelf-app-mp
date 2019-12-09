@@ -1,8 +1,18 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useContext, useDidShow } from '@tarojs/taro'
 import { Image, Text, View } from '@tarojs/components'
+import { usePagination } from '../../store/usePagaination'
+import AppStore from '../../store/app'
+import { observer } from '@tarojs/mobx'
 
 const Page: Taro.FC = () => {
+  const { wallet } = useContext(AppStore)
+  const { items, fetchStart } = usePagination({ url: 'wallet/rechargeRecordList' })
+
+  useDidShow(() => {
+    fetchStart()
+  })
+
   return (
     <View className='page page--gray'>
       <View className='page-banner'>
@@ -11,7 +21,7 @@ const Page: Taro.FC = () => {
           <View className='top'>余额</View>
           <View className='money red'>
             <Text className='money-unit'>¥</Text>
-            199
+            {(wallet && wallet.depositTotal) ? wallet.depositTotal : 0}
           </View>
         </View>
       </View>
@@ -22,30 +32,20 @@ const Page: Taro.FC = () => {
         </View>
         <View className='card'>
           <View className='cell-group'>
-            <View className='cell'>
-              <View className='cell__bd'>
-                <View className='label'>[缴纳]缴纳押金</View>
-                <Text className='desc gray'>2019/11/12 18:00</Text>
-              </View>
-              <View className='cell__ft'>
-                <View className='money red'>
-                  +<Text className='money-unit money-unit--large'>¥</Text>
-                  99
+            {items.map(item => (
+              <View className='cell'>
+                <View className='cell__bd'>
+                  <View className='label'>[缴纳]缴纳押金</View>
+                  <Text className='desc gray'>2019/11/12 18:00</Text>
+                </View>
+                <View className='cell__ft'>
+                  <View className='money red'>
+                    +<Text className='money-unit money-unit--large'>¥</Text>
+                    99
+                  </View>
                 </View>
               </View>
-            </View>
-            <View className='cell'>
-              <View className='cell__bd'>
-                <View className='label'>[缴纳]缴纳押金</View>
-                <Text className='desc gray'>2019/11/12 18:00</Text>
-              </View>
-              <View className='cell__ft'>
-                <View className='money green'>
-                  -<Text className='money-unit money-unit--large'>¥</Text>
-                  99
-                </View>
-              </View>
-            </View>
+            ))}
           </View>
         </View>
       </View>
@@ -57,4 +57,4 @@ Page.config = {
   navigationBarTitleText: '我的余额'
 }
 
-export default Page
+export default observer(Page)

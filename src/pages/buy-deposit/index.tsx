@@ -1,8 +1,21 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useState, useContext, useEffect } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
+import AppStore from '../../store/app'
+import numeral from 'numeral'
+import { observer } from '@tarojs/mobx'
+import { BASIC_DEPOSIT } from '../../config'
 
 const Page: Taro.FC = () => {
+  const { wallet } = useContext(AppStore)
+  const [depositToPay, setDepositToPay] = useState('0')
+  useEffect(() => {
+    if (wallet && wallet.depositTotal) {
+      setDepositToPay(numeral(BASIC_DEPOSIT).subtract(wallet.depositTotal).format('0[.]0'))
+    } else {
+      setDepositToPay( `${BASIC_DEPOSIT}`)
+    }
+  }, [wallet])
 
   async function onPaymentClick() {
     Taro.navigateTo({ url: '/pages/result/index?type=deposit' })
@@ -14,7 +27,7 @@ const Page: Taro.FC = () => {
         <Image src={require('../../assets/pay_icon@2x.png')} mode='aspectFit' />
         <View className='money red'>
           <Text className='money-unit'>¥</Text>
-          199
+          {(wallet && wallet.depositTotal) ? wallet.depositTotal : '0'}
         </View>
         <View className='title'>押金总额</View>
         <View className='desc'>
@@ -30,7 +43,7 @@ const Page: Taro.FC = () => {
               <View className='cell__ft'>
                 <View className='money'>
                   <Text className='money-unit'>¥</Text>
-                  99
+                  {BASIC_DEPOSIT}
                 </View>
               </View>
             </View>
@@ -39,7 +52,7 @@ const Page: Taro.FC = () => {
               <View className='cell__ft'>
                 <View className='money'>
                   <Text className='money-unit'>¥</Text>
-                  99
+                  {(wallet && wallet.depositTotal) ? wallet.depositTotal : '0'}
                 </View>
               </View>
             </View>
@@ -49,7 +62,7 @@ const Page: Taro.FC = () => {
                 需缴押金：
                 <Text className='money red'>
                   <Text className='money-unit'>¥</Text>
-                  99
+                  {depositToPay}
                 </Text>
               </View>
             </View>
@@ -62,7 +75,7 @@ const Page: Taro.FC = () => {
           确认购买即视为已同意<Text className='orange'>《借阅卡卡权益及服务规则》</Text>
         </View>
         <Button className='btn-block btn-primary' onClick={onPaymentClick}>
-          确认支付199元押金
+          确认支付{depositToPay}元押金
         </Button>
       </View>
     </View>
@@ -73,4 +86,4 @@ Page.config = {
   navigationBarTitleText: '我的押金'
 }
 
-export default Page
+export default observer(Page)

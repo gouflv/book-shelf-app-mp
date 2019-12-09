@@ -1,7 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-import Taro from '@tarojs/taro'
-
 export * from './ajax'
+
+import Taro from '@tarojs/taro'
+import numeral from 'numeral'
 
 export function showLoading(props?: Partial<Taro.showLoading.Param>) {
   Taro.showLoading({
@@ -23,4 +24,10 @@ export function showToast(props: Taro.showToast.Param) {
       ...props
     })
   }, 100)
+}
+
+export function distanceFormat(value: number) {
+  return value > 1000
+    ? `${numeral(value).format('0[.]0a')}m`
+    : `${numeral(value).format('0')}m`
 }

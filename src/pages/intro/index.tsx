@@ -1,11 +1,12 @@
 import './index.scss'
 import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
-import { showToast } from '../../utils'
+import { distanceFormat, showToast } from '../../utils'
 import AppStore from '../../store/app'
+import { observer } from '@tarojs/mobx'
 
 const Intro: Taro.FC = () => {
-  const { fetchSites } = useContext(AppStore)
+  const { fetchSites, closestSite } = useContext(AppStore)
 
   useEffect(() => {
     fetchSites()
@@ -28,20 +29,23 @@ const Intro: Taro.FC = () => {
 
   return (
     <View className='page-intro'>
-      <View className='card'>
-        <View className='site-info'>
-          <View className='site-info__hd'>
-            <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
-          </View>
-          <View className='site-info__bd'>
-            <View className='name'>金山小金星幼儿园</View>
-            <View className='more'>
-              <View className='left'>距离你250m</View>
-              <View className='right' onClick={openSiteMap}>查看附近借书馆</View>
+
+      {closestSite && (
+        <View className='card'>
+          <View className='site-info'>
+            <View className='site-info__hd'>
+              <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
+            </View>
+            <View className='site-info__bd'>
+              <View className='name'>{closestSite.netName}</View>
+              <View className='more'>
+                <View className='left'>距离你{distanceFormat(parseFloat(closestSite.distance))}</View>
+                <View className='right' onClick={openSiteMap}>查看附近借书馆</View>
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      )}
 
       <View className='card'>
         <View className='card-body'>
@@ -67,4 +71,4 @@ Intro.options = {
   addGlobalClass: true
 }
 
-export default Intro
+export default observer(Intro)

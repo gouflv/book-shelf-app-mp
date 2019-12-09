@@ -9,7 +9,7 @@ import { Cabinet, CabinetBook } from '../../typing'
 import { observer } from '@tarojs/mobx'
 
 const Index: Taro.FC = () => {
-  const { scanCabinet, setScanCabinet } = useContext(AppStore)
+  const { scanCabinet, setScanCabinet, isUserHasDeposit } = useContext(AppStore)
   const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
 
   // initial
@@ -28,7 +28,7 @@ const Index: Taro.FC = () => {
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<CabinetBook>()
   const borrowErrorConfig = {
-    1: { type: '需绑定手机号', text: '查看', page: '/pages/login/index' },
+    1: { type: '需绑定手机号', text: '查看', page: '/pages/user-bind/index' },
     2: { type: '每次最多只能借阅2本书', text: '查看', page: '/pages/order/index' },
     3: { type: '你还有逾期费用未支付', text: '去支付', page: '/pages/order/index?tab=overdue' },
     4: { type: '缴纳押金', text: '交押金', page: '/pages/buy-deposit/index' },
@@ -60,14 +60,19 @@ const Index: Taro.FC = () => {
 
   return (
     <View className='page-index'>
-      <View className='deposit-tip'>
-        <View className='content'>
-          <Image src={require('../../assets/home_icon_prompt@2x.png')} mode='aspectFit' className='icon' />
-          借书请先缴纳押金
+
+      {isUserHasDeposit && (
+        <View>
+          <View className='deposit-tip'>
+            <View className='content'>
+              <Image src={require('../../assets/home_icon_prompt@2x.png')} mode='aspectFit' className='icon' />
+              借书请先缴纳押金
+            </View>
+            <Button size='mini' className='btn-primary'>缴纳押金</Button>
+          </View>
+          <View className='space' />
         </View>
-        <Button size='mini' className='btn-primary'>缴纳押金</Button>
-      </View>
-      <View className='space' />
+      )}
 
       <View className='page-section'>
         <View className='shop-book-list'>

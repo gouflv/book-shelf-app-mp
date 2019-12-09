@@ -5,26 +5,20 @@ import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Map, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { marker } from '@tarojs/components/types/Map'
-import { hideLoading, POST, showLoading, showToast } from '../../utils'
+import { distanceFormat, hideLoading, POST, showLoading, showToast } from '../../utils'
 import { AtActionSheet, AtActionSheetItem } from 'taro-ui'
 import { Cabinet } from '../../typing'
 
 const SiteMap: Taro.FC = () => {
-  const { location, siteList, previewSite, getUserLocation, fetchSites, setPreviewSite, setPreviewCabinet } = useContext(AppStore)
+  const { location, siteList, previewSite, getUserLocation, setPreviewSite, setPreviewCabinet } = useContext(AppStore)
 
   const [markers, setMarkers] = useState<marker[]>([])
   const [cabinets, setCabinets] = useState<Cabinet[]>([])
   const [cabinetsSelectVisible, setCabinetsSelectVisible] = useState(false)
 
   useEffect(() => {
-    getUserLocation()
-  }, [getUserLocation])
-
-  useEffect(() => {
-    if (location) {
-      fetchSites()
-    }
-  }, [fetchSites, location])
+    !location && getUserLocation()
+  }, [location])
 
   useEffect(() => {
     setMarkers(prevState => {
@@ -121,9 +115,9 @@ const SiteMap: Taro.FC = () => {
                 <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
               </View>
               <View className='site-info__bd'>
-                <View className='name'>金山小金星幼儿园</View>
+                <View className='name'>{previewSite.netName}</View>
                 <View className='more'>
-                  <View className='left'>距离你250m</View>
+                  <View className='left'>距离你{distanceFormat(parseFloat(previewSite.distance))}</View>
                 </View>
               </View>
             </View>

@@ -3,6 +3,7 @@ import { action, computed, observable, toJS } from 'mobx'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../utils'
 import { Cabinet, Site, User, Wallet } from '../typing'
 import _pick from 'lodash.pick'
+import _minBy from 'lodash.minby'
 
 import RouterInfo = Taro.RouterInfo
 
@@ -33,7 +34,11 @@ class AppStore {
   @computed get isUserBoundDevice() {
     // return !!~[1011, 1012, 1013].indexOf(this.scene)
     // return !!this.scanCabinet
-    return true
+    return false
+  }
+
+  @computed get isUserHasDeposit() {
+    return this.wallet && this.wallet.depositTotal
   }
 
   @action.bound
@@ -79,12 +84,18 @@ class AppStore {
         'depositTotal',
         'depositBalance',
         'depositOccupy',
-        'freeTotal',
         'lendingcardTotal'
       ])
     }
     console.debug(toJS(this.user))
     console.debug(toJS(this.wallet))
+  }
+
+  @action.bound
+  setWallet() {
+    this.wallet = {
+      depositTotal: '999'
+    } as any
   }
 
   //#endregion
@@ -135,6 +146,11 @@ class AppStore {
   }
 
   @action.bound
+  setClosestSite(site: Site) {
+    this.closestSite = site
+  }
+
+  @action.bound
   setPreviewSite(site) {
     this.previewSite = site
   }
@@ -147,12 +163,22 @@ class AppStore {
   @action.bound
   async fetchSites() {
     await this.getUserLocation()
-    this.siteList = await POST('book/networkAllList', {
-      data: {
-        state: 1,
-        ...this.location
+    if (this.location) {
+      const { longitude, latitude } = this.location
+      this.siteList = await POST('book/networkAllList', {
+        data: {
+          state: 1,
+          longitude,
+          latitude
+        }
+      })
+      const closest = _minBy(this.siteList, site => {
+        return parseInt(site.distance)
+      })
+      if (closest) {
+        this.setClosestSite(closest)
       }
-    })
+    }
   }
 
   //#endregion

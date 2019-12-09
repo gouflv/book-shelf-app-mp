@@ -1,8 +1,9 @@
 import './index.scss'
 import Taro, { useContext } from '@tarojs/taro'
-import { Button, Image, View } from '@tarojs/components'
+import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
+import dayjs from 'dayjs'
 
 const Page: Taro.FC = () => {
   const { user, wallet } = useContext(AppStore)
@@ -18,25 +19,27 @@ const Page: Taro.FC = () => {
         <View className='section-header'>我的卡</View>
         <View className='section-body'>
 
-          <View className='user-card'>
-            <View className='bg'>
-              <Image src={require('../../assets/wallet_bg_car@2x.png')} mode='aspectFit' />
-            </View>
-            <View className='user'>
-              <View className='user__hd'>
-                <View className='thumb'>
-                  <Image src={user.image || '//placehold.it/200'} mode='aspectFill' />
+          {wallet.effectiveTimes && (
+            <View className='user-card'>
+              <View className='bg'>
+                <Image src={require('../../assets/wallet_bg_car@2x.png')} mode='aspectFit' />
+              </View>
+              <View className='user'>
+                <View className='user__hd'>
+                  <View className='thumb'>
+                    <Image src={user.image || '//placehold.it/200'} mode='aspectFill' />
+                  </View>
+                  <View className='content'>
+                    <View className='name'>{user.nickName}</View>
+                    <View className='desc'>{dayjs(wallet.effectiveTimes).format('YYYY-MM-DD')}到期</View>
+                  </View>
                 </View>
-                <View className='content'>
-                  <View className='name'>{user.nickName}</View>
-                  <View className='desc'>{wallet.effectiveTimes}到期</View>
+                <View className='user__ft'>
+                  <View className='right'>葫芦借阅卡: 不限次</View>
                 </View>
               </View>
-              <View className='user__ft'>
-                <View className='right'>葫芦借阅卡: 不限次</View>
-              </View>
             </View>
-          </View>
+          )}
 
           <View className='card card--shadow'>
             <View className='cell-group'>
@@ -71,7 +74,9 @@ const Page: Taro.FC = () => {
                 <View className='label'>余额</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>{wallet.balance}</View>
+                <Text className='money red'>
+                  <Text className='money-unit'>¥</Text>{wallet.balance || 0}
+                </Text>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
@@ -83,7 +88,12 @@ const Page: Taro.FC = () => {
                 <View className='label'>借阅次卡</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>{wallet.lendingCardTotal}张可用</View>
+                <View className='red'>
+                  {wallet.lendingCardTotal && parseInt(wallet.lendingCardTotal)
+                    ? `${wallet.lendingCardTotal}张可用`
+                    : '暂无次卡'
+                  }
+                </View>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
@@ -95,7 +105,9 @@ const Page: Taro.FC = () => {
                 <View className='label'>押金</View>
               </View>
               <View className='cell__ft'>
-                <View className='red'>{wallet.depositTotal}</View>
+                <Text className='money red'>
+                  <Text className='money-unit'>¥</Text>{wallet.depositTotal || 0}
+                </Text>
               </View>
               <View className='cell__link'>
                 <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />

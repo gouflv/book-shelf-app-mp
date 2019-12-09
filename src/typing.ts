@@ -26,6 +26,7 @@ export interface Site {
   address: string
   longitude: string
   latitude: string
+  distance: string
 }
 
 export interface Cabinet {
@@ -81,13 +82,24 @@ export interface Order {
 export interface Wallet {
   // 余额
   balance: string
-
   //押金总额
   depositTotal: string
-
   //卡有效期
-  // TODO null 时代表没有时间卡
+  // null 时代表次卡
   effectiveTimes: string
   //借阅卡数
   lendingCardTotal: string
+}
+
+export interface UserTimesCard {
+  orderNo: string
+  lendingcardType: CardType
+  lendingcardName: string
+  // timesCard only
+  effectiveNum: string
+
+  // dateRangeCard only
+  effectiveTimes: string
+  startDate: string
+  endDate: string
 }
