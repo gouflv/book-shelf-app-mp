@@ -26,12 +26,11 @@ class AppStore {
   //#region user
 
   @observable token = Taro.getStorageSync('client_token')
-  @observable openid = null
 
   @observable user: User | null = null
   @observable wallet: Wallet | null = null
 
-  @computed get isUserBoundSite() {
+  @computed get isUserBoundDevice() {
     // return !!~[1011, 1012, 1013].indexOf(this.scene)
     // return !!this.scanCabinet
     return true

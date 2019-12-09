@@ -84,15 +84,10 @@ export interface Wallet {
 
   //押金总额
   depositTotal: string
-  //押金余额
-  depositBalance: string
-  //占用押金
-  depositOccupy: string
 
   //卡有效期
+  // TODO null 时代表没有时间卡
   effectiveTimes: string
   //借阅卡数
   lendingCardTotal: string
-  //免费卡数
-  freeTotal: string
 }

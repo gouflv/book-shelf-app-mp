@@ -44,8 +44,14 @@ const Page: Taro.FC = () => {
   }
 
   async function onPaymentClick() {
-    //TODO
-    Taro.navigateTo({ url: '/pages/result/index?type=pay' })
+    await POST('wallet/payLendingCard', {
+      data: {
+        [CARD_ID]: currentChecked[CARD_ID],
+        lendingcardName: currentChecked.lendingcardName,
+        eqCode: 'T738'
+      }
+    })
+    // Taro.navigateTo({ url: '/pages/result/index?type=pay' })
   }
 
   return (
@@ -141,7 +147,7 @@ const Page: Taro.FC = () => {
                 <Text className='money-unit money-unit--large'>¥</Text>{currentChecked.lendingcardPrice}
               </Text>
             </View>
-            {wallet && (
+            {wallet && wallet.balance && (
               <View className='desc'>账户余额可抵扣: {wallet.balance}元</View>
             )}
           </View>

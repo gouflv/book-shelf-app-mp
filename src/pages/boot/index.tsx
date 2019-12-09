@@ -11,6 +11,8 @@ const Page: Taro.FC = () => {
       if (token) {
         await fetchUserInfo()
         Taro.switchTab({ url: '/pages/index/introGuard' })
+        // Taro.switchTab({ url: '/pages/wallet/index' })
+        // Taro.redirectTo({ url: '/pages/login/index' })
       } else {
         Taro.redirectTo({ url: '/pages/login/index' })
       }

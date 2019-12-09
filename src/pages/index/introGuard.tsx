@@ -5,8 +5,8 @@ import Index from './index'
 import Intro from '../intro/index'
 
 const Page: Taro.FC = () => {
-  const { isUserBoundSite } = useContext(AppStore)
-  return isUserBoundSite
+  const { isUserBoundDevice } = useContext(AppStore)
+  return isUserBoundDevice
     ? <Index />
     : <Intro />
 }
