@@ -105,7 +105,7 @@ const Page: Taro.FC = () => {
             <Image src={require('../../assets/phone-icon-lock.png')} mode='aspectFit' className='icon' />
             <Input type='digit' className='input' placeholder='请输入短信验证码' value={smsCode} onInput={e => setSmsCode(e.detail.value)} />
             {timeLeft && (
-              <Text className='btn-sms blue'>{timeLeft / 1000}s</Text>
+              <Text className='btn-sms blue'>{(timeLeft as number) / 1000}s</Text>
             )}
             {!timeLeft && (
               <Text className='btn-sms blue' onClick={onSendClick}>

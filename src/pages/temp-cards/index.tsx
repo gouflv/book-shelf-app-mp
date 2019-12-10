@@ -71,7 +71,7 @@ const Page: Taro.FC = () => {
                     }
                   </View>
                 </View>
-                <View className='t-card__ft'>
+                <View className='t-card__ft' onClick={() => Taro.navigateTo({ url: '/pages/index/introGuard' })}>
                   <Text className='orange'>去使用</Text>
                 </View>
               </View>

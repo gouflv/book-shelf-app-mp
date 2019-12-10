@@ -48,7 +48,7 @@ const Page: Taro.FC = () => {
   }
 
   useEffect(() => {
-    // sendSms()
+    sendSms()
   }, [])
 
   useEffect(() => {
@@ -141,7 +141,7 @@ const Page: Taro.FC = () => {
             {user && encodePhone(user.tel)}
           </View>
           <View className='desc'>
-            {timeLeft / 1000}s
+            {(timeLeft as number) / 1000}s
           </View>
           <NumberInput
             onChange={val => setSmsCode(val)}
@@ -149,6 +149,7 @@ const Page: Taro.FC = () => {
           <Button className='btn btn-primary' onClick={() => setStep(1)}>下一步</Button>
         </View>
       )}
+
       {step === 1 && (
         <View className='step2'>
           <View className='form'>
@@ -167,7 +168,7 @@ const Page: Taro.FC = () => {
                 }}
               >
                 {timeLeft
-                  ? `${timeLeft / 1000}s`
+                  ? `${(timeLeft as number) / 1000}s`
                   : hasSend ? '点击重新获取' : '获取验证码'
                 }
               </Button>

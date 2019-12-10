@@ -31,6 +31,7 @@ export const usePagination = ({ url }: usePaginationProps) => {
         setEmpty(true)
       }
     } catch (e) {
+      setFinish(true)
       defaultErrorHandler(e)
     } finally {
       setLoading(false)

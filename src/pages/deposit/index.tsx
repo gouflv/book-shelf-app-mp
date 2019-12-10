@@ -10,7 +10,7 @@ const Page: Taro.FC = () => {
   const { wallet, isUserBoundPhone } = useContext(AppStore)
 
   //#region list
-  const { items, fetchStart, isEmpty, isFinish } = usePagination({
+  const { items, fetchStart, isEmpty, isFinish, loading } = usePagination({
     url: 'wallet/depositRecordList'
   })
   useDidShow(() => {
@@ -95,7 +95,7 @@ const Page: Taro.FC = () => {
         {renderList()}
       </View>
 
-      {!isEmpty && (
+      {!loading && !isEmpty && (
         <View className='page-section' style={{ paddingTop: 0 }}>
           <View className='card'>
             <View className='cell-group'>
