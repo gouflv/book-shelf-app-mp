@@ -31,3 +31,9 @@ export function distanceFormat(value: number) {
     ? `${numeral(value).format('0[.]0a')}m`
     : `${numeral(value).format('0')}m`
 }
+
+export function encodePhone(val: string) {
+  return val.replace(/(\d{3})(\d{4})(.*)/, (_match, $1, _$2, $3) => {
+    return [$1, '****', $3].join('')
+  })
+}

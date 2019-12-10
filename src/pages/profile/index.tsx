@@ -1,12 +1,14 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useState, useContext } from '@tarojs/taro'
 import { Image, View, Text, Button, Picker } from '@tarojs/components'
-
-import useState = Taro.useState
 import ModalWithClose from '../../components/Modal/ModalWithClose'
 import SCheckbox from '../../components/SCheckbox'
+import AppStore from '../../store/app'
+import { encodePhone } from '../../utils'
 
 const Page: Taro.FC = () => {
+  const { user, isUserBoundPhone } = useContext(AppStore)
+
   const [genderVisible, setGenderVisible] = useState(false)
   const [currentGender, setCurrentGender] = useState<1 | 2>(1)
 
@@ -44,9 +46,18 @@ const Page: Taro.FC = () => {
             <Image src={require('../../assets/personal_icon_phone@2x.png')} mode='aspectFit' />
           </View>
           <View className='cell__bd'>手机号码</View>
-          <View className='cell__ft'>
-            <Text className='gray'>绑定手机号</Text>
-            {/*<Text>18600009999</Text>*/}
+          <View className='cell__ft' onClick={() => {
+            if (!isUserBoundPhone) {
+              Taro.navigateTo({ url: '/pages/user-bind-phone/index' })
+            } else {
+              Taro.navigateTo({ url: '/pages/profile-chpwd/index' })
+            }
+          }}
+          >
+            {isUserBoundPhone
+              ? <Text>{user && encodePhone(user.tel)}</Text>
+              : <Text className='gray'>绑定手机号</Text>
+            }
           </View>
           <View className='cell__link'>
             <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />

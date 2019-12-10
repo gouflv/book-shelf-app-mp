@@ -37,6 +37,10 @@ class AppStore {
     return true
   }
 
+  @computed get isUserBoundPhone() {
+    return this.user && this.user.tel
+  }
+
   @computed get isUserHasDeposit() {
     return this.wallet && this.wallet.depositTotal
   }
@@ -89,13 +93,6 @@ class AppStore {
     }
     console.debug(toJS(this.user))
     console.debug(toJS(this.wallet))
-  }
-
-  @action.bound
-  setWallet() {
-    this.wallet = {
-      depositTotal: '999'
-    } as any
   }
 
   //#endregion

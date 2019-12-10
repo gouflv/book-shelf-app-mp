@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { useState, useEffect, useContext } from '@tarojs/taro'
 import { Button, RichText, Text, View } from '@tarojs/components'
 import SCheckbox from '../../components/SCheckbox'
-import { POST } from '../../utils'
+import { hideLoading, POST, showLoading } from '../../utils'
 import numeral from 'numeral'
 import classNames from 'classnames'
 import AppStore from '../../store/app'
@@ -19,6 +19,7 @@ const Page: Taro.FC = () => {
   const [timesItems, setTimesItems] = useState<any[]>([])
 
   async function fetch() {
+    showLoading()
     const item2 = await POST('wallet/configLendingcardList', {
       data: { lendingcardType: 2 }
     })
@@ -27,6 +28,7 @@ const Page: Taro.FC = () => {
     })
     setRangeItems(item2)
     setTimesItems(item1)
+    hideLoading()
   }
   useEffect(() => {
     fetch()

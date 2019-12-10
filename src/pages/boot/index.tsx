@@ -15,9 +15,10 @@ const Page: Taro.FC = () => {
         hideLoading()
 
         // Taro.switchTab({ url: '/pages/index/introGuard' })
-        Taro.switchTab({ url: '/pages/wallet/index' })
+        // Taro.switchTab({ url: '/pages/wallet/index' })
         // Taro.redirectTo({ url: '/pages/login/index' })
         // Taro.redirectTo({ url: '/pages/order/index' })
+        Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
       } else {
         Taro.redirectTo({ url: '/pages/login/index' })
       }

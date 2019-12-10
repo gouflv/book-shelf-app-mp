@@ -7,10 +7,10 @@ import { observer } from '@tarojs/mobx'
 import { usePagination } from '../../store/usePagaination'
 
 const Page: Taro.FC = () => {
-  const { wallet } = useContext(AppStore)
+  const { wallet, isUserBoundPhone } = useContext(AppStore)
 
   //#region list
-  const { items, loading, fetchStart, isEmpty, isFinish } = usePagination({
+  const { items, fetchStart, isEmpty, isFinish } = usePagination({
     url: 'wallet/depositRecordList'
   })
   useDidShow(() => {
@@ -31,6 +31,10 @@ const Page: Taro.FC = () => {
   //#endregion
 
   function onDepositPaymentClick() {
+    if (!isUserBoundPhone) {
+      Taro.navigateTo({ url: '/pages/user-bind-phone/index' })
+      return
+    }
     Taro.navigateTo({ url: '/pages/buy-deposit/index' })
   }
 

@@ -17,7 +17,7 @@ class App extends Component {
     pages: [
       'pages/boot/index',
       'pages/login/index',
-      'pages/user-bind/index',
+      'pages/user-bind-phone/index',
       'pages/index/introGuard',
       'pages/wallet/index',
       'pages/user/index',

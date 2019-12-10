@@ -33,7 +33,7 @@ const Page: Taro.FC = () => {
           <Image src={require('../../assets/user-bg.jpg')} mode='scaleToFill' />
         </View>
         <View className='content'>
-          <View className='thumb'>
+          <View className='thumb' onClick={() => Taro.navigateTo({ url: '/pages/profile/index' })}>
             <Image src={user.image || '//placehold.it/200'} mode='aspectFill' />
           </View>
           <View className='name'>{user.nickName}</View>
