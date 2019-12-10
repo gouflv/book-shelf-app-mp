@@ -1,8 +1,18 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useState, useEffect } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
+import { POST } from '../../utils'
 
 const Page: Taro.FC = () => {
+  const [articles, setArticles] = useState<any[]>([])
+
+  useEffect(() => {
+    async function fetch() {
+      const data = await POST('account/configProblemList')
+      setArticles(data)
+    }
+    fetch()
+  }, [])
 
   function phoneCall() {
     Taro.makePhoneCall({ phoneNumber: '114' })
@@ -35,24 +45,16 @@ const Page: Taro.FC = () => {
       <View className='card-group-title'>常见问题</View>
       <View className='card'>
         <View className='cell-group'>
-          <View className='cell'>
-            <View className='cell__bd'>如何借书</View>
-            <View className='cell__link'>
-              <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
+          {articles.map(item => (
+            <View key={item.cfgQuesId} className='cell'
+              onClick={() => Taro.navigateTo({ url: `/pages/help/article?id=${item.cfgQuesId}` })}
+            >
+              <View className='cell__bd'>{item.quesTitle}</View>
+              <View className='cell__link'>
+                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
+              </View>
             </View>
-          </View>
-          <View className='cell'>
-            <View className='cell__bd'>如何还书</View>
-            <View className='cell__link'>
-              <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
-            </View>
-          </View>
-          <View className='cell'>
-            <View className='cell__bd'>押金退还</View>
-            <View className='cell__link'>
-              <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
-            </View>
-          </View>
+          ))}
         </View>
       </View>
 

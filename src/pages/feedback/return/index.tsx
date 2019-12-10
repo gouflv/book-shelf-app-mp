@@ -4,9 +4,13 @@ import { Button, Image, Picker, View } from '@tarojs/components'
 import useFetchOrders from '../useFetchOrders'
 import { hideLoading, showLoading, showToast } from '../../../utils'
 import ModalWithClose from '../../../components/Modal/ModalWithClose'
+import { OrderStatus } from '../../../typing'
 
 const Page: Taro.FC = () => {
-  const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders()
+  const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders({
+    status: OrderStatus.Borrow,
+    emptyText: '暂无借书记录'
+  })
   const [ currentOrder, setCurrentOrder ] = useState()
   const [ currentDate, setCurrentDate ] = useState()
   const [resultVisible, setResultVisible] = useState(false)
@@ -49,7 +53,7 @@ const Page: Taro.FC = () => {
                   {isOrderEmpty ? '暂无还书记录' : '请选择还书记录'}
                 </View>
                 <View className='cell__ft'>
-                  {currentOrder ? currentOrder.name : ''}
+                  {currentOrder ? currentOrder.goods_names : ''}
                 </View>
                 <View className='cell__link'>
                   <Image src={require('../../../assets/list_btn_more@2x.png')} mode='aspectFit' />

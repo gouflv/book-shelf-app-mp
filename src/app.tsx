@@ -42,6 +42,7 @@ class App extends Component {
       'pages/pay-overdue/index', //支付逾期
       //5
       'pages/help/index',
+      'pages/help/article',
       'pages/feedback/return/index',
       'pages/feedback/payment/index',
       'pages/feedback/shelf/index',
