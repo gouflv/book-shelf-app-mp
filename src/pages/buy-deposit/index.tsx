@@ -5,6 +5,8 @@ import AppStore from '../../store/app'
 import numeral from 'numeral'
 import { observer } from '@tarojs/mobx'
 import { BASIC_DEPOSIT } from '../../config'
+import { defaultErrorHandler, hideLoading, POST, showLoading } from '../../utils'
+import { PaymentRequestParams } from '../../typing'
 
 const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
@@ -18,7 +20,16 @@ const Page: Taro.FC = () => {
   }, [wallet])
 
   async function onPaymentClick() {
-    Taro.navigateTo({ url: '/pages/result/index?type=deposit' })
+    showLoading()
+    try {
+      const params: PaymentRequestParams = await POST('wallet/payDepositCash')
+      await Taro.requestPayment(params)
+      Taro.navigateTo({ url: '/pages/result/index?type=deposit' })
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
   }
 
   return (

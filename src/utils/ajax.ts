@@ -31,8 +31,6 @@ export const ajax = (url, options?: AjaxOptions) =>
       if (statusCode === 500) {
         showToast({ title: '服务繁忙, 请稍后再试' })
         reject({ handler: true })
-      } else if (data.code !== 0) {
-        reject({ ...data, handler: false })
       } else {
         resolve(data.data)
       }

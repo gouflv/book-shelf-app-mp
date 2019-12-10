@@ -2,11 +2,12 @@ import './index.scss'
 import Taro, { useState, useEffect, useContext } from '@tarojs/taro'
 import { Button, RichText, Text, View } from '@tarojs/components'
 import SCheckbox from '../../components/SCheckbox'
-import { hideLoading, POST, showLoading } from '../../utils'
+import { defaultErrorHandler, hideLoading, POST, showLoading } from '../../utils'
 import numeral from 'numeral'
 import classNames from 'classnames'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
+import { PaymentRequestParams } from '../../typing'
 
 const CARD_ID = 'cfgLcId'
 
@@ -46,14 +47,21 @@ const Page: Taro.FC = () => {
   }
 
   async function onPaymentClick() {
-    await POST('wallet/payLendingCard', {
-      data: {
-        [CARD_ID]: currentChecked[CARD_ID],
-        lendingcardName: currentChecked.lendingcardName,
-        eqCode: 'T738'
-      }
-    })
-    // Taro.navigateTo({ url: '/pages/result/index?type=pay' })
+    showLoading()
+    try {
+      const params: PaymentRequestParams = await POST('wallet/payLendingCard', {
+        data: {
+          [CARD_ID]: currentChecked[CARD_ID],
+          lendingcardName: currentChecked.lendingcardName,
+        }
+      })
+      await Taro.requestPayment(params)
+      Taro.navigateTo({ url: '/pages/result/index?type=pay' })
+    } catch (e) {
+      defaultErrorHandler(e)
+    } finally {
+      hideLoading()
+    }
   }
 
   return (

@@ -4,6 +4,7 @@ import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import dayjs from 'dayjs'
+import { moneyFormat } from '../../utils'
 
 const Page: Taro.FC = () => {
   const { user, wallet } = useContext(AppStore)
@@ -75,7 +76,8 @@ const Page: Taro.FC = () => {
               </View>
               <View className='cell__ft'>
                 <Text className='money red'>
-                  <Text className='money-unit'>¥</Text>{wallet.balance || 0}
+                  <Text className='money-unit'>¥</Text>
+                  {moneyFormat(wallet.balance)}
                 </Text>
               </View>
               <View className='cell__link'>
@@ -106,7 +108,8 @@ const Page: Taro.FC = () => {
               </View>
               <View className='cell__ft'>
                 <Text className='money red'>
-                  <Text className='money-unit'>¥</Text>{wallet.depositTotal || 0}
+                  <Text className='money-unit'>¥</Text>
+                  {moneyFormat(wallet.depositTotal)}
                 </Text>
               </View>
               <View className='cell__link'>

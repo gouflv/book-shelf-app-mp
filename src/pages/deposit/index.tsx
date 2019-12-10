@@ -85,7 +85,6 @@ const Page: Taro.FC = () => {
           {(wallet && wallet.depositTotal && parseFloat(wallet.depositTotal) < 99) && (
             <Button className='btn btn--round' size='mini' onClick={onDepositPaymentClick}>补缴押金</Button>
           )}
-          <Button className='btn btn--round' size='mini' onClick={onDepositPaymentClick}>补缴押金</Button>
         </View>
       </View>
 

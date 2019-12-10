@@ -107,3 +107,11 @@ export interface UserTimesCard {
   startDate: string
   endDate: string
 }
+
+export interface PaymentRequestParams {
+  timeStamp: string
+  nonceStr: string
+  package: string
+  signType: 'MD5'
+  paySign: string
+}
