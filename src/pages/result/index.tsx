@@ -7,11 +7,12 @@ const Page: Taro.FC = () => {
   const [type, setType] = useState<string>()
 
   useEffect(() => {
-    setType((router.params).type)
-  },[router.params])
+    setType(router.params.type)
+  },[])
 
   return (
     <View className='page'>
+      {type}
       {type === 'pay' && (
         <View className='page-section'>
           <Image src={require('../../assets/complete_icon@2x.png')} mode='aspectFit' className='icon' />

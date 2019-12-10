@@ -9,14 +9,14 @@ const Page: Taro.FC = () => {
   useEffect(() => {
     async function fetch() {
       showLoading()
-      const data = await POST('account/configProblemDetail', {
+      const res = await POST('account/configProblemDetail', {
         data: { cfgQuesId: router.params.id }
       })
-      setData(data)
+      setData(res)
       hideLoading()
     }
     fetch()
-  }, [router.params.id])
+  }, [])
 
   return (
     <View className='page'>

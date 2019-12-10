@@ -46,5 +46,7 @@ export const POST = async (url, options?: AjaxOptions) => ajax(url, { ...options
 export const defaultErrorHandler = e => {
   console.error(e)
   if (e.handler) return
-  showToast({ title: e.message })
+  if (e.message) {
+    showToast({ title: e.message })
+  }
 }
