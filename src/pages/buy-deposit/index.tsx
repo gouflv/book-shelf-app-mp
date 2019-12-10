@@ -1,12 +1,11 @@
 import './index.scss'
-import Taro, { useState, useContext, useEffect } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import numeral from 'numeral'
 import { observer } from '@tarojs/mobx'
 import { BASIC_DEPOSIT } from '../../config'
-import { defaultErrorHandler, hideLoading, POST, showLoading } from '../../utils'
-import { PaymentRequestParams } from '../../typing'
+import { submitPayment } from '../../utils'
 
 const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
@@ -20,16 +19,11 @@ const Page: Taro.FC = () => {
   }, [wallet])
 
   async function onPaymentClick() {
-    showLoading()
-    try {
-      const params: PaymentRequestParams = await POST('wallet/payDepositCash')
-      await Taro.requestPayment(params)
-      Taro.navigateTo({ url: '/pages/result/index?type=deposit' })
-    } catch (e) {
-      defaultErrorHandler(e)
-    } finally {
-      hideLoading()
-    }
+    await submitPayment({
+      url: 'wallet/payDepositCash',
+      data: {}
+    })
+    Taro.navigateTo({ url: '/pages/result/index?type=deposit' })
   }
 
   return (

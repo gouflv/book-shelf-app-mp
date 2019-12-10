@@ -20,7 +20,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             </View>
           )}
           <View className='btns'>
-            {data.status === OrderStatus.Overdue && (
+            {data.status !== OrderStatus.Overdue && (
               <Button
                 size='mini'
                 className='btn btn-primary btn-primary--plain'
@@ -36,7 +36,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
                 size='mini'
                 className='btn btn-primary btn--round'
                 onClick={
-                  () => Taro.navigateTo({ url: `/pages/buy-book/index?id=1` })
+                  () => Taro.navigateTo({ url: `/pages/buy-book/index?id=${data.orderNo}` })
                 }
               >
                 买下

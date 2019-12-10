@@ -53,7 +53,7 @@ export interface Book {
   booksId: string
   booksName: string
   booksImg: string
-  totalPrice: string
+  booksPrice: string
   borrowTotal: string
 }
 
@@ -75,6 +75,7 @@ export interface Order {
   lendingcardType: CardType
   booksName: string
   booksImg: string
+  booksPrice: string
   createTime: string
   expireTime: string
   status: OrderStatus

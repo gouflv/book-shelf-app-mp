@@ -1,10 +1,22 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useContext, useRouter, useState } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
+import { submitPayment } from '../../utils'
+import AppStore from '../../store/app'
 
 const Page: Taro.FC = () => {
+  const router = useRouter()
+  const { wallet } = useContext(AppStore)
+
+  const [price] = useState(router.params.price)
 
   async function onPaymentClick() {
+    submitPayment({
+      url: 'book/payRenewingOrder',
+      data: {
+        orderNo: router.params.id
+      }
+    })
     Taro.navigateTo({ url: '/pages/result/index?type=payOverdue' })
   }
 
@@ -13,9 +25,9 @@ const Page: Taro.FC = () => {
 
       <View className='card book-info-card'>
         <View className='card-body'>
-          <Image className='thumb' src='//placehold.it/130x160' mode='aspectFit' />
+          <Image className='thumb' src={router.params.image || '//placehold.it/130x160'} mode='aspectFit' />
           <View className='content'>
-            <View className='title'>體兩清開進起有候過特中</View>
+            <View className='title'>{router.params.book}</View>
           </View>
         </View>
       </View>
