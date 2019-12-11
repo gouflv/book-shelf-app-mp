@@ -87,10 +87,9 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             ? (data.returnTime ? '逾期' : '已逾期')
             : OrderType[data.status]
           }
-          {/* 逾期归还文本 */}
-          {(data.status === OrderStatus.Overdue && data.returnTime)
-            ? '/已归还'
-            : '/未归还'
+          {data.status === OrderStatus.Overdue
+            ? (data.returnTime ? '/已归还' : '/未归还')
+            : ''
           }
         </Text>
       </View>

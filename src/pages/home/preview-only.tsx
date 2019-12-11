@@ -5,6 +5,7 @@ import { Button, Image, View } from '@tarojs/components'
 import BookGrid from '../../components/BookGrid'
 import AppStore from '../../store/app'
 import { useCabinetBooks } from './store'
+import { distanceFormat } from '../../utils'
 
 const Index: Taro.FC = () => {
   const { previewSite, previewCabinet } = useContext(AppStore)
@@ -46,25 +47,27 @@ const Index: Taro.FC = () => {
         <BookGrid items={[]} onBorrowClick={() => {}} readonly />
       </View>
 
-      <View className='footer'>
-        <View className='site-info'>
-          <View className='site-info__hd'>
-            <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
-          </View>
-          <View className='site-info__bd'>
-            <View className='name'>金山小金星幼儿园</View>
-            <View className='more'>
-              <View className='left'>距离你250m</View>
-              <View className='right'>
-                <Button className='btn btn-primary' size='mini' onClick={openNavigation}>
-                  <Image src={require('../../assets/navigation_icon@2x.png')} mode='aspectFit' className='icon' />
-                  导航
-                </Button>
+      {previewSite && (
+        <View className='footer'>
+          <View className='site-info'>
+            <View className='site-info__hd'>
+              <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
+            </View>
+            <View className='site-info__bd'>
+              <View className='name'>{previewSite.netName}</View>
+              <View className='more'>
+                <View className='left'>距离你{distanceFormat(parseFloat(previewSite.distance))}</View>
+                <View className='right'>
+                  <Button className='btn btn-primary' size='mini' onClick={openNavigation}>
+                    <Image src={require('../../assets/navigation_icon@2x.png')} mode='aspectFit' className='icon' />
+                    导航
+                  </Button>
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
+      )}
     </View>
   )
 }

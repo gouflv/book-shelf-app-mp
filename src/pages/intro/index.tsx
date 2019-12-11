@@ -65,7 +65,7 @@ const Intro: Taro.FC = () => {
               <Image src='//placehold.it/660x580' mode='aspectFit' className='image' />
             </SwiperItem>
             <SwiperItem>
-              <Image src='//placehold.it/660x580' mode='aspectFit' className='image' />
+              <Image src='//placehold.it/460x580' mode='aspectFit' className='image' />
             </SwiperItem>
           </Swiper>
         </View>
