@@ -90,8 +90,11 @@ const BookDetail: Taro.FC = () => {
         <RichText nodes='<h1>Hello</h5>' />
       </View>
 
-      <View className="footer">
-        <Button className='btn btn-primary'>立即购买</Button>
+      <View className='footer'>
+        {book.borrowOrder
+          ? <Button className='btn btn-primary'>立即购买</Button>
+          : <Button className='btn btn-primary'>借阅</Button>
+        }
       </View>
     </View>
   )

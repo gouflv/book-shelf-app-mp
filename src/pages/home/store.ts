@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { useCallback, useState } from '@tarojs/taro'
-import { hideLoading, POST, showLoading } from '../../utils'
+import { hideLoading, POST, showLoading, showToast } from '../../utils'
 import { CabinetBook } from '../../typing'
 
 export const useCabinetBooks = () => {
@@ -41,8 +41,9 @@ export const onBorrowConfirm = async (borrowItem: CabinetBook) => {
         rfidCode: borrowItem.rfidCode
       }
     })
+    showToast({ title: '开柜成功' })
   } catch (e) {
-
+    showToast({ title: '开柜失败，如果疑问请联系客服' })
   } finally {
     hideLoading()
   }

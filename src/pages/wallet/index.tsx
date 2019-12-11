@@ -42,7 +42,7 @@ const Page: Taro.FC = () => {
             </View>
           )}
 
-          <View className='card card--shadow'>
+          <View className='card card--shadow' style={{ marginBottom: 0 }}>
             <View className='cell-group'>
               <View className='cell'>
                 <View className='cell__bd'>

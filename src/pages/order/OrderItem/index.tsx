@@ -3,6 +3,13 @@ import Taro from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import { CardType, Order, OrderStatus } from '../../../typing'
 import dayjs from 'dayjs'
+import classNames from 'classnames'
+
+const OrderType = {
+  [OrderStatus.Borrow]: '借阅中',
+  [OrderStatus.Overdue]: '已逾期',
+  [OrderStatus.Finish]: '已完成'
+}
 
 const OrderItem: Taro.FC<{ data: Order }> = props => {
   // @ts-ignore
@@ -20,7 +27,8 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             </View>
           )}
           <View className='btns'>
-            {data.status !== OrderStatus.Overdue && (
+            {/*逾期归还*/}
+            {data.status === OrderStatus.Overdue && data.returnTime && (
               <Button
                 size='mini'
                 className='btn btn-primary btn-primary--plain'
@@ -42,7 +50,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
                 买下
               </Button>
             )}
-            {false && (
+            {data.billingExceptions !== '0' && (
               <Button size='mini' className='btn btn--plain btn--round'>
                 计费异常
               </Button>
@@ -69,13 +77,20 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
     <View className='order-item order-item--shrink'>
       <View className='order-item__hd'>
         <Text className='date'>{data.createTime}</Text>
-        <Text className='state green'>
-          {
-            {
-              [OrderStatus.Borrow]: '借阅中',
-              [OrderStatus.Overdue]: '已逾期',
-              [OrderStatus.Finish]: '已完成'
-            }[data.status]
+        <Text className={classNames('state', {
+          'green': data.status === OrderStatus.Borrow,
+          'red': data.status === OrderStatus.Overdue,
+          'gray': data.status === OrderStatus.Finish
+        })}
+        >
+          {data.status === OrderStatus.Overdue
+            ? (data.returnTime ? '逾期' : '已逾期')
+            : OrderType[data.status]
+          }
+          {/* 逾期归还文本 */}
+          {(data.status === OrderStatus.Overdue && data.returnTime)
+            ? '/已归还'
+            : '/未归还'
           }
         </Text>
       </View>
@@ -93,7 +108,10 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             )}
           </View>
           <View className='flex-grow' />
-          {renderAction(data)}
+          {data.tosaleOrderNo
+            ? renderBuyFlag()
+            : renderAction(data)
+          }
         </View>
       </View>
     </View>

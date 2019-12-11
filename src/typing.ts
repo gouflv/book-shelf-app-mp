@@ -55,6 +55,8 @@ export interface Book {
   booksImg: string
   booksPrice: string
   borrowTotal: string
+  // 用户借阅单号
+  borrowOrder: string
 }
 
 // eslint-disable-next-line import/prefer-default-export
@@ -76,19 +78,26 @@ export interface Order {
   booksName: string
   booksImg: string
   booksPrice: string
+
+  status: OrderStatus
   createTime: string
   expireTime: string
-  status: OrderStatus
-
+  returnTime: string
+  // 逾期天数
   beOverdueNum: string
+  // TODO 逾期价格
   orderMoney: string
+  // 图书购买状态, 未购买为 null
+  tosaleOrderNo: string
+  // 计费异常: 大于0
+  billingExceptions: string
 }
 
 export interface Wallet {
   // 余额
-  balance: string
+  balance: number
   //押金总额
-  depositTotal: string
+  depositTotal: number
   //卡有效期
   // null 时代表次卡
   effectiveTimes: string

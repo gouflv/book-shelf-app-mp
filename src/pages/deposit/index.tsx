@@ -5,6 +5,13 @@ import { AtModal, AtModalAction, AtModalContent } from 'taro-ui'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import { usePagination } from '../../store/usePagaination'
+import { moneyFormat } from '../../utils'
+
+const DepositType = {
+  0: '归还',
+  1: '充值',
+  2: '续租抵扣',
+}
 
 const Page: Taro.FC = () => {
   const { wallet, isUserBoundPhone } = useContext(AppStore)
@@ -49,18 +56,24 @@ const Page: Taro.FC = () => {
           {items.map(item => (
             <View className='cell'>
               <View className='cell__bd'>
-                <View className='label'>[缴纳]缴纳押金</View>
+                <View className='label'>{DepositType[item.depositType] || item.depositType}</View>
                 <Text className='desc gray'>2019/11/12 18:00</Text>
               </View>
               <View className='cell__ft'>
-                <View className='money red'>
-                  +<Text className='money-unit money-unit--large'>¥</Text>
-                  99
-                </View>
-                <View className='money green'>
-                  -<Text className='money-unit money-unit--large'>¥</Text>
-                  99
-                </View>
+                {item.depositType === 1
+                  ? (
+                    <View className='money red'>
+                      +<Text className='money-unit money-unit--large'>¥</Text>
+                      {moneyFormat(item.depositPrice)}
+                    </View>
+                  )
+                  : (
+                    <View className='money green'>
+                      -<Text className='money-unit money-unit--large'>¥</Text>
+                      {moneyFormat(item.depositPrice)}
+                    </View>
+                  )
+                }
               </View>
             </View>
           ))}
@@ -80,9 +93,9 @@ const Page: Taro.FC = () => {
           <View className='top'>押金</View>
           <View className='money red'>
             <Text className='money-unit'>¥</Text>
-            {(wallet && wallet.depositTotal) ? wallet.depositTotal : '0'}
+            {wallet && moneyFormat(wallet.depositTotal)}
           </View>
-          {(wallet && wallet.depositTotal && parseFloat(wallet.depositTotal) < 99) && (
+          {(wallet && wallet.depositTotal < 99) && (
             <Button className='btn btn--round' size='mini' onClick={onDepositPaymentClick}>补缴押金</Button>
           )}
         </View>

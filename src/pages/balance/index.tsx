@@ -6,6 +6,12 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import { moneyFormat } from '../../utils'
 
+const RechargeType = {
+  0: '赠送',
+  1: '退款',
+  2: '消费',
+}
+
 const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
   const { items, fetchStart, isEmpty, isFinish } = usePagination({ url: 'wallet/rechargeRecordList' })
@@ -14,6 +20,7 @@ const Page: Taro.FC = () => {
     fetchStart()
   })
 
+  // eslint-disable-next-line react/no-multi-comp
   const renderList = () => {
     if (isEmpty) {
       return <View className='list-empty'>暂无记录</View>
@@ -23,16 +30,26 @@ const Page: Taro.FC = () => {
         <View className='card'>
           <View className='cell-group'>
             {items.map(item => (
-              <View className='cell'>
+              <View key={item.rechargeId} className='cell'>
                 <View className='cell__bd'>
-                  <View className='label'>{item.rechargeType}</View>
+                  <View className='label'>{RechargeType[item.rechargeType] || item.rechargeType}</View>
                   <Text className='desc gray'>{item.rechargeDate}</Text>
                 </View>
                 <View className='cell__ft'>
-                  <View className='money red'>
-                    +<Text className='money-unit money-unit--large'>¥</Text>
-                    {item.rechargePrice}
-                  </View>
+                  {item.rechargeType === 2
+                    ? (
+                      <View className='money green'>
+                        -<Text className='money-unit money-unit--large'>¥</Text>
+                        {moneyFormat(item.rechargePrice)}
+                      </View>
+                    )
+                    : (
+                      <View className='money red'>
+                        +<Text className='money-unit money-unit--large'>¥</Text>
+                        {moneyFormat(item.rechargePrice)}
+                      </View>
+                    )
+                  }
                 </View>
               </View>
             ))}

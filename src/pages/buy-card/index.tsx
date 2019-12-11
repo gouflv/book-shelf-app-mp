@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, RichText, Text, View } from '@tarojs/components'
 import SCheckbox from '../../components/SCheckbox'
-import { hideLoading, POST, showLoading, submitPayment } from '../../utils'
+import { hideLoading, moneyFormat, POST, showLoading, submitPayment } from '../../utils'
 import numeral from 'numeral'
 import classNames from 'classnames'
 import AppStore from '../../store/app'
@@ -150,7 +150,7 @@ const Page: Taro.FC = () => {
               </Text>
             </View>
             {wallet && wallet.balance && (
-              <View className='desc'>账户余额可抵扣: {wallet.balance}元</View>
+              <View className='desc'>账户余额可抵扣: {moneyFormat(wallet.balance)}元</View>
             )}
           </View>
           <Button className='btn btn-primary' onClick={onPaymentClick}>购买</Button>

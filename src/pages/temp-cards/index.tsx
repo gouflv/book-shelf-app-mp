@@ -71,13 +71,12 @@ const Page: Taro.FC = () => {
                     }
                   </View>
                 </View>
-                <View className='t-card__ft' onClick={() => Taro.navigateTo({ url: '/pages/home/introGuard' })}>
+                <View className='t-card__ft' onClick={() => Taro.switchTab({ url: '/pages/home/introGuard' })}>
                   <Text className='orange'>去使用</Text>
                 </View>
               </View>
             </View>
           ))}
-          <View className='list-finished'>到底了，我是有底线的</View>
         </View>
       )}
 

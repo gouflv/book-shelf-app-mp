@@ -26,7 +26,7 @@ export function showToast(props: Taro.showToast.Param) {
       duration: 2000,
       ...props
     })
-  }, 100)
+  }, 1)
 }
 
 export function distanceFormat(value: number) {

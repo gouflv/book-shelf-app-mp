@@ -32,9 +32,7 @@ class AppStore {
   @observable wallet: Wallet | null = null
 
   @computed get isUserBoundDevice() {
-    // return !!~[1011, 1012, 1013].indexOf(this.scene)
-    // return !!this.scanCabinet
-    return true
+    return !!this.scanCabinet
   }
 
   @computed get isUserBoundPhone() {
@@ -80,16 +78,11 @@ class AppStore {
   async fetchUserInfo() {
     this.user = await POST('account/myAccount')
     const wallet: Wallet = await POST('wallet/myWallet')
-    const walletExt: Wallet = await POST('wallet/myMemberAssetsParam')
+    const walletExt = await POST('wallet/myMemberAssetsParam')
     this.wallet = {
       ...wallet,
-      ..._pick(walletExt, [
-        'balance',
-        'depositTotal',
-        'depositBalance',
-        'depositOccupy',
-        'lendingcardTotal'
-      ])
+      balance: parseFloat(walletExt.balance || 0),
+      depositTotal: parseFloat(walletExt.depositTotal || 0)
     }
     console.debug(toJS(this.user))
     console.debug(toJS(this.wallet))
@@ -137,6 +130,7 @@ class AppStore {
     this.location = await Taro.getLocation({ type: 'gcj02' })
   }
 
+  // TODO init
   @action.bound
   setScanCabinet(cabinet: Cabinet) {
     this.scanCabinet = cabinet

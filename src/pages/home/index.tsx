@@ -24,7 +24,7 @@ const Index: Taro.FC = () => {
   }, [scanCabinet])
 
 
-  // borrow
+  // TODO move to borrow-confirm component
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<CabinetBook>()
   const borrowErrorConfig = {
@@ -68,7 +68,11 @@ const Index: Taro.FC = () => {
               <Image src={require('../../assets/home_icon_prompt@2x.png')} mode='aspectFit' className='icon' />
               借书请先缴纳押金
             </View>
-            <Button size='mini' className='btn-primary'>缴纳押金</Button>
+            <Button
+              size='mini'
+              className='btn-primary'
+              onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
+            >缴纳押金</Button>
           </View>
           <View className='space' />
         </View>

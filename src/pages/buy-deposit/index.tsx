@@ -5,14 +5,14 @@ import AppStore from '../../store/app'
 import numeral from 'numeral'
 import { observer } from '@tarojs/mobx'
 import { BASIC_DEPOSIT } from '../../config'
-import { submitPayment } from '../../utils'
+import { moneyFormat, submitPayment } from '../../utils'
 
 const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
   const [depositToPay, setDepositToPay] = useState('0')
   useEffect(() => {
     if (wallet && wallet.depositTotal) {
-      setDepositToPay(numeral(BASIC_DEPOSIT).subtract(wallet.depositTotal).format('0[.]0'))
+      setDepositToPay(numeral(BASIC_DEPOSIT).subtract(wallet.depositTotal).format('0[.]00'))
     } else {
       setDepositToPay( `${BASIC_DEPOSIT}`)
     }
@@ -32,7 +32,7 @@ const Page: Taro.FC = () => {
         <Image src={require('../../assets/pay_icon@2x.png')} mode='aspectFit' />
         <View className='money red'>
           <Text className='money-unit'>¥</Text>
-          {(wallet && wallet.depositTotal) ? wallet.depositTotal : '0'}
+          {BASIC_DEPOSIT}
         </View>
         <View className='title'>押金总额</View>
         <View className='desc'>
@@ -57,7 +57,7 @@ const Page: Taro.FC = () => {
               <View className='cell__ft'>
                 <View className='money'>
                   <Text className='money-unit'>¥</Text>
-                  {(wallet && wallet.depositTotal) ? wallet.depositTotal : '0'}
+                  {wallet && moneyFormat(wallet.depositTotal)}
                 </View>
               </View>
             </View>
