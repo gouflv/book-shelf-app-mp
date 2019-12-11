@@ -77,7 +77,7 @@ const SiteMap: Taro.FC = () => {
     hideLoading()
     if (items.length === 1) {
       setPreviewCabinet(items[0])
-      Taro.navigateTo({ url: '/pages/index/preview-only' })
+      Taro.navigateTo({ url: '/pages/home/preview-only' })
     } else if (items.length > 1) {
       setCabinets(items)
       setCabinetsSelectVisible(true)
@@ -89,7 +89,7 @@ const SiteMap: Taro.FC = () => {
   function onCabinetClick(item: Cabinet) {
     setPreviewCabinet(item)
     setCabinetsSelectVisible(false)
-    Taro.navigateTo({ url: '/pages/index/preview-only' })
+    Taro.navigateTo({ url: '/pages/home/preview-only' })
   }
 
   return (

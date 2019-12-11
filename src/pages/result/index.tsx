@@ -24,7 +24,7 @@ const Page: Taro.FC = () => {
           <View>
             <Button
               className='btn btn--round btn-primary'
-              onClick={() => Taro.switchTab({ url: '/pages/index/introGuard' })}
+              onClick={() => Taro.switchTab({ url: '/pages/home/introGuard' })}
             >
               去借书
             </Button>
@@ -42,7 +42,7 @@ const Page: Taro.FC = () => {
           <View>
             <Button
               className='btn btn--round btn-primary'
-              onClick={() => Taro.switchTab({ url: '/pages/index/introGuard' })}
+              onClick={() => Taro.switchTab({ url: '/pages/home/introGuard' })}
             >
               去借书
             </Button>

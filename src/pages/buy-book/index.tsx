@@ -49,7 +49,7 @@ const Page: Taro.FC = () => {
             <View className='cell__ft'>
               <Text className='money'>
                 <Text className='money-unit money-unit--large'>¥</Text>
-                {moneyFormat(bookPrice)}
+                {moneyFormat(price)}
               </Text>
             </View>
           </View>

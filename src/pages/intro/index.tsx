@@ -21,7 +21,7 @@ const Intro: Taro.FC = () => {
       const scan = await Taro.scanCode({ onlyFromCamera: true })
       console.log(scan)
       // TODO bind site
-      Taro.redirectTo({ url: '/pages/index/index' })
+      Taro.redirectTo({ url: '/pages/home/index' })
     } catch (e) {
       showToast({ title: '可能是无效的二维码' })
     }

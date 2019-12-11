@@ -2,7 +2,7 @@ import './app.scss'
 import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { onError, Provider } from '@tarojs/mobx'
-import Index from './pages/index'
+import Index from './pages/home'
 import { store as app } from './store/app'
 
 onError(error => {
@@ -15,16 +15,16 @@ class App extends Component {
 
   config: Config = {
     pages: [
-      'pages/boot/index',
+      'pages/index/index',
       'pages/login/index',
       'pages/user-bind-phone/index',
-      'pages/index/introGuard',
+      'pages/home/introGuard',
       'pages/wallet/index',
       'pages/user/index',
 
       //1
       'pages/site-map/index', //网点
-      'pages/index/preview-only', //网点页
+      'pages/home/preview-only', //网点页
       'pages/book/index', //图书页
       'pages/book/comments/index', //评论
       //2
@@ -59,7 +59,7 @@ class App extends Component {
     },
     tabBar: {
       list: [
-        { text: '借书', pagePath: 'pages/index/introGuard', iconPath: 'assets/tab_books_normal@2x.png', selectedIconPath: 'assets/tab_books_selected@2x.png' },
+        { text: '借书', pagePath: 'pages/home/introGuard', iconPath: 'assets/tab_books_normal@2x.png', selectedIconPath: 'assets/tab_books_selected@2x.png' },
         { text: '钱包', pagePath: 'pages/wallet/index', iconPath: 'assets/tab_wallet_normal@2x.png', selectedIconPath: 'assets/tab_wallet_selected@2x.png' },
         { text: '我的', pagePath: 'pages/user/index', iconPath: 'assets/tab_me_normal@2x.png', selectedIconPath: 'assets/tab_me_selected@2x.png' },
       ],

@@ -62,7 +62,7 @@ class AppStore {
       console.log(res)
       this.saveToken(res)
       await this.fetchUserInfo()
-      Taro.switchTab({ url: '/pages/index/introGuard' })
+      Taro.switchTab({ url: '/pages/home/introGuard' })
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
