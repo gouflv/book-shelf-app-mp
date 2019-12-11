@@ -2,7 +2,6 @@ import Taro, { createContext } from '@tarojs/taro'
 import { action, computed, observable, toJS } from 'mobx'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../utils'
 import { Cabinet, Site, User, Wallet } from '../typing'
-import _pick from 'lodash.pick'
 import _minBy from 'lodash.minby'
 
 import RouterInfo = Taro.RouterInfo
@@ -22,6 +21,12 @@ class AppStore {
     console.log('init', params)
     this.scene = params.scene as number
     this.shareTicket = params.shareTicket
+
+    if (this.scene === 1047 && params.query && (params.query as any).scene) {
+      this.setScanCabinet({
+        eqCode: (params.query as any).scene
+      } as Cabinet)
+    }
   }
 
   //#region user

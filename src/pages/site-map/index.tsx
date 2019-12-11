@@ -10,15 +10,11 @@ import { AtActionSheet, AtActionSheetItem } from 'taro-ui'
 import { Cabinet } from '../../typing'
 
 const SiteMap: Taro.FC = () => {
-  const { location, siteList, previewSite, getUserLocation, setPreviewSite, setPreviewCabinet } = useContext(AppStore)
+  const { location, siteList, previewSite, setPreviewSite, setPreviewCabinet } = useContext(AppStore)
 
   const [markers, setMarkers] = useState<marker[]>([])
   const [cabinets, setCabinets] = useState<Cabinet[]>([])
   const [cabinetsSelectVisible, setCabinetsSelectVisible] = useState(false)
-
-  useEffect(() => {
-    !location && getUserLocation()
-  }, [location])
 
   useEffect(() => {
     setMarkers(prevState => {

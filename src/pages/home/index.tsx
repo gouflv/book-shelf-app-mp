@@ -5,17 +5,12 @@ import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
 import { checkBorrowAllow, onBorrowConfirm, useCabinetBooks } from './store'
 import AppStore from '../../store/app'
-import { Cabinet, CabinetBook } from '../../typing'
+import { CabinetBook } from '../../typing'
 import { observer } from '@tarojs/mobx'
 
 const Index: Taro.FC = () => {
-  const { scanCabinet, setScanCabinet, isUserHasDeposit } = useContext(AppStore)
+  const { scanCabinet, isUserHasDeposit } = useContext(AppStore)
   const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
-
-  // initial
-  useEffect(() => {
-    setScanCabinet({ eqCode: 'T738' } as Cabinet)
-  }, [])
 
   useEffect(() => {
     if (scanCabinet) {
@@ -23,8 +18,7 @@ const Index: Taro.FC = () => {
     }
   }, [scanCabinet])
 
-
-  // TODO move to borrow-confirm component
+  // TODO move to b orrow-confirm component
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<CabinetBook>()
   const borrowErrorConfig = {
@@ -61,7 +55,7 @@ const Index: Taro.FC = () => {
   return (
     <View className='page-index'>
 
-      {isUserHasDeposit && (
+      {!isUserHasDeposit && (
         <View>
           <View className='deposit-tip'>
             <View className='content'>

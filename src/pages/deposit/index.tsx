@@ -31,7 +31,7 @@ const Page: Taro.FC = () => {
     setConfirmVisible(true)
   }
   function onGetBackConfirm() {
-    // TODO
+    // TODO 退款接口
     setConfirmVisible(true)
     Taro.navigateTo({ url: '/pages/result/index?type=getBackDeposit' })
   }

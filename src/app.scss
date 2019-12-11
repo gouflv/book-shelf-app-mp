@@ -252,6 +252,9 @@ page, view {
   background-color: #fff;
 }
 
+.at-modal__container {
+  border-radius: 10Px;
+}
 .modal {
   &-close {
     position: absolute;
@@ -280,15 +283,14 @@ page, view {
     margin-top: 56px;
     margin-bottom: 28px;
     text-align: center;
-    font-weight: bold;
-    font-size: $font-size-large;
+    font-size: 30px;
   }
   &-desc {
     margin-bottom: 56px;
     padding: 0 30px;
     text-align: center;
     line-height: 1.8;
-    font-size: $font-size-small;
+    font-size: 24px;
   }
   &-foot {
   }

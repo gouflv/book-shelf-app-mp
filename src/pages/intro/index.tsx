@@ -1,12 +1,16 @@
 import './index.scss'
-import Taro, { useContext, useEffect } from '@tarojs/taro'
-import { Image, Swiper, SwiperItem, View } from '@tarojs/components'
-import { distanceFormat, showToast } from '../../utils'
+import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
+import { Button, Image, Swiper, SwiperItem, View } from '@tarojs/components'
+import { distanceFormat } from '../../utils'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
+import queryString from 'query-string'
+import { Cabinet } from '../../typing'
+import ModalWithClose from '../../components/Modal/ModalWithClose'
 
 const Intro: Taro.FC = () => {
-  const { fetchSites, closestSite } = useContext(AppStore)
+  const { fetchSites, closestSite, setScanCabinet } = useContext(AppStore)
+  const [errorVisible, setErrorVisible] = useState(false)
 
   useEffect(() => {
     fetchSites()
@@ -19,11 +23,18 @@ const Intro: Taro.FC = () => {
   async function onScanClick() {
     try {
       const scan = await Taro.scanCode({ onlyFromCamera: true })
-      console.log(scan)
-      // TODO bind site
-      Taro.redirectTo({ url: '/pages/home/index' })
+      console.debug(scan)
+      const query = queryString.parse(scan.path.split('?').pop())
+      console.debug(query)
+
+      if (query && query.scene) {
+        setScanCabinet({ eqCode: query.scene } as Cabinet)
+      } else {
+        setErrorVisible(true)
+        return
+      }
     } catch (e) {
-      showToast({ title: '可能是无效的二维码' })
+      setErrorVisible(true)
     }
   }
 
@@ -63,6 +74,19 @@ const Intro: Taro.FC = () => {
       <View className='scan-btn'>
         <Image src={require('../../assets/home_btn_scanning@2x.png')} mode='aspectFit' className='icon' onClick={onScanClick} />
       </View>
+
+      <ModalWithClose isOpened={errorVisible} onCancel={() => setErrorVisible(false)}>
+        <View className='message-title'>
+          该二维码信息有误
+        </View>
+        <View className='message-desc'>
+          <View>该二维码信息有误</View>
+          请重新扫描二维码
+        </View>
+        <View className='message-foot'>
+          <Button className='btn btn-primary' onClick={() => setErrorVisible(false)}>确认</Button>
+        </View>
+      </ModalWithClose>
     </View>
   )
 }

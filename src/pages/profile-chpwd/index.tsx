@@ -37,7 +37,7 @@ const Page: Taro.FC = () => {
 
     showLoading()
     try {
-      //TODO
+      //TODO 验证修改密码授权
       setStep(1)
     } catch (e) {
       defaultErrorHandler(e)
