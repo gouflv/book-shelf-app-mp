@@ -1,56 +1,23 @@
 import './index.scss'
-import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
+import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { Button, Image, ScrollView, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
-import { checkBorrowAllow, onBorrowConfirm, useCabinetBooks } from './store'
+import { useCabinetBooks } from './store'
 import AppStore from '../../store/app'
-import { CabinetBook } from '../../typing'
 import { observer } from '@tarojs/mobx'
+import useBookBorrow from '../../utils/borrow-hook'
 
 const Index: Taro.FC = () => {
   const { scanCabinet, isUserHasDeposit } = useContext(AppStore)
   const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
+  const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
 
   useEffect(() => {
     if (scanCabinet) {
       fetchCabinetBook({ eqCode: scanCabinet.eqCode })
     }
   }, [scanCabinet])
-
-  // TODO move to b orrow-confirm component
-  const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
-  const [borrowItem, setBorrowItem] = useState<CabinetBook>()
-  const borrowErrorConfig = {
-    1: { type: '需绑定手机号', text: '查看', page: '/pages/user-bind-phone/index' },
-    2: { type: '每次最多只能借阅2本书', text: '查看', page: '/pages/order/index' },
-    3: { type: '你还有逾期费用未支付', text: '去支付', page: '/pages/order/index?tab=3' },
-    4: { type: '缴纳押金', text: '交押金', page: '/pages/buy-deposit/index' },
-    5: { type: '押金不足', text: '补押金', page: '/pages/buy-deposit/index' },
-    6: { type: '借阅卡', text: '去购买', page: '/pages/buy-card/index' }
-  }
-  async function onBorrowClick(book) {
-    const { error, code, title, content } = await checkBorrowAllow()
-    if (error) {
-      const config = borrowErrorConfig[code]
-      if (!config) {
-        console.error('handler undefined for', code)
-        return
-      }
-      Taro.showModal({
-        title,
-        content,
-        confirmText: config.text,
-      }).then(({ confirm }) => {
-        if (confirm) {
-          Taro.navigateTo({ url: config.page })
-        }
-      })
-      return
-    }
-    setBorrowItem(book)
-    setBorrowConfirmVisible(true)
-  }
 
   return (
     <View className='page-index'>
@@ -90,7 +57,7 @@ const Index: Taro.FC = () => {
         <View className='text'>你已看过的书</View>
       </View>
       <View className='page-section'>
-        <BookGrid items={[]} onBorrowClick={item => onBorrowClick(item)} />
+        <BookGrid items={[]} onBorrowClick={() => {}} />
       </View>
       <View className='space' />
 
@@ -98,8 +65,9 @@ const Index: Taro.FC = () => {
         <BorrowBookConfirm
           visible={borrowConfirmVisible}
           book={borrowItem}
-          onConfirm={() => onBorrowConfirm(borrowItem)}
-          onCancel={() => setBorrowConfirmVisible(false)}
+          isBorrowSend={isBorrowSend}
+          onConfirm={() => onBorrowConfirm()}
+          onCancel={() => closeBorrowConfirm()}
         />
       )}
     </View>

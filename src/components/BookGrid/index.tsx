@@ -11,7 +11,9 @@ const BookGrid: Taro.FC<{
 }> = props => {
 
   function onItemClick(item: CabinetBook) {
-    Taro.navigateTo({ url: `/pages/book/index?id=${item.bookId}` })
+    Taro.navigateTo({
+      url: `/pages/book/index?id=${item.bookId}&eqBoxId=${item.eqBoxId}&rfidCode=${item.rfidCode}`
+    })
   }
 
   return (

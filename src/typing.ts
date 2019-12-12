@@ -57,6 +57,7 @@ export interface Book {
   borrowTotal: string
   // 用户借阅单号
   borrowOrder: string
+  totalPrice: string
 }
 
 // eslint-disable-next-line import/prefer-default-export

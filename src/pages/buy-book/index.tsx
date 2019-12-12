@@ -19,7 +19,7 @@ const Page: Taro.FC = () => {
       setPrice(currentOrder.booksPrice)
 
       const discount = numeral(currentOrder.booksPrice).multiply(1- 0.7)
-      setDiscountAmount(discount.format('0[.]]00'))
+      setDiscountAmount(discount.format('0[.]00'))
 
       const val = numeral(currentOrder.booksPrice)
         .subtract(discount.value())

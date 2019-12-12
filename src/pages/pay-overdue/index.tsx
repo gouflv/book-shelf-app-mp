@@ -28,7 +28,7 @@ const Page: Taro.FC = () => {
   }, [wallet, currentOrder])
 
   async function onPaymentClick() {
-    submitPayment({
+    await submitPayment({
       url: 'book/payRenewingOrder',
       data: {
         orderNo: router.params.id
@@ -62,7 +62,7 @@ const Page: Taro.FC = () => {
                   {dayjs(currentOrder.expireTime).format('YYYY-MM-DD')}
                 </View>
               </View>
-              {currentOrder.returnTime && (
+              {currentOrder && currentOrder.returnTime && (
                 <View className='cell'>
                   <View className='cell__bd'>归还时间:</View>
                   <View className='cell__ft'>

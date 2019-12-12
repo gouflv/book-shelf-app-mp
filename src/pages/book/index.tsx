@@ -1,12 +1,43 @@
 import './index.scss'
-import Taro, { useState, useRouter, useEffect } from '@tarojs/taro'
+import Taro, { useState, useRouter, useEffect, useContext } from '@tarojs/taro'
 import { View, Image, Swiper, SwiperItem, RichText, Button } from '@tarojs/components'
 import { POST } from '../../utils'
-import { Book } from '../../typing'
+import { Book, CabinetBook, Order } from '../../typing'
+import useBookBorrow from '../../utils/borrow-hook'
+import BorrowBookConfirm from '../../components/BorrowBookConfirm'
+import AppStore from '../../store/app'
 
 const BookDetail: Taro.FC = () => {
   const { params } = useRouter()
+  const { setCurrentOrder, scanCabinet } = useContext(AppStore)
+  const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
 
+  function onBorrow() {
+    if (book) {
+      onBorrowClick({
+        bookId: book.booksId,
+        booksImg: book.booksImg,
+        booksName: book.booksName,
+        eqCode: scanCabinet.eqCode,
+        eqBoxId: params.eqBoxId,
+        rfidCode: params.rfidCode,
+      } as CabinetBook)
+    }
+  }
+
+  function onBuyClick() {
+    if (book) {
+      setCurrentOrder({
+        orderNo: book.borrowOrder,
+        booksName: book.booksName,
+        booksImg: book.booksImg,
+        booksPrice: book.totalPrice
+      } as Order)
+      Taro.navigateTo({ url: '/pages/buy-book/index' })
+    }
+  }
+
+  //#region PageData
   const [swiperIndex, onSwiperIndexChange] = useState(0)
   const [book, setBook] = useState<Book>()
 
@@ -20,6 +51,7 @@ const BookDetail: Taro.FC = () => {
     })
     setBook(data)
   }
+  //#endregion
 
   if (!book) {
     return <View />
@@ -92,10 +124,20 @@ const BookDetail: Taro.FC = () => {
 
       <View className='footer'>
         {book.borrowOrder
-          ? <Button className='btn btn-primary'>立即购买</Button>
-          : <Button className='btn btn-primary'>借阅</Button>
+          ? <Button className='btn btn-primary' onClick={onBuyClick}>立即购买</Button>
+          : <Button className='btn btn-primary' onClick={onBorrow}>借阅</Button>
         }
       </View>
+
+      {borrowItem && (
+        <BorrowBookConfirm
+          visible={borrowConfirmVisible}
+          book={borrowItem}
+          isBorrowSend={isBorrowSend}
+          onConfirm={() => onBorrowConfirm()}
+          onCancel={() => closeBorrowConfirm()}
+        />
+      )}
     </View>
   )
 }

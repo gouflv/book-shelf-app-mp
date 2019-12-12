@@ -8,6 +8,7 @@ import numeral from 'numeral'
 const BorrowBookConfirm: Taro.FC<{
   visible: boolean
   book: CabinetBook
+  isBorrowSend: boolean
   onConfirm: () => void
   onCancel: () => void
 }> = props => {
@@ -32,11 +33,18 @@ const BorrowBookConfirm: Taro.FC<{
         </View>
         <View className='desc'>
           {numeral(props.book.boxNum).format('00')}号柜
+          {props.isBorrowSend ? '柜门已开' : ''}
         </View>
-        <Button className='btn' onClick={() => props.onConfirm()}>我在书柜旁, 开柜</Button>
+        <Button className='btn' onClick={() => props.onConfirm()}>
+          {props.isBorrowSend ? '再次开柜' : '我在书柜旁, 开柜'}
+        </Button>
       </View>
     </ModalWithClose>
   )
+}
+
+BorrowBookConfirm.options = {
+  addGlobalClass: true
 }
 
 export default BorrowBookConfirm
