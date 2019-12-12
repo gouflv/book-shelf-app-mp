@@ -3,10 +3,11 @@ import { useCallback, useEffect, useReachBottom, useState } from '@tarojs/taro'
 
 interface usePaginationProps {
   url: string
+  params: any
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const usePagination = ({ url }: usePaginationProps) => {
+export const usePagination = ({ url, params }: usePaginationProps) => {
   const [items, setItems] = useState<any[]>([])
   const [index, setIndex] = useState(1)
   const [loading, setLoading] = useState(false)
@@ -18,7 +19,8 @@ export const usePagination = ({ url }: usePaginationProps) => {
       const data = await POST(url, {
         data: {
           pageIndex: index,
-          pageSize: 10
+          pageSize: 10,
+          ...params
         }
       })
       const f_items = data.records
@@ -37,7 +39,7 @@ export const usePagination = ({ url }: usePaginationProps) => {
       setLoading(false)
       hideLoading()
     }
-  }, [index, items, url])
+  }, [index, items, url, params])
 
   async function fetchStart() {
     showLoading()

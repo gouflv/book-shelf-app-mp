@@ -1,16 +1,20 @@
 import './index.scss'
-import Taro, { useDidShow, useEffect, useState } from '@tarojs/taro'
+import Taro, { useDidShow, useEffect, useState, useRouter } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import classNames from 'classnames'
 import OrderItem from './OrderItem'
 import { usePagination } from '../../store/usePagaination'
 
 const Page: Taro.FC = () => {
-  const [tab, setTab] = useState<1 | 2 | 3 | 4>(1)
-  const [url, setUrl] = useState()
+  const router = useRouter()
+  const [tab, setTab] = useState<1 | 2 | 3 | 4>(
+    (router.params.tab ? parseInt(router.params.tab) : 1) as any
+  )
+  const [params, setParams] = useState()
 
   const { items, fetchStart, isFinish, isEmpty, loading } = usePagination({
-    url
+    url: 'account/getOrderPageList',
+    params
   })
 
   useEffect(() => {
@@ -18,7 +22,7 @@ const Page: Taro.FC = () => {
     if (tab === 2) status = '0'
     if (tab === 3) status = '2'
     if (tab === 4) status = '3'
-    setUrl(`account/getOrderPageList?status=${status}`)
+    setParams({ status })
     fetchStart()
   }, [tab])
 
