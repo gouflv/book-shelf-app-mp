@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useContext, useEffect, useRouter, useState } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useState, useRouter } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import { moneyFormat, submitPayment } from '../../utils'
 import AppStore from '../../store/app'
@@ -7,18 +7,26 @@ import { observer } from '@tarojs/mobx'
 import numeral from 'numeral'
 
 const Page: Taro.FC = () => {
-  const { wallet } = useContext(AppStore)
   const router = useRouter()
+  const { wallet, currentOrder } = useContext(AppStore)
 
-  const [price] = useState(router.params.price)
-  const [amount, setAmount] = useState()
+  const [price, setPrice] = useState<string>()
+  const [discountAmount, setDiscountAmount] = useState<string>()
+  const [amount, setAmount] = useState<string>()
 
   useEffect(() => {
-    const val = numeral(price)
-      .subtract(wallet ? wallet.balance : 0)
-      .format('0[.]00')
-    setAmount(val)
-  }, [wallet, price])
+    if (currentOrder && wallet) {
+      setPrice(currentOrder.booksPrice)
+
+      const discount = numeral(currentOrder.booksPrice).multiply(1- 0.7)
+      setDiscountAmount(discount.format('0[.]]00'))
+
+      const val = numeral(currentOrder.booksPrice)
+        .subtract(discount.value())
+        .subtract(wallet.balance)
+      setAmount((val.value() < 0) ? '0' : val.format('0[.]00'))
+    }
+  }, [currentOrder, wallet])
 
   async function onPaymentClick() {
     await submitPayment({
@@ -33,14 +41,16 @@ const Page: Taro.FC = () => {
   return (
     <View className='page-section page--gray'>
 
-      <View className='card book-info-card'>
-        <View className='card-body'>
-          <Image className='thumb' src={router.params.image || '//placehold.it/130x160'} mode='aspectFit' />
-          <View className='content'>
-            <View className='title'>{router.params.book}</View>
+      {currentOrder && (
+        <View className='card book-info-card'>
+          <View className='card-body'>
+            <Image className='thumb' src={currentOrder.booksImg || '//placehold.it/130x160'} mode='aspectFit' />
+            <View className='content'>
+              <View className='title'>{currentOrder.booksName}</View>
+            </View>
           </View>
         </View>
-      </View>
+      )}
 
       <View className='card'>
         <View className='cell-group'>
@@ -53,15 +63,16 @@ const Page: Taro.FC = () => {
               </Text>
             </View>
           </View>
-          {/*<View className='cell cell--noborder'>*/}
-          {/*  <View className='cell__bd'>优惠金额:</View>*/}
-          {/*  <View className='cell__ft'>*/}
-          {/*    <Text className='tag' style={{ marginRight: '10px' }}>7折</Text>*/}
-          {/*    <Text className='money red'>*/}
-          {/*      -<Text className='money-unit money-unit--large'>¥</Text>100*/}
-          {/*    </Text>*/}
-          {/*  </View>*/}
-          {/*</View>*/}
+          <View className='cell cell--noborder'>
+            <View className='cell__bd'>优惠金额:</View>
+            <View className='cell__ft'>
+              <Text className='tag' style={{ marginRight: '10px' }}>7折</Text>
+              <Text className='money red'>
+                -<Text className='money-unit money-unit--large'>¥</Text>
+                {discountAmount}
+              </Text>
+            </View>
+          </View>
           <View className='cell'>
             <View className='cell__bd'>余额抵扣:</View>
             <View className='cell__ft'>

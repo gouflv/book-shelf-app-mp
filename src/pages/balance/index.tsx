@@ -36,7 +36,7 @@ const Page: Taro.FC = () => {
                   <Text className='desc gray'>{item.rechargeDate}</Text>
                 </View>
                 <View className='cell__ft'>
-                  {item.rechargeType === 2
+                  {item.rechargeType === '2'
                     ? (
                       <View className='money green'>
                         -<Text className='money-unit money-unit--large'>¥</Text>

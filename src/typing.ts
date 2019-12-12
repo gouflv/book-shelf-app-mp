@@ -73,7 +73,6 @@ export const enum OrderStatus {
 
 export interface Order {
   orderNo: string
-  goodsNames: string
   lendingcardType: CardType
   booksName: string
   booksImg: string

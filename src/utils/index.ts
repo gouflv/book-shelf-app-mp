@@ -35,7 +35,8 @@ export function distanceFormat(value: number) {
     : `${numeral(value).format('0')}m`
 }
 
-export function moneyFormat(value: string | number | null) {
+export function moneyFormat(value: string | number | null | undefined) {
+  if (!value) return '0'
   return numeral(value).format('0[.]00')
 }
 

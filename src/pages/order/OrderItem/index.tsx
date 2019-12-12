@@ -1,9 +1,11 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useContext } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import { CardType, Order, OrderStatus } from '../../../typing'
 import dayjs from 'dayjs'
 import classNames from 'classnames'
+import numeral from 'numeral'
+import AppStore from '../../../store/app'
 
 const OrderType = {
   [OrderStatus.Borrow]: '借阅中',
@@ -12,9 +14,11 @@ const OrderType = {
 }
 
 const OrderItem: Taro.FC<{ data: Order }> = props => {
-  // @ts-ignore
+  const { setCurrentOrder } = useContext(AppStore)
+
   // eslint-disable-next-line react/no-multi-comp
   const renderAction = (data: Order) => {
+    const overdueAmount = numeral(data.beOverdueNum || 0).multiply(0.6).format('0[.]00')
     return (
       <View>
         <View className='actions'>
@@ -22,7 +26,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             <View className='state'>
               已逾期{data.beOverdueNum}天
               <Text className='money red bold'>
-                <Text className='money-unit'>¥</Text>{data.orderMoney}
+                <Text className='money-unit'>¥</Text>{overdueAmount}
               </Text>
             </View>
           )}
@@ -32,9 +36,10 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
               <Button
                 size='mini'
                 className='btn btn-primary btn-primary--plain'
-                onClick={
-                  () => Taro.navigateTo({ url: `/pages/pay-overdue/index?id=${data.orderNo}` })
-                }
+                onClick={() => {
+                  setCurrentOrder(data)
+                  Taro.navigateTo({ url: `/pages/pay-overdue/index?id=${data.orderNo}` })
+                }}
               >
                 逾期支付
               </Button>
@@ -43,9 +48,10 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
               <Button
                 size='mini'
                 className='btn btn-primary btn--round'
-                onClick={
-                  () => Taro.navigateTo({ url: `/pages/buy-book/index?id=${data.orderNo}` })
-                }
+                onClick={() => {
+                  setCurrentOrder(data)
+                  Taro.navigateTo({ url: `/pages/buy-book/index?id=${data.orderNo}` })
+                }}
               >
                 买下
               </Button>
@@ -96,7 +102,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
       <View className='order-item__bd'>
         <Image className='thumb' src={data.booksImg || '//placehold.it/130x160'} mode='aspectFit' />
         <View className='content'>
-          <View className='title'>{data.goodsNames || data.booksName}</View>
+          <View className='title'>{data.booksName}</View>
           <View className='desc'>
             {data.lendingcardType === CardType.DATE_RANGE
               ? <Image src={require('../../../assets/order_icon_borrowcard@2x.png')} mode='aspectFit' className='icon-card-1' />

@@ -80,11 +80,17 @@ class App extends Component {
 
   componentDidMount () {}
 
-  componentDidShow () {}
+  componentDidShow () {
+    if (app.user) {
+      app.fetchUserInfo()
+    }
+  }
 
   componentDidHide () {}
 
-  componentDidCatchError () {}
+  componentDidCatchError (e) {
+    console.error(e)
+  }
 
   render () {
     return (

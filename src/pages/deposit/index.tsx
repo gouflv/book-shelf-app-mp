@@ -60,7 +60,7 @@ const Page: Taro.FC = () => {
                 <Text className='desc gray'>2019/11/12 18:00</Text>
               </View>
               <View className='cell__ft'>
-                {item.depositType === 1
+                {item.depositType === '1'
                   ? (
                     <View className='money red'>
                       +<Text className='money-unit money-unit--large'>¥</Text>
