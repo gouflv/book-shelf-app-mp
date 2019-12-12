@@ -44,7 +44,7 @@ const Page: Taro.FC = () => {
       </View>
 
       <View className='card card--shadow menu'>
-        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index?tab=2` })}>
+        <View className='item' onClick={() => Taro.navigateTo({ url: `/pages/order/index` })}>
           <View className='thumb'>
             <Image src={require('../../assets/me_icon_borrowing@2x.png')} mode='aspectFit' />
             {showNotify('borrowingNum') && (

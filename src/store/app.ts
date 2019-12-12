@@ -135,7 +135,6 @@ class AppStore {
     this.location = await Taro.getLocation({ type: 'gcj02' })
   }
 
-  // TODO init
   @action.bound
   setScanCabinet(cabinet: Cabinet) {
     this.scanCabinet = cabinet

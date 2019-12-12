@@ -113,7 +113,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             )}
           </View>
           <View className='flex-grow' />
-          {data.tosaleOrderNo
+          {data.subStatus === '3'
             ? renderBuyFlag()
             : renderAction(data)
           }

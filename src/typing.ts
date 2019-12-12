@@ -80,13 +80,12 @@ export interface Order {
   booksPrice: string
 
   status: OrderStatus
+  subStatus: '3'
   createTime: string
   expireTime: string
   returnTime: string
   // 逾期天数
   beOverdueNum: string
-  // TODO 逾期价格
-  orderMoney: string
   // 图书购买状态, 未购买为 null
   tosaleOrderNo: string
   // 计费异常: 大于0
