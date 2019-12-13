@@ -1,6 +1,6 @@
 import './index.scss'
 import Taro, { useState, useContext, useEffect, showModal } from '@tarojs/taro'
-import { Button, Input, View } from '@tarojs/components'
+import { Button, Input, View, Text } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { defaultErrorHandler, encodePhone, hideLoading, POST, showLoading, showToast } from '../../utils'
 import useCountDown from '../../utils/countdown-hook'
@@ -8,37 +8,42 @@ import NumberInput from './NumberInput'
 
 const Page: Taro.FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
 
   //#region step1
   const [timeLeft, start] = useCountDown()
   const [smsCode, setSmsCode] = useState('')
+
   async function sendSms() {
     showLoading()
     try {
-      await POST('base/getVerificationCode', {
+      await POST('base/getMemberVerificationCode', {
         data: { phone: user && user.tel }
       })
       // @ts-ignore
-      // start()
+      start()
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
       hideLoading()
     }
   }
+
   async function commitSmsCode() {
     if (!smsCode) {
       showToast({ title: '请输入短信验证码' })
       return
     }
-    // @ts-ignore
-    start(0)
 
     showLoading()
     try {
-      //TODO 验证修改密码授权
-      setStep(1)
+      if (false) {
+        setStep(1)
+        // @ts-ignore
+        start(0)
+      } else {
+        showToast({ title: '短信验证码无效' })
+      }
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
@@ -141,7 +146,10 @@ const Page: Taro.FC = () => {
             {user && encodePhone(user.tel)}
           </View>
           <View className='desc'>
-            {(timeLeft as number) / 1000}s
+            {timeLeft
+              ? <Text>{(timeLeft as number) / 1000}s</Text>
+              : <Text onClick={() => sendSms()}>点击重发</Text>
+            }
           </View>
           <NumberInput
             onChange={val => setSmsCode(val)}
@@ -157,7 +165,7 @@ const Page: Taro.FC = () => {
               <Input className='input' placeholder='请输入您要绑定的新手机号' value={phone} onInput={e => setPhone(e.detail.value)} />
             </View>
             <View className='form-item'>
-              <Input type='digit' className='input' placeholder='请输入短信验证码' />
+              <Input type='digit' className='input' placeholder='请输入短信验证码' onInput={e => setSmsCode(e.detail.value)} />
               <Button
                 className='btn btn--plain orange btn-send'
                 size='mini'

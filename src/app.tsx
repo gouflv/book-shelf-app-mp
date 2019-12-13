@@ -35,7 +35,7 @@ class App extends Component {
       'pages/buy-deposit/index', //押金支付
       //3
       'pages/profile/index', //个人
-      'pages/profile-chpwd/index',
+      'pages/profile-chang-phone/index',
       //4
       'pages/order/index', //订单
       'pages/buy-book/index', //购书

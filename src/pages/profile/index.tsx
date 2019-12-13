@@ -113,7 +113,7 @@ const Page: Taro.FC = () => {
           if (!isUserBoundPhone) {
             Taro.navigateTo({ url: '/pages/user-bind-phone/index' })
           } else {
-            Taro.navigateTo({ url: '/pages/profile-chpwd/index' })
+            Taro.navigateTo({ url: '/pages/profile-chang-phone/index' })
           }
         }}
         >
@@ -201,15 +201,15 @@ const Page: Taro.FC = () => {
 
       <ModalWithClose className='popup-modal' isOpened={childGenderVisible} onCancel={() => setChildGenderVisible(false)}>
         <View className='modal-header'>宝宝性别选择</View>
-        <View className='cell'>
+        <View className='cell' onClick={() => setChildGender('1')}>
           <View className='cell__hd'>
-            <SCheckbox value={childGender === '1'} onChange={() => setChildGender('1')} />
+            <SCheckbox value={childGender === '1'} />
           </View>
           <View className='cell__bd'>男宝</View>
         </View>
-        <View className='cell'>
+        <View className='cell'  onClick={() => setChildGender('2')}>
           <View className='cell__hd'>
-            <SCheckbox value={childGender === '2'} onChange={() => setChildGender('2')} />
+            <SCheckbox value={childGender === '2'} />
           </View>
           <View className='cell__bd'>女宝</View>
         </View>
