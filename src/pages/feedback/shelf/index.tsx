@@ -4,7 +4,8 @@ import { Button, Image, Picker, Textarea, View } from '@tarojs/components'
 import ModalWithClose from '../../../components/Modal/ModalWithClose'
 import useFetchOrders from '../useFetchOrders'
 import classNames from 'classnames'
-import { hideLoading, showLoading, showToast } from '../../../utils'
+import { hideLoading, POST, showLoading, showToast } from '../../../utils'
+import { Order } from '../../../typing'
 
 const Problems = [
   { key: 1, name: '提示已开柜，但柜门未开启' },
@@ -15,16 +16,16 @@ function getProblemByIndex(index) {
 }
 
 const Page: Taro.FC = () => {
-  //TODO limit orders by least 7d
-  const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders()
+  const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders({
+    day: 1,
+    emptyText: '暂无借书记录'
+  })
   const [resultVisible, setResultVisible] = useState(false)
-  const [ currentOrder, setCurrentOrder ] = useState()
-  const [ problem, setProblem ] = useState()
+  const [ currentOrder, setCurrentOrder] = useState<Order>()
+  const [ problem, setProblem ] = useState<{ key, name }>()
   const [ other, setOther ] = useState()
 
-  function submit() {
-    // TODO check order amount
-
+  async function submit() {
     if (!currentOrder) {
       showToast({ title: '请填选择开柜异常的书本' })
       return
@@ -34,7 +35,14 @@ const Page: Taro.FC = () => {
       return
     }
     showLoading()
-    // TODO
+    await POST('account/configProblemAdd', {
+      data: {
+        orderNo: currentOrder.orderNo,
+        faultType: '0',
+        faultDescription: problem.name,
+        faultNote: other
+      }
+    })
     hideLoading()
     setResultVisible(true)
   }
@@ -63,7 +71,7 @@ const Page: Taro.FC = () => {
                   {isOrderEmpty
                     ? '暂无借书记录'
                     : currentOrder
-                      ? currentOrder.name
+                      ? currentOrder.booksName
                       : '请选择开柜异常的书'
                   }
                 </View>

@@ -1,21 +1,34 @@
 import '../index.scss'
-import Taro, { useState } from '@tarojs/taro'
+import Taro, { useState, useEffect } from '@tarojs/taro'
 import { Button, Image, Input, Picker, Text, View } from '@tarojs/components'
 import ModalWithClose from '../../../components/Modal/ModalWithClose'
 import useFetchOrders from '../useFetchOrders'
 import classNames from 'classnames'
-import { hideLoading, showLoading, showToast } from '../../../utils'
+import { hideLoading, moneyFormat, POST, showLoading, showToast } from '../../../utils'
+import { CardType, Order, OrderStatus } from '../../../typing'
+import { MoneyFormatter } from '../../../config'
+import dayjs from 'dayjs'
+import numeral from 'numeral'
 
 const Page: Taro.FC = () => {
-  //TODO limit orders by least 7d
-  const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders()
+  const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders({
+    day: 7,
+    status: OrderStatus.Finish,
+    emptyText: '暂无归还记录'
+  })
   const [resultVisible, setResultVisible] = useState(false)
-  const [ currentOrder, setCurrentOrder ] = useState()
+  const [ currentOrder, setCurrentOrder ] = useState<Order>()
   const [ inputDays, setInputDays ] = useState()
 
-  function submit() {
-    // TODO check order amount
+  const [amount, setAmount] = useState('')
+  useEffect(() => {
+    if (currentOrder) {
+      const num = numeral(currentOrder.overdueDays).multiply(0.6)
+      setAmount(num.value() < 0 ? '0' : num.format(MoneyFormatter))
+    }
+  }, [currentOrder])
 
+  async function submit() {
     if (!currentOrder) {
       showToast({ title: '请选择借阅书本' })
       return
@@ -25,7 +38,14 @@ const Page: Taro.FC = () => {
       return
     }
     showLoading()
-    // TODO
+    await POST('account/configProblemAdd', {
+      data: {
+        orderNo: currentOrder.orderNo,
+        faultType: 2,
+        faultDescription: inputDays,
+        faultNote: inputDays
+      }
+    })
     hideLoading()
     setResultVisible(true)
   }
@@ -54,9 +74,7 @@ const Page: Taro.FC = () => {
                 <View className={classNames(['cell__bd', { 'gray': isOrderEmpty || !currentOrder }])}>
                   {isOrderEmpty
                     ? '暂无归还记录'
-                    : currentOrder
-                      ? currentOrder.name
-                      : '请选择计费有误的书'
+                    : currentOrder ? currentOrder.booksName : '请选择计费有误的书'
                   }
                 </View>
                 <View className='cell__ft'>
@@ -70,34 +88,47 @@ const Page: Taro.FC = () => {
           </View>
         </View>
 
-        <View className='card'>
-          <View className='cell-group cell-group--small'>
-            <View className='cell cell--noborder'>
-              <View className='cell__bd'>借阅时间:</View>
-              <View className='cell__ft'>2019-5-9 至 2019-5-12</View>
-            </View>
-            <View className='cell cell--noborder'>
-              <View className='cell__bd'>归还时间:</View>
-              <View className='cell__ft'>2019-5-12</View>
-            </View>
-            <View className='cell cell--noborder'>
-              <View className='cell__bd'>借阅方式:</View>
-              <View className='cell__ft'>次卡</View>
-            </View>
-            <View className='cell'>
-              <View className='cell__bd'>借阅天数:</View>
-              <View className='cell__ft'>6天</View>
-            </View>
-            <View className='cell summary'>
-              <View className='cell__bd bold'>费用:</View>
-              <View className='cell__ft'>
-                <Text className='money red bold'>
-                  <Text className='money-unit'>¥</Text>90.99
-                </Text>
+        {currentOrder && (
+          <View className='card'>
+            <View className='cell-group cell-group--small'>
+              <View className='cell cell--noborder'>
+                <View className='cell__bd'>借阅时间:</View>
+                <View className='cell__ft'>
+                  {dayjs(currentOrder.createTime).format('YYYY-MM-DD')}
+                  至
+                  {dayjs(currentOrder.expireTime).format('YYYY-MM-DD')}
+                </View>
+              </View>
+              <View className='cell cell--noborder'>
+                <View className='cell__bd'>归还时间:</View>
+                <View className='cell__ft'>
+                  {dayjs(currentOrder.returnTime).format('YYYY-MM-DD')}
+                </View>
+              </View>
+              <View className='cell cell--noborder'>
+                <View className='cell__bd'>借阅方式:</View>
+                <View className='cell__ft'>
+                  {currentOrder.lendingcardType === CardType.TIMES ? '次卡' : '借阅卡'}
+                </View>
+              </View>
+              <View className='cell'>
+                <View className='cell__bd'>借阅天数:</View>
+                <View className='cell__ft'>
+                  {currentOrder.borrowingDays}天
+                </View>
+              </View>
+              <View className='cell summary'>
+                <View className='cell__bd bold'>费用:</View>
+                <View className='cell__ft'>
+                  <Text className='money red bold'>
+                    <Text className='money-unit'>¥</Text>
+                    {moneyFormat(amount)}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
+        )}
 
         <View className='card'>
           <View className='cell-group cell-group--small'>

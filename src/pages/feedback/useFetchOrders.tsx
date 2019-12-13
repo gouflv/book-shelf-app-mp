@@ -8,22 +8,26 @@ interface useFetchOrdersProps {
   emptyText: string
 }
 
-export default function useFetchOrders(props: useFetchOrdersProps = {} as any) {
-  const { day, status, emptyText } = props
-
+export default function useFetchOrders(
+  { day, status, emptyText }: useFetchOrdersProps
+) {
   const [items, setItems] = useState<any[]>([])
   const [isEmpty, setEmpty] = useState(false)
   const [options, setOptions] = useState<string[]>([])
 
   useEffect(() => {
     async function fetch() {
-      const data = await POST('account/getOrderList', {
-        data: { day, status }
+      const data = {} as any
+      if (day) data.day = day
+      if (status) data.status = status
+
+      const res = await POST('account/getOrderList', {
+        data
       })
-      setEmpty(!data.length)
-      setItems(data)
-      setOptions(data.length
-        ? data.map(d => d.goods_names)
+      setEmpty(!res.length)
+      setItems(res)
+      setOptions(res.length
+        ? res.map(d => d.booksName)
         : [emptyText]
       )
     }

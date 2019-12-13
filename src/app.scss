@@ -165,6 +165,7 @@ page, view {
   }
   &__bd {
     flex: 1 0 auto;
+    margin-right: 20px;
     font-size: $font-size-large;
     .desc {
       margin-top: 4px;
@@ -172,9 +173,11 @@ page, view {
     }
   }
   &__ft {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     font-size: $font-size-large - 2;
     text-align: right;
+    white-space: nowrap;
+    @include line(1);
     button {
       vertical-align: middle;
     }

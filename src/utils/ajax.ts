@@ -32,7 +32,7 @@ export const ajax = (url, options?: AjaxOptions) =>
         showToast({ title: '服务繁忙, 请稍后再试' })
         reject({ handler: true })
       } else {
-        resolve(data.data)
+        resolve(data.data || {})
       }
     } catch (e) {
       showToast({ title: '网络开小差了' })

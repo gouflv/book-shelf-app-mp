@@ -5,6 +5,7 @@ import { moneyFormat, submitPayment } from '../../utils'
 import AppStore from '../../store/app'
 import numeral from 'numeral'
 import dayjs from 'dayjs'
+import { MoneyFormatter } from '../../config'
 
 const Page: Taro.FC = () => {
   const router = useRouter()
@@ -18,11 +19,11 @@ const Page: Taro.FC = () => {
       const balance = wallet ? wallet.balance : '0'
 
       const overdue = days.multiply(0.6)
-      setOverdueAmount(overdue.format('0[.]00'))
+      setOverdueAmount(overdue.format(MoneyFormatter))
 
       const pay = numeral(overdue).multiply(balance)
       setAmount(
-        (pay.value() < 0 ) ? '0' : pay.format('0[.]00')
+        (pay.value() < 0 ) ? '0' : pay.format(MoneyFormatter)
       )
     }
   }, [wallet, currentOrder])

@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 import classNames from 'classnames'
 import numeral from 'numeral'
 import AppStore from '../../../store/app'
+import { MoneyFormatter } from '../../../config'
 
 const OrderType = {
   [OrderStatus.Borrow]: '借阅中',
@@ -18,7 +19,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
 
   // eslint-disable-next-line react/no-multi-comp
   const renderAction = (data: Order) => {
-    const overdueAmount = numeral(data.beOverdueNum || 0).multiply(0.6).format('0[.]00')
+    const overdueAmount = numeral(data.beOverdueNum || 0).multiply(0.6).format(MoneyFormatter)
     return (
       <View>
         <View className='actions'>

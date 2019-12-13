@@ -6,6 +6,7 @@ export * from './ajax'
 import Taro from '@tarojs/taro'
 import numeral from 'numeral'
 import { defaultErrorHandler, POST } from './ajax'
+import { MoneyFormatter } from '../config'
 
 export function showLoading(props?: Partial<Taro.showLoading.Param>) {
   Taro.showLoading({
@@ -37,7 +38,7 @@ export function distanceFormat(value: number) {
 
 export function moneyFormat(value: string | number | null | undefined) {
   if (!value) return '0'
-  return numeral(value).format('0[.]00')
+  return numeral(value).format(MoneyFormatter)
 }
 
 export function encodePhone(val: string) {

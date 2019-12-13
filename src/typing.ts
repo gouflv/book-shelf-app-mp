@@ -84,6 +84,9 @@ export interface Order {
   createTime: string
   expireTime: string
   returnTime: string
+  borrowingDays: string
+  overdueDays: string
+
   // 逾期天数
   beOverdueNum: string
   // 图书购买状态, 未购买为 null

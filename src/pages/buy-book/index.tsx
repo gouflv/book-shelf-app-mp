@@ -5,6 +5,7 @@ import { moneyFormat, submitPayment } from '../../utils'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import numeral from 'numeral'
+import { MoneyFormatter } from '../../config'
 
 const Page: Taro.FC = () => {
   const router = useRouter()
@@ -19,12 +20,12 @@ const Page: Taro.FC = () => {
       setPrice(currentOrder.booksPrice)
 
       const discount = numeral(currentOrder.booksPrice).multiply(1- 0.7)
-      setDiscountAmount(discount.format('0[.]00'))
+      setDiscountAmount(discount.format(MoneyFormatter))
 
       const val = numeral(currentOrder.booksPrice)
         .subtract(discount.value())
         .subtract(wallet.balance)
-      setAmount((val.value() < 0) ? '0' : val.format('0[.]00'))
+      setAmount((val.value() < 0) ? '0' : val.format(MoneyFormatter))
     }
   }, [currentOrder, wallet])
 

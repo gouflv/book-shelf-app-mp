@@ -4,7 +4,7 @@ import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import numeral from 'numeral'
 import { observer } from '@tarojs/mobx'
-import { BASIC_DEPOSIT } from '../../config'
+import { BASIC_DEPOSIT, MoneyFormatter } from '../../config'
 import { moneyFormat, submitPayment } from '../../utils'
 
 const Page: Taro.FC = () => {
@@ -12,7 +12,7 @@ const Page: Taro.FC = () => {
   const [depositToPay, setDepositToPay] = useState('0')
   useEffect(() => {
     if (wallet && wallet.depositTotal) {
-      setDepositToPay(numeral(BASIC_DEPOSIT).subtract(wallet.depositTotal).format('0[.]00'))
+      setDepositToPay(numeral(BASIC_DEPOSIT).subtract(wallet.depositTotal).format(MoneyFormatter))
     } else {
       setDepositToPay( `${BASIC_DEPOSIT}`)
     }
