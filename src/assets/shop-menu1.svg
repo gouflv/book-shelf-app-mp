@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="334px" height="120px" viewBox="0 0 334 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>Group Copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="44.4487312%" x2="100%" y2="56.4541576%" id="linearGradient-1">
+            <stop stop-color="#6385F2" offset="0%"></stop>
+            <stop stop-color="#CEF9F7" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-2" x="0" y="0" width="334" height="120" rx="8"></rect>
+        <linearGradient x1="90.8454502%" y1="9.53081916%" x2="22.2516888%" y2="75.178079%" id="linearGradient-4">
+            <stop stop-color="#A4E3F5" offset="0%"></stop>
+            <stop stop-color="#79B3F7" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="13.5368087%" y1="82.9512266%" x2="90.2537085%" y2="11.1866603%" id="linearGradient-5">
+            <stop stop-color="#BBDFFD" offset="0%"></stop>
+            <stop stop-color="#B4E7FA" stop-opacity="0.614951313" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="94.0551758%" y1="49.0242187%" x2="13.7044271%" y2="50%" id="linearGradient-6">
+            <stop stop-color="#9DDBF5" offset="0%"></stop>
+            <stop stop-color="#8DC9F6" offset="100%"></stop>
+        </linearGradient>
+        <rect id="path-7" x="0" y="0" width="334" height="120" rx="8"></rect>
+    </defs>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="书城改版" transform="translate(-30.000000, -306.000000)">
+            <g id="Group-Copy" transform="translate(30.000000, 306.000000)">
+                <g id="表单管理">
+                    <mask id="mask-3" fill="white">
+                        <use xlink:href="#path-2"></use>
+                    </mask>
+                    <use id="Mask" fill="url(#linearGradient-1)" fill-rule="nonzero" xlink:href="#path-2"></use>
+                    <rect id="Rectangle-2" fill="#FFFFFF" fill-rule="nonzero" opacity="0.0962611607" mask="url(#mask-3)" transform="translate(104.500000, 14.500000) rotate(-30.000000) translate(-104.500000, -14.500000) " x="-17" y="-80" width="243" height="189"></rect>
+                    <g opacity="0.4" mask="url(#mask-3)" fill-rule="nonzero">
+                        <g transform="translate(274.000000, 47.000000)">
+                            <path d="M66,88 L40.8571371,88 C26.4847098,88 0,74.575035 0,52.3118889 L0,9.06896547 C0,7.62068962 0.733332362,6.8965517 1.46666472,5.44827585 C2.19999709,4.72413792 3.66666181,4 5.13332663,4 C11.8747333,4 16.9307883,4 20.3014916,4 C20.9899239,4 22.3997835,7.11417165 23.1398575,7.11417165 C28.3887596,7.11417165 42.5919067,7.32105928 52.4751116,7.11417165 C53.1682563,7.04405613 54.4449576,4.4985208 55.3475282,4 C56.2251942,4.00472484 59.0040728,4.00472484 63.6841641,4 C65.2280547,5.44827585 66,6.8965517 66,8.34482755 L66,61.9310345 L66,88 Z" id="Shape" fill="url(#linearGradient-4)"></path>
+                            <path d="M69,13 L69,79 L41,79 C22.7746033,79 8,64.2253967 8,46 L8,17 C8,14.790861 9.790861,13 12,13 L69,13 Z M60.6222582,51.2429907 L20.7348846,51.2429907 C19.2019073,51.2429907 17.9591837,52.4857143 17.9591837,54.0186916 C17.9591837,55.5516689 19.2019073,56.7943925 20.7348846,56.7943925 L20.7348846,56.7943925 L60.6222582,56.7943925 C62.1552355,56.7943925 63.3979592,55.5516689 63.3979592,54.0186916 C63.3979592,52.4857143 62.1552355,51.2429907 60.6222582,51.2429907 L60.6222582,51.2429907 Z M60.6222582,37.6728972 L20.7348846,37.6728972 C19.2019073,37.6728972 17.9591837,38.9156208 17.9591837,40.4485981 C17.9591837,41.9815754 19.2019073,43.2242991 20.7348846,43.2242991 L20.7348846,43.2242991 L60.6222582,43.2242991 C62.1552355,43.2242991 63.3979592,41.9815754 63.3979592,40.4485981 C63.3979592,38.9156208 62.1552355,37.6728972 60.6222582,37.6728972 L60.6222582,37.6728972 Z M60.6222582,24.1028037 L20.7348846,24.1028037 C19.2019073,24.1028037 17.9591837,25.3455274 17.9591837,26.8785047 C17.9591837,28.411482 19.2019073,29.6542056 20.7348846,29.6542056 L20.7348846,29.6542056 L60.6222582,29.6542056 C62.1552355,29.6542056 63.3979592,28.411482 63.3979592,26.8785047 C63.3979592,25.3455274 62.1552355,24.1028037 60.6222582,24.1028037 L60.6222582,24.1028037 Z" id="Combined-Shape" fill="url(#linearGradient-5)"></path>
+                            <path d="M26,0 L50,0 C51.6568542,-3.04359188e-16 53,1.34314575 53,3 C53,4.65685425 51.6568542,6 50,6 L26,6 C24.3431458,6 23,4.65685425 23,3 C23,1.34314575 24.3431458,3.04359188e-16 26,0 Z" id="Rectangle-4" fill="url(#linearGradient-6)"></path>
+                        </g>
+                    </g>
+                    <mask id="mask-8" fill="white">
+                        <use xlink:href="#path-7"></use>
+                    </mask>
+                    <g id="Mask" fill-rule="nonzero"></g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

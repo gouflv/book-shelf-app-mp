@@ -19,7 +19,7 @@ const Page: Taro.FC = () => {
         // Taro.switchTab({ url: '/pages/user/index' })
         // Taro.redirectTo({ url: '/pages/login/index' })
         // Taro.redirectTo({ url: '/pages/order/index' })
-        Taro.redirectTo({ url: '/pages/help/index' })
+        Taro.redirectTo({ url: '/pages/profile/index' })
       } else {
         Taro.redirectTo({ url: '/pages/login/index' })
       }

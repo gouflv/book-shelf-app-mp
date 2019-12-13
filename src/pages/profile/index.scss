@@ -44,3 +44,13 @@
     border-radius: 10Px 10Px 0 0;
   }
 }
+
+.input {
+  margin-left: auto;
+  width: 120Px;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid $gray;
+  font-size: $font-size-large;
+  border-radius: 4Px;
+}
