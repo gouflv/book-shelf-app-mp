@@ -4,7 +4,10 @@ import { API_BASE } from '../config'
 import { showToast } from './index'
 import { store } from '../store/app'
 
-interface AjaxOptions extends Partial<request.Param> {}
+interface AjaxOptions extends Partial<request.Param> {
+  returnOriginResponse?: boolean
+}
+
 interface AjaxError {
   handler: boolean
   code: number
@@ -27,12 +30,17 @@ export const ajax = (url, options?: AjaxOptions) =>
       if (statusCode === 401) {
         showToast({ title: data.message || '服务繁忙, 请稍后再试' })
         reject({ handler: true })
+        store.tryFetchTokenByLocalOpenId()
       }
       if (statusCode === 500) {
         showToast({ title: '服务繁忙, 请稍后再试' })
         reject({ handler: true })
       } else {
-        resolve(data.data || {})
+        if (options && options.returnOriginResponse) {
+          resolve(data)
+        } else {
+          resolve(data.data || {})
+        }
       }
     } catch (e) {
       showToast({ title: '网络开小差了' })

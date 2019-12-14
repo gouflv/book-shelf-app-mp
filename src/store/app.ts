@@ -63,7 +63,8 @@ class AppStore {
         data: { code, encryptedData, iv }
       })
       console.log(res)
-      this.saveToken(res)
+      this.saveToken(res.clientToken)
+      this.saveOpenId(res.openId)
       await this.fetchUserInfo()
       Taro.switchTab({ url: '/pages/home/introGuard' })
     } catch (e) {
@@ -74,9 +75,29 @@ class AppStore {
   }
 
   @action.bound
-  saveToken({ clientToken }) {
+  async tryFetchTokenByLocalOpenId() {
+    const openId = Taro.getStorageSync('open_id')
+    if (!openId) {
+      return
+    }
+    const res = await POST('base/callback/getTokenByOpenId', {
+      data: { openId }
+    })
+    if (res) {
+      this.saveToken(res.clientToken)
+      Taro.reLaunch({ url: '/pages/index/index' })
+    }
+  }
+
+  @action.bound
+  saveToken(clientToken) {
     this.token = clientToken
     Taro.setStorageSync('client_token', clientToken)
+  }
+
+  @action.bound
+  saveOpenId(open_id) {
+    Taro.setStorageSync('open_id', open_id)
   }
 
   @action.bound

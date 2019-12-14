@@ -8,7 +8,7 @@ import NumberInput from './NumberInput'
 
 const Page: Taro.FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState<0 | 1>(0)
 
   //#region step1
   const [timeLeft, start] = useCountDown()
@@ -37,10 +37,16 @@ const Page: Taro.FC = () => {
 
     showLoading()
     try {
-      if (false) {
-        setStep(1)
+      const res = await POST('base/verifyCode', {
+        returnOriginResponse: true,
+        data: {
+          code: smsCode
+        }
+      })
+      if (res && res.code === 0) {
         // @ts-ignore
         start(0)
+        setStep(1)
       } else {
         showToast({ title: '短信验证码无效' })
       }
@@ -57,10 +63,10 @@ const Page: Taro.FC = () => {
   }, [])
 
   useEffect(() => {
-    if (smsCode.length === 6) {
+    if (step === 0 && smsCode.length === 6) {
       commitSmsCode()
     }
-  }, [smsCode])
+  }, [smsCode, step])
   //#endregion
 
   //#region step2
