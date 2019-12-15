@@ -41,22 +41,22 @@ const Intro: Taro.FC = () => {
   return (
     <View className='page-intro'>
 
-      {closestSite && (
-        <View className='card'>
-          <View className='site-info'>
-            <View className='site-info__hd'>
-              <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
-            </View>
-            <View className='site-info__bd'>
-              <View className='name'>{closestSite.netName}</View>
+      <View className='card'>
+        <View className='site-info'>
+          <View className='site-info__hd'>
+            <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
+          </View>
+          <View className='site-info__bd'>
+            <View className='name'>{closestSite ? closestSite.netName : '你暂未开启地理位置定位服务'}</View>
+            {closestSite && (
               <View className='more'>
                 <View className='left'>距离你{distanceFormat(parseFloat(closestSite.distance))}</View>
                 <View className='right' onClick={openSiteMap}>查看附近借书馆</View>
               </View>
-            </View>
+            )}
           </View>
         </View>
-      )}
+      </View>
 
       <View className='card'>
         <View className='card-body'>
