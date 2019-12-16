@@ -51,32 +51,34 @@ const Page: Taro.FC = () => {
       return <View className='list-empty'>暂无押金记录</View>
     }
     return (
-      <View className='card'>
-        <View className='cell-group'>
-          {items.map(item => (
-            <View className='cell'>
-              <View className='cell__bd'>
-                <View className='label'>{DepositType[item.depositType] || item.depositType}</View>
-                <Text className='desc gray'>2019/11/12 18:00</Text>
+      <View>
+        <View className='card'>
+          <View className='cell-group'>
+            {items.map(item => (
+              <View className='cell'>
+                <View className='cell__bd'>
+                  <View className='label'>{DepositType[item.depositType] || item.depositType}</View>
+                  <Text className='desc gray'>{item.createTime}</Text>
+                </View>
+                <View className='cell__ft'>
+                  {item.depositType === '1'
+                    ? (
+                      <View className='money red'>
+                        +<Text className='money-unit money-unit--large'>¥</Text>
+                        {moneyFormat(item.depositPrice)}
+                      </View>
+                    )
+                    : (
+                      <View className='money green'>
+                        -<Text className='money-unit money-unit--large'>¥</Text>
+                        {moneyFormat(item.depositPrice)}
+                      </View>
+                    )
+                  }
+                </View>
               </View>
-              <View className='cell__ft'>
-                {item.depositType === '1'
-                  ? (
-                    <View className='money red'>
-                      +<Text className='money-unit money-unit--large'>¥</Text>
-                      {moneyFormat(item.depositPrice)}
-                    </View>
-                  )
-                  : (
-                    <View className='money green'>
-                      -<Text className='money-unit money-unit--large'>¥</Text>
-                      {moneyFormat(item.depositPrice)}
-                    </View>
-                  )
-                }
-              </View>
-            </View>
-          ))}
+            ))}
+          </View>
         </View>
         {isFinish && (
           <View className='list-finished'>到底了，我是有底线的</View>
