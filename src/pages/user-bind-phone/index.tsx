@@ -105,7 +105,19 @@ const Page: Taro.FC = () => {
         <View className='form'>
           <View className='item'>
             <Image src={require('../../assets/phone-icon-user.png')} mode='aspectFit' className='icon' />
-            <Input className='input' placeholder='请输入您的手机号' value={phone} onInput={e => setPhone(e.detail.value)} />
+            <Input
+              className='input'
+              placeholder='请输入您的手机号'
+              value={phone}
+              onInput={e => setPhone(e.detail.value)}
+              maxLength={11}
+            />
+            <Image
+              src={require('../../assets/icon_input_clean.png')}
+              mode='aspectFit'
+              className='btn-clean'
+              onClick={() => setPhone('')}
+            />
           </View>
           <View className='item'>
             <Image src={require('../../assets/phone-icon-lock.png')} mode='aspectFit' className='icon' />

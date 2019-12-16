@@ -12,6 +12,10 @@ page, view {
   line-height: 1.4;
 }
 
+image {
+  display: block;
+}
+
 .orange {
   color: $orange !important;
 }
