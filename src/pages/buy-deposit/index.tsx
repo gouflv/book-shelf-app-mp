@@ -26,7 +26,7 @@ const Page: Taro.FC = () => {
       url: 'wallet/payDepositCash',
       data: {}
     })
-    Taro.navigateTo({ url: '/pages/result/index?type=deposit' })
+    Taro.navigateTo({ url: `/pages/result/index?type=deposit&price=${depositToPay}` })
   }
 
   return (

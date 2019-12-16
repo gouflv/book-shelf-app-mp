@@ -55,7 +55,9 @@ const Page: Taro.FC = () => {
         lendingcardName: currentChecked.lendingcardName
       }
     })
-    Taro.navigateTo({ url: '/pages/result/index?type=pay' })
+
+    const amount = currentChecked.lendingcardPrice - (wallet ? wallet.balance : 0)
+    Taro.navigateTo({ url: `/pages/result/index?type=pay&price=${amount}` })
   }
 
   return (

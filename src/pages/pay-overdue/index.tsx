@@ -37,7 +37,7 @@ const Page: Taro.FC = () => {
         orderNo: router.params.id
       }
     })
-    Taro.navigateTo({ url: '/pages/result/index?type=payOverdue' })
+    Taro.navigateTo({ url: `/pages/result/index?type=payOverdue&price=${amount}` })
   }
 
   return (
