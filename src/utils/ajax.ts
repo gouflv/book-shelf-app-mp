@@ -27,20 +27,22 @@ export const ajax = (url, options?: AjaxOptions) =>
     try {
       const res = await Taro.request(params)
       const { data, statusCode } = res
-      if (statusCode === 401) {
-        showToast({ title: data.message || '服务繁忙, 请稍后再试' })
-        reject({ handler: true })
-        store.tryFetchTokenByLocalOpenId()
-      }
+
       if (statusCode === 500) {
         showToast({ title: '服务繁忙, 请稍后再试' })
         reject({ handler: true })
+        return
+      }
+
+      if (data && data.code === 999) {
+        reject({ handler: true })
+        store.tryFetchTokenByLocalOpenId()
+      }
+
+      if (options && options.returnOriginResponse) {
+        resolve(data)
       } else {
-        if (options && options.returnOriginResponse) {
-          resolve(data)
-        } else {
-          resolve(data.data || {})
-        }
+        resolve(data.data || {})
       }
     } catch (e) {
       showToast({ title: '网络开小差了' })
