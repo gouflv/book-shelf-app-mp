@@ -3,7 +3,7 @@ import { useCallback, useEffect, useReachBottom, useState } from '@tarojs/taro'
 
 interface usePaginationProps {
   url: string
-  params: any
+  params?: any
 }
 
 // eslint-disable-next-line import/prefer-default-export

@@ -1,6 +1,6 @@
 import './index.scss'
 import Taro, { useContext, useEffect } from '@tarojs/taro'
-import { Button, Image, View } from '@tarojs/components'
+import { Button, Image, ScrollView, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
 import { useCabinetBooks } from './store'
@@ -41,14 +41,14 @@ const Index: Taro.FC = () => {
 
       <View className='page-section'>
         <View className='shop-book-list'>
-          {/*<ScrollView>*/}
-          {/*  <View className='type-filter'>*/}
-          {/*    <View className='type-filter__item type-filter__item--active'>全部</View>*/}
-          {/*    <View className='type-filter__item'>小班</View>*/}
-          {/*    <View className='type-filter__item'>中班</View>*/}
-          {/*    <View className='type-filter__item'>大班</View>*/}
-          {/*  </View>*/}
-          {/*</ScrollView>*/}
+          <ScrollView scrollX>
+            <View className='type-filter'>
+              <View className='type-filter__item type-filter__item--active'>全部</View>
+              <View className='type-filter__item'>小班</View>
+              <View className='type-filter__item'>中班</View>
+              <View className='type-filter__item'>大班</View>
+            </View>
+          </ScrollView>
           <BookGrid items={cabinetBookItems} onBorrowClick={item => onBorrowClick(item)} />
         </View>
       </View>
