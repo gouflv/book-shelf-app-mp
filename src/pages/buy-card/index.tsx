@@ -144,6 +144,8 @@ const Page: Taro.FC = () => {
         </View>
       </View>
 
+      <View className='space' />
+
       {currentChecked && (
         <View className='payment-footer'>
           <View className='left'>
