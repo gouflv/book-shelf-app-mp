@@ -78,8 +78,7 @@ page, view {
 //#region layout
 .page {
   &--has-footer {
-    margin-bottom: 140px;
-    margin-bottom: calc(140px + env(safe-area-inset-bottom));
+    padding-bottom: calc(140px + #{$safe-button});
   }
 }
 

@@ -34,7 +34,7 @@ const Page: Taro.FC = () => {
   }
 
   return (
-    <View>
+    <View className='page page--has-footer'>
       <View className='top-tabbar'>
         <View
           className={classNames('item', { 'item--active': tab === 1 })}

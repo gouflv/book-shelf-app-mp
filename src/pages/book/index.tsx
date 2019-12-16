@@ -9,7 +9,7 @@ import AppStore from '../../store/app'
 
 const BookDetail: Taro.FC = () => {
   const { params } = useRouter()
-  const { setCurrentOrder, scanCabinet } = useContext(AppStore)
+  const { setCurrentOrder, scanCabinet, isUserBoundDevice } = useContext(AppStore)
   const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
 
   function onBorrow() {
@@ -122,12 +122,14 @@ const BookDetail: Taro.FC = () => {
         <RichText nodes='<h1>Hello</h5>' />
       </View>
 
-      <View className='footer'>
-        {book.borrowOrder
-          ? <Button className='btn btn-primary' onClick={onBuyClick}>立即购买</Button>
-          : <Button className='btn btn-primary' onClick={onBorrow}>借阅</Button>
-        }
-      </View>
+      {isUserBoundDevice && (
+        <View className='footer'>
+          {book.borrowOrder
+            ? <Button className='btn btn-primary' onClick={onBuyClick}>立即购买</Button>
+            : <Button className='btn btn-primary' onClick={onBorrow}>借阅</Button>
+          }
+        </View>
+      )}
 
       {borrowItem && (
         <BorrowBookConfirm

@@ -138,7 +138,13 @@ const Page: Taro.FC = () => {
           <View className='content red'>再给宝宝多看两本书吧</View>
         </AtModalContent>
         <AtModalAction>
-          <Button className='gray' onClick={onGetBackConfirm}>想好了，退押金</Button>
+          <Button
+            className='gray'
+            onClick={() => {
+              onGetBackConfirm()
+              setConfirmVisible(false)
+            }}
+          >想好了，退押金</Button>
           <Button className='orange' onClick={() => setConfirmVisible(false)}>不退了，留下</Button>
         </AtModalAction>
       </AtModal>

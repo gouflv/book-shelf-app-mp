@@ -18,7 +18,6 @@ $foot-shadow: 0 0 6Px rgba(#000, 0.05);
 $safe-button: env(safe-area-inset-bottom);
 
 @mixin safe-padding-bottom($value) {
-  padding-bottom: $value;
   padding-bottom: calc(#{$value} + #{$safe-button});
 }
 

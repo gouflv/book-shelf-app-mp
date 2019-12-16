@@ -9,7 +9,7 @@ import { Cabinet } from '../../typing'
 import ModalWithClose from '../../components/Modal/ModalWithClose'
 
 const Intro: Taro.FC = () => {
-  const { fetchSites, closestSite, setScanCabinet } = useContext(AppStore)
+  const { fetchSites, closestSite, setScanCabinet, setPreviewSite } = useContext(AppStore)
   const [errorVisible, setErrorVisible] = useState(false)
 
   useEffect(() => {
@@ -17,6 +17,7 @@ const Intro: Taro.FC = () => {
   }, [])
 
   function openSiteMap() {
+    setPreviewSite(null)
     Taro.navigateTo({ url: '/pages/site-map/index' })
   }
 
