@@ -1,6 +1,6 @@
 import Taro, { useState } from '@tarojs/taro'
 import { CabinetBook } from '../typing'
-import { hideLoading, POST, showLoading, showToast } from './index'
+import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from './index'
 
 const borrowErrorConfig = {
   1: { type: '需绑定手机号', text: '查看', page: '/pages/user-bind-phone/index' },
@@ -14,11 +14,17 @@ const borrowErrorConfig = {
 async function checkBorrowAllow() {
   try {
     showLoading()
-    await POST('base/judgeBorrowing')
+    const res = await POST('base/judgeBorrowing', {
+      returnOriginResponse: true
+    })
+    if (res && res.code) {
+      const [title, content] = (res.message || '').split(':')
+      return { error: true, code: res.code, title, content }
+    }
     return { error: false }
   } catch (e) {
-    const [title, content] = (e.message || '').split(':')
-    return { error: true, code: e.code, title, content }
+    defaultErrorHandler(e)
+    return { error: true }
   } finally {
     hideLoading()
   }
