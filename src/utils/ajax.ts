@@ -2,7 +2,7 @@
 import Taro, { request } from '@tarojs/taro'
 import { API_BASE } from '../config'
 import { showToast } from './index'
-import { store } from '../store/app'
+import { app } from '../store/app'
 
 interface AjaxOptions extends Partial<request.Param> {
   returnOriginResponse?: boolean
@@ -19,7 +19,7 @@ export const ajax = (url, options?: AjaxOptions) =>
     const params: request.Param = {
       header: {
         'content-type': 'application/x-www-form-urlencoded',
-        clientToken: store.token
+        clientToken: app.token
       },
       url: `${API_BASE}/${url}`,
       ...options
@@ -36,7 +36,7 @@ export const ajax = (url, options?: AjaxOptions) =>
 
       if (data && data.code === 999) {
         reject({ handler: true })
-        store.tryFetchTokenByLocalOpenId()
+        app.tryFetchTokenByLocalOpenId()
       }
 
       if (options && options.returnOriginResponse) {

@@ -5,13 +5,14 @@ import { hideLoading, showLoading } from '../../utils'
 
 const Page: Taro.FC = () => {
 
-  const { token, fetchUserInfo } = useContext(AppStore)
+  const { token, fetchUserInfo, fetchDict } = useContext(AppStore)
 
   useEffect(() => {
     async function redirect() {
       if (token) {
         showLoading()
         await fetchUserInfo()
+        await fetchDict()
         hideLoading()
 
         Taro.switchTab({ url: '/pages/home/introGuard' })

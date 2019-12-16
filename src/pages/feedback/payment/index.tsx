@@ -9,6 +9,7 @@ import { CardType, Order, OrderStatus } from '../../../typing'
 import { MoneyFormatter } from '../../../config'
 import dayjs from 'dayjs'
 import numeral from 'numeral'
+import { app } from '../../../store/app'
 
 const Page: Taro.FC = () => {
   const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders({
@@ -23,7 +24,7 @@ const Page: Taro.FC = () => {
   const [amount, setAmount] = useState('')
   useEffect(() => {
     if (currentOrder) {
-      const num = numeral(currentOrder.overdueDays).multiply(0.6)
+      const num = numeral(currentOrder.overdueDays).multiply(app.getOverduePrice())
       setAmount(num.value() < 0 ? '0' : num.format(MoneyFormatter))
     }
   }, [currentOrder])

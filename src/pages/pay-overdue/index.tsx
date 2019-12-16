@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { useContext, useRouter, useState, useEffect } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
 import { moneyFormat } from '../../utils'
-import AppStore from '../../store/app'
+import AppStore, { app } from '../../store/app'
 import numeral from 'numeral'
 import dayjs from 'dayjs'
 import { MoneyFormatter } from '../../config'
@@ -20,7 +20,7 @@ const Page: Taro.FC = () => {
       const days = numeral(currentOrder.beOverdueNum || 0)
       const balance = wallet ? wallet.balance : '0'
 
-      const overdue = days.multiply(0.6)
+      const overdue = days.multiply(app.getOverduePrice())
       setOverdueAmount(overdue.format(MoneyFormatter))
 
       const pay = numeral(overdue).multiply(balance)
@@ -89,7 +89,7 @@ const Page: Taro.FC = () => {
         <View className='cell-group'>
           <View className='cell cell--noborder'>
             <View className='cell__bd'>
-              逾期费用<Text className='red cell-hd-ext'>（每天0.6元）</Text>:
+              逾期费用<Text className='red cell-hd-ext'>（每天{app.getOverduePrice()}元）</Text>:
             </View>
             <View className='cell__ft'>
               <Text className='money red'>

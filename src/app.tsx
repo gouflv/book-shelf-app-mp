@@ -3,7 +3,7 @@ import '@tarojs/async-await'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { onError, Provider } from '@tarojs/mobx'
 import Index from './pages/home'
-import { store as app } from './store/app'
+import { app } from './store/app'
 
 onError(error => {
   console.log('mobx error', error)

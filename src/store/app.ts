@@ -1,10 +1,9 @@
-import Taro, { createContext } from '@tarojs/taro'
+import Taro, { createContext, RouterInfo } from '@tarojs/taro'
 import { action, computed, observable, toJS } from 'mobx'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../utils'
 import { Cabinet, Order, Site, User, Wallet } from '../typing'
 import _minBy from 'lodash.minby'
-
-import RouterInfo = Taro.RouterInfo
+import _find from 'lodash.find'
 
 interface LocationParam {
   latitude: number
@@ -66,6 +65,7 @@ class AppStore {
       this.saveToken(res.clientToken)
       this.saveOpenId(res.openId)
       await this.fetchUserInfo()
+      await this.fetchDict()
       Taro.switchTab({ url: '/pages/home/introGuard' })
     } catch (e) {
       defaultErrorHandler(e)
@@ -199,6 +199,32 @@ class AppStore {
 
   //#endregion
 
+  //#region dict
+  @observable dict: { nameEn: string, bz: string }[]
+
+  @action.bound
+  async fetchDict() {
+    await POST('dictionaries/getDictionariesList')
+  }
+
+  getDistValue(key, defaultValue) {
+    const match = _find(this.dict, { nameEn: key })
+    if (!match) return defaultValue
+    return match.bz
+  }
+
+  getOverduePrice() {
+    const value = this.getDistValue('overduePrice',0.6)
+    return parseFloat(value)
+  }
+
+  getBuyBookDiscount() {
+    const value = this.getDistValue('merchandiseDiscount',0.7)
+    return parseFloat(value)
+  }
+
+  //#endregion
+
   //#region other
   @observable currentOrder: Order | null
 
@@ -210,6 +236,6 @@ class AppStore {
 
 }
 
-export const store = new AppStore()
+export const app = new AppStore()
 
-export default createContext(store)
+export default createContext(app)
