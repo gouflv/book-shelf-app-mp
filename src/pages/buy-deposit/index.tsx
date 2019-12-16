@@ -5,10 +5,13 @@ import AppStore from '../../store/app'
 import numeral from 'numeral'
 import { observer } from '@tarojs/mobx'
 import { BASIC_DEPOSIT, MoneyFormatter } from '../../config'
-import { moneyFormat, submitPayment } from '../../utils'
+import { moneyFormat } from '../../utils'
+import usePayment from '../../utils/payment-hook'
 
 const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
+  const { submitPayment } = usePayment()
+
   const [depositToPay, setDepositToPay] = useState('0')
   useEffect(() => {
     if (wallet && wallet.depositTotal) {

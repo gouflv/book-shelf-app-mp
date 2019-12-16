@@ -2,16 +2,18 @@ import './index.scss'
 import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, RichText, Text, View } from '@tarojs/components'
 import SCheckbox from '../../components/SCheckbox'
-import { hideLoading, moneyFormat, POST, showLoading, submitPayment } from '../../utils'
+import { hideLoading, moneyFormat, POST, showLoading } from '../../utils'
 import numeral from 'numeral'
 import classNames from 'classnames'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
+import usePayment from '../../utils/payment-hook'
 
 const CARD_ID = 'cfgLcId'
 
 const Page: Taro.FC = () => {
   const { wallet } = useContext(AppStore)
+  const { submitPayment } = usePayment()
 
   const [currentChecked, setCurrentChecked] = useState<any>()
 

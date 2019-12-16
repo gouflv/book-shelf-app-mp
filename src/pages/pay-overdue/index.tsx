@@ -1,15 +1,17 @@
 import './index.scss'
 import Taro, { useContext, useRouter, useState, useEffect } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
-import { moneyFormat, submitPayment } from '../../utils'
+import { moneyFormat } from '../../utils'
 import AppStore from '../../store/app'
 import numeral from 'numeral'
 import dayjs from 'dayjs'
 import { MoneyFormatter } from '../../config'
+import usePayment from '../../utils/payment-hook'
 
 const Page: Taro.FC = () => {
   const router = useRouter()
   const { wallet, currentOrder } = useContext(AppStore)
+  const { submitPayment } = usePayment()
 
   const [overdueAmount, setOverdueAmount] = useState<string>()
   const [amount, setAmount] = useState<string>()
