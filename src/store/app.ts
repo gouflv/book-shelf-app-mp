@@ -78,6 +78,7 @@ class AppStore {
   async tryFetchTokenByLocalOpenId() {
     const openId = Taro.getStorageSync('open_id')
     if (!openId) {
+      Taro.reLaunch({ url: '/pages/login/index' })
       return
     }
     const res = await POST('base/callback/getTokenByOpenId', {

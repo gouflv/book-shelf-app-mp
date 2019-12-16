@@ -49,7 +49,7 @@
 .footer {
   position: fixed;
   right: 20px;
-  bottom: calc(20px + #{$safe-button});
+  bottom: calc(20px + (#{$safe-button} / 2));
   left: 20px;
   background-color: #fff;
   border-radius: 8Px;
