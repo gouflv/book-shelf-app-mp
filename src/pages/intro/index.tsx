@@ -34,6 +34,9 @@ const Intro: Taro.FC = () => {
         return
       }
     } catch (e) {
+      if (e.errMsg && !!~e.errMsg.indexOf('cancel')) {
+        return
+      }
       setErrorVisible(true)
     }
   }

@@ -1,7 +1,7 @@
 @import '../../style/var';
 
 .page-buy-card {
-  margin-bottom: 140px;
+  margin-bottom: calc(140px + #{$safe-button});
 }
 
 .page-section:first-child {

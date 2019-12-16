@@ -1,18 +1,24 @@
 import './index.scss'
-import Taro, { useContext, useState, showModal } from '@tarojs/taro'
+import Taro, { useContext, useState, showModal, useEffect } from '@tarojs/taro'
 import { Button, Image, Input, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import useCountDown from '../../utils/countdown-hook'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../../utils'
 
 const Page: Taro.FC = () => {
-  const { fetchUserInfo } = useContext(AppStore)
+  const { fetchUserInfo, user } = useContext(AppStore)
 
   const [hasSend, setHasSend] = useState(false)
   const [timeLeft, start] = useCountDown()
 
-  const [phone, setPhone] = useState('18650997970')
+  const [phone, setPhone] = useState('')
   const [smsCode, setSmsCode] = useState('')
+
+  useEffect(() => {
+    if (user && user.tel) {
+      setPhone(user.tel)
+    }
+  }, [user])
 
   async function onSendClick() {
     if (!validatePhone()) {
