@@ -94,8 +94,11 @@ const Page: Taro.FC = () => {
                     借书<Text>{item.effectiveNum}</Text>次
                   </View>
                   <View className='desc gray'>
-                    {dayjs(item.startDate).format('YYYY-MM-DD')}至{
-                    dayjs(item.endDate).format('YYYY-MM-DD')}
+                    {(item.startDate && item.endDate)
+                      ? `${dayjs(item.startDate).format('YYYY-MM-DD')
+                      }至${dayjs(item.endDate).format('YYYY-MM-DD')}`
+                      : '长期有效'
+                    }
                   </View>
                 </View>
               </View>
