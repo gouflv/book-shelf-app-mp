@@ -17,39 +17,37 @@ const SiteMap: Taro.FC = () => {
   const [cabinetsSelectVisible, setCabinetsSelectVisible] = useState(false)
 
   useEffect(() => {
-    setMarkers(prevState => {
-      return [
-        ...prevState,
-        ...siteList.map(s => {
-          const active = previewSite && previewSite.netCode === s.netCode
-          return {
-            id: (s.netCode as any) as number,
-            longitude: parseFloat(s.longitude),
-            latitude: parseFloat(s.latitude),
-            iconPath: active ?
-              require('../../assets/navigation_position_selected@2x.png') :
-              require('../../assets/navigation_position_normal@2x.png'),
-            width: 30,
-            height: 30,
-            callout: {
-              content: s.netName,
-              color: active ? '#fff' : '#333',
-              fontSize: 13,
-              borderRadius: 6,
-              borderColor: active ? '#f1b400' : '#fff',
-              bgColor: active ? '#f1b400' : '#fff',
-              padding: 6,
-              display: 'ALWAYS',
-              textAlign: 'center'
-            } as marker['callout']
-          }
-        })
-      ]
-    })
-  }, [siteList, previewSite])
+    setMarkers(siteList.map(s => {
+      const active = previewSite && previewSite.netCode === s.netCode
+      return {
+        id: (s.netCode as any) as number,
+        longitude: parseFloat(s.longitude),
+        latitude: parseFloat(s.latitude),
+        iconPath: active ?
+          require('../../assets/navigation_position_selected@2x.png') :
+          require('../../assets/navigation_position_normal@2x.png'),
+        width: 30,
+        height: 30,
+        callout: {
+          content: s.netName,
+          color: active ? '#fff' : '#333',
+          fontSize: 13,
+          borderRadius: 6,
+          borderColor: active ? '#f1b400' : '#fff',
+          bgColor: active ? '#f1b400' : '#fff',
+          padding: 6,
+          display: 'ALWAYS',
+          textAlign: 'center'
+        } as marker['callout']
+      }
+    }))
+  }, [previewSite])
 
   function onSiteSelect(markerId) {
-    setPreviewSite(_find(siteList, s => s.netCode === markerId))
+    const match = _find(siteList, s => s.netCode === markerId)
+    if (match) {
+      setPreviewSite({ ...match })
+    }
   }
 
   function openNavigation() {
@@ -96,7 +94,7 @@ const SiteMap: Taro.FC = () => {
           longitude={location.longitude}
           showLocation
           markers={markers}
-          scale={14}
+          scale={10}
           style={{ width: '100vw', height: '100vh' }}
           onMarkerTap={e => onSiteSelect((e as any).markerId)}
           onCalloutTap={e => onSiteSelect((e as any).markerId)}
