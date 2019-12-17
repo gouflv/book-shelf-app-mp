@@ -4,8 +4,7 @@ export interface User {
   unionId: string
   registerDate: string
 
-  //#region profile
-
+  memberCode: string
   nickName: string
   realName: string
   sex: string
@@ -16,8 +15,6 @@ export interface User {
   childBirthday: string
   childName: string
   childSex: string
-
-  //#endregion
 }
 
 export interface Site {

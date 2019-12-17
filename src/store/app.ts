@@ -14,12 +14,14 @@ class AppStore {
   @observable loading = true
 
   @observable scene: number
-  @observable shareTicket: string | undefined
+  @observable shareMember: Partial<User> | undefined
 
   async init(params: RouterInfo['params']) {
     console.log('init', params)
     this.scene = params.scene as number
-    this.shareTicket = (params.query as any).memberCode
+    this.shareMember = (params.query as any).memberCode
+      ? ((params.query as any) as User)
+      : undefined
 
     if (this.scene === 1047 && params.query && (params.query as any).scene) {
       this.setScanCabinet({
@@ -48,7 +50,7 @@ class AppStore {
   }
 
   @action.bound
-  async loginWithData(data: { encryptedData: string, iv: string, inviter?: string }) {
+  async loginWithData(data: { encryptedData: string, iv: string, inviter?: string }, redirect = true) {
     showLoading()
     try {
       const { code, errMsg } = await Taro.login()
@@ -65,7 +67,10 @@ class AppStore {
       this.saveOpenId(res.openId)
       await this.fetchUserInfo()
       await this.fetchDict()
-      Taro.switchTab({ url: '/pages/home/introGuard' })
+
+      if (redirect) {
+        Taro.switchTab({ url: '/pages/home/introGuard' })
+      }
     } catch (e) {
       defaultErrorHandler(e)
     } finally {

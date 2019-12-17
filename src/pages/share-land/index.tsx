@@ -1,87 +1,94 @@
 import './index.scss'
-import Taro, { useState, useContext } from '@tarojs/taro'
+import Taro, { useState, useContext, useEffect } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
-import { hideLoading, showLoading } from '../../utils'
 
 const Page: Taro.FC = () => {
-  const { token, shareTicket, user, loginWithPhoneData } = useContext(AppStore)
+  const { token: hasRegister, shareMember, user, fetchUserInfo, loginWithData } = useContext(AppStore)
 
-  const [isSelf] = useState(false)
-  const [hasRegister] = useState(false)
+  const [isSelf, setIsSelf] = useState(false)
   const [isShowResult, setShowResult] = useState(false)
 
-  async function onGetClick() {
-    if (!shareTicket) {
-      return
+  useEffect(() => {
+    async function fetch() {
+      if (hasRegister && shareMember) {
+        await fetchUserInfo()
+      }
     }
-    console.log(shareTicket)
-    showLoading()
-    hideLoading()
-  }
+    fetch()
+  }, [])
 
-  async function onGetPhoneNumber({ encryptedData, iv }) {
+  useEffect(() => {
+    if (user && shareMember) {
+      setIsSelf(user.memberCode === shareMember.memberCode)
+    }
+  }, [user])
+
+  async function onGetUserInfo({ encryptedData, iv }) {
     if (!encryptedData) {
       return
     }
     console.debug(encryptedData, iv)
-    await loginWithPhoneData({ encryptedData, iv })
-    await onGetClick()
+    await loginWithData({
+      encryptedData,
+      iv,
+      inviter: shareMember && shareMember.memberCode
+    }, false)
     setShowResult(true)
   }
 
   // eslint-disable-next-line react/no-multi-comp
   const renderBtn = () => {
-    if (hasRegister) {
-      return <Button className='btn btn-disabled'>你不是新用户咯，无法领取</Button>
-    }
     if (isSelf) {
       return <Button className='btn btn-disabled'>没有办法领取自己的优惠券哦</Button>
     }
-    if (token) {
-      return <Button className='btn btn-primary' onClick={onGetClick}>领取免费借书卡</Button>
+    if (hasRegister) {
+      return <Button className='btn btn-disabled'>你不是新用户咯，无法领取</Button>
     }
     return (
       <Button
         className='btn btn-primary'
-        openType='getPhoneNumber'
-        onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+        openType='getUserInfo'
+        onGetUserInfo={e => onGetUserInfo(e.detail)}
       >领取免费借书卡</Button>
     )
   }
 
   // eslint-disable-next-line react/no-multi-comp
-  const renderIndex = () => (
-    <View>
-      <View className='top'>
-        <Image src='//placehold.it/200' mode='aspectFit' className='thumb' />
-        <View className='title'>
-          你的好友<Text className='orange'>马里奥</Text>送你5张借书卡
-          <View>邀请你一起读书啦！</View>
-        </View>
-      </View>
-
-      <View className='ticket-container'>
-        <Image src={require('../../assets/invite_bg_rule@2x.png')} mode='aspectFit' className='bg' />
-        <View className='ticket'>
-          <View className='ticket__hd'>
-            5<Text className='unit'>张</Text>
-          </View>
-          <View className='ticket__bd'>
-            免费借阅卡5张
+  const renderIndex = () => {
+    const { nickName, image } = shareMember || {}
+    return (
+      <View>
+        <View className='top'>
+          <Image src={image || '//placehold.it/200'} mode='aspectFit' className='thumb' />
+          <View className='title'>
+            你的好友<Text className='orange'>{nickName}</Text>送你5张借书卡
+            <View>邀请你一起读书啦！</View>
           </View>
         </View>
-        <View className='ticket-desc'>
-          產是完所象人著去心都究而對！業趣好減步的樣供色輕他座統你行陸，故話經
+
+        <View className='ticket-container'>
+          <Image src={require('../../assets/invite_bg_rule@2x.png')} mode='aspectFit' className='bg' />
+          <View className='ticket'>
+            <View className='ticket__hd'>
+              5<Text className='unit'>张</Text>
+            </View>
+            <View className='ticket__bd'>
+              免费借阅卡5张
+            </View>
+          </View>
+          <View className='ticket-desc'>
+            免费借书次卡<Text className='orange'>5张</Text>，每张借阅卡可免费借一本书3天，每次最多可同时借阅2本书。
+          </View>
+        </View>
+
+        <View className='footer'>
+          {renderBtn()}
         </View>
       </View>
-
-      <View className='footer'>
-        {renderBtn()}
-      </View>
-    </View>
-  )
+    )
+  }
 
   // eslint-disable-next-line react/no-multi-comp
   const renderResult = () => (
@@ -102,7 +109,7 @@ const Page: Taro.FC = () => {
         </View>
       </View>
       <View className='footer'>
-        <Button className='btn btn-primary' onClick={() => Taro.switchTab({ url: 'pages/home/introGuard' })}>去借书</Button>
+        <Button className='btn btn-primary' onClick={() => Taro.switchTab({ url: '/pages/home/introGuard' })}>去借书</Button>
       </View>
     </View>
   )

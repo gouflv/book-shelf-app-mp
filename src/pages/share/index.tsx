@@ -12,10 +12,11 @@ const Page: Taro.FC = () => {
   }, [])
 
   useShareAppMessage(() => {
+    if (!app.user) return
     const config: ShareAppMessageReturn = {
       title: '送您5张免费借书卡，一起来葫芦弟弟借书吧',
       // imageUrl: '',
-      path: `/pages/share/land?memberCode=${(app.user as any).memberCode}`
+      path: `/pages/share/land?memberCode=${app.user.memberCode}&nickName=${app.user.nickName}&image=${app.user.image}`
     }
     return config
   })
