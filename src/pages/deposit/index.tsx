@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { useContext, useDidShow, useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import { AtModal, AtModalAction, AtModalContent } from 'taro-ui'
-import AppStore from '../../store/app'
+import AppStore, { app } from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import { usePagination } from '../../store/usePagaination'
 import { moneyFormat } from '../../utils'
@@ -42,30 +42,6 @@ const Page: Taro.FC = () => {
     Taro.navigateTo({ url: '/pages/result/index?type=getBackDeposit' })
   }
   //#endregion
-
-  // eslint-disable-next-line react/no-multi-comp
-  const renderBuyBtn = () => {
-    if (!isUserBoundPhone) {
-      return (
-        <Button
-          openType='getPhoneNumber'
-          className='btn btn--round'
-          size='mini'
-          onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
-        >补缴押金</Button>
-      )
-    }
-    if (wallet && wallet.depositTotal < 99) {
-      return (
-        <Button
-          className='btn btn--round'
-          size='mini'
-          onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
-        >补缴押金</Button>
-      )
-    }
-    return <View />
-  }
 
   // eslint-disable-next-line react/no-multi-comp
   const renderList = () => {
@@ -119,7 +95,24 @@ const Page: Taro.FC = () => {
             <Text className='money-unit'>¥</Text>
             {wallet && moneyFormat(wallet.depositTotal)}
           </View>
-          {renderBuyBtn()}
+
+          {!isUserBoundPhone && (
+            <Button
+              key='getPhoneNumber'
+              openType='getPhoneNumber'
+              className='btn btn--round'
+              size='mini'
+              onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+            >补缴押金</Button>
+          )}
+          {wallet && (wallet.depositTotal < app.getDepositAmount()) && (
+            <Button
+              key='navigateTo'
+              className='btn btn--round'
+              size='mini'
+              onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
+            >补缴押金</Button>
+          )}
         </View>
       </View>
 

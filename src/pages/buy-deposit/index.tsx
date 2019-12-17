@@ -1,10 +1,10 @@
 import './index.scss'
 import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
-import AppStore from '../../store/app'
+import AppStore, { app } from '../../store/app'
 import numeral from 'numeral'
 import { observer } from '@tarojs/mobx'
-import { BASIC_DEPOSIT, MoneyFormatter } from '../../config'
+import { MoneyFormatter } from '../../config'
 import { moneyFormat } from '../../utils'
 import usePayment from '../../utils/payment-hook'
 
@@ -15,9 +15,9 @@ const Page: Taro.FC = () => {
   const [depositToPay, setDepositToPay] = useState('0')
   useEffect(() => {
     if (wallet && wallet.depositTotal) {
-      setDepositToPay(numeral(BASIC_DEPOSIT).subtract(wallet.depositTotal).format(MoneyFormatter))
+      setDepositToPay(numeral(app.getDepositAmount()).subtract(wallet.depositTotal).format(MoneyFormatter))
     } else {
-      setDepositToPay( `${BASIC_DEPOSIT}`)
+      setDepositToPay( `${app.getDepositAmount()}`)
     }
   }, [wallet])
 
@@ -35,7 +35,7 @@ const Page: Taro.FC = () => {
         <Image src={require('../../assets/pay_icon@2x.png')} mode='aspectFit' />
         <View className='money red'>
           <Text className='money-unit'>¥</Text>
-          {BASIC_DEPOSIT}
+          {app.getDepositAmount()}
         </View>
         <View className='title'>押金总额</View>
         <View className='desc'>
@@ -51,7 +51,7 @@ const Page: Taro.FC = () => {
               <View className='cell__ft'>
                 <View className='money'>
                   <Text className='money-unit'>¥</Text>
-                  {BASIC_DEPOSIT}
+                  {app.getDepositAmount()}
                 </View>
               </View>
             </View>

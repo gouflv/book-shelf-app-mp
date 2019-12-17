@@ -223,6 +223,11 @@ class AppStore {
     return parseFloat(value)
   }
 
+  getDepositAmount() {
+    const value = this.getDistValue('depositAmount',99)
+    return parseFloat(value)
+  }
+
   //#endregion
 
   //#region other
