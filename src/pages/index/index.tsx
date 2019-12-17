@@ -18,9 +18,9 @@ const Page: Taro.FC = () => {
         Taro.switchTab({ url: '/pages/home/introGuard' })
         // Taro.switchTab({ url: '/pages/wallet/index' })
         // Taro.switchTab({ url: '/pages/user/index' })
-        // Taro.redirectTo({ url: '/pages/login/index' })
+        // Taro.redirectTo({ url: '/pages/deposit/index' })
         // Taro.redirectTo({ url: '/pages/order/index' })
-        // Taro.redirectTo({ url: '/pages/profile/index' })
+        // Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
       } else {
         Taro.redirectTo({ url: '/pages/login/index' })
       }

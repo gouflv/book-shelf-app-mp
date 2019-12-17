@@ -1,12 +1,16 @@
 import './index.scss'
-import Taro, { useContext, useState, showModal, useEffect } from '@tarojs/taro'
+import Taro, { useContext, useState, useEffect } from '@tarojs/taro'
 import { Button, Image, Input, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
+import DialogService from '../../store/dialogService'
 import useCountDown from '../../utils/countdown-hook'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../../utils'
+import BasicPageView from '../../components/BasicPageView'
+import { observer } from '@tarojs/mobx'
 
 const Page: Taro.FC = () => {
   const { fetchUserInfo, user } = useContext(AppStore)
+  const { showConfirm } = useContext(DialogService)
 
   const [hasSend, setHasSend] = useState(false)
   const [timeLeft, start] = useCountDown()
@@ -79,12 +83,14 @@ const Page: Taro.FC = () => {
         Taro.navigateBack()
       }, 2000)
     } catch (e) {
+      // @ts-ignore
+      start(0)
       if (e.message === '输入的手机号已经被注册了') {
         hideLoading()
-        await showModal({
+        await showConfirm({
           title: '提示',
           content: '该手机号已被其他账户绑定，请更换绑定手机号',
-          showCancel: false
+          confirmText: '更换绑定手机号'
         })
         setPhone('')
         setSmsCode('')
@@ -92,14 +98,12 @@ const Page: Taro.FC = () => {
         defaultErrorHandler(e)
       }
     } finally {
-      // @ts-ignore
-      start(0)
       hideLoading()
     }
   }
 
   return (
-    <View className='page'>
+    <BasicPageView>
       <View className='page-section'>
         <Image src={require('../../assets/login@3x.jpg')} mode='aspectFit' className='top' />
 
@@ -134,9 +138,9 @@ const Page: Taro.FC = () => {
           </View>
         </View>
 
-        <Button className='btn btn-primary' onClick={submit}>绑定手机号</Button>
+        <Button className='btn btn-primary submit' onClick={submit}>绑定手机号</Button>
       </View>
-    </View>
+    </BasicPageView>
   )
 }
 
@@ -144,4 +148,4 @@ Page.config = {
   navigationBarTitleText: '葫芦弟弟智能机柜管理端'
 }
 
-export default Page
+export default observer(Page)

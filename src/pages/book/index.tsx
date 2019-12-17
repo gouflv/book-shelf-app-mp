@@ -6,6 +6,7 @@ import { Book, CabinetBook, Order } from '../../typing'
 import useBookBorrow from '../../utils/borrow-hook'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import AppStore from '../../store/app'
+import BasicPageView from '../../components/BasicPageView'
 
 const BookDetail: Taro.FC = () => {
   const { params } = useRouter()
@@ -57,7 +58,7 @@ const BookDetail: Taro.FC = () => {
     return <View />
   }
   return (
-    <View className='page page--has-footer'>
+    <BasicPageView className='page page--has-footer'>
       <View className='banner'>
         <Swiper className='swiper' circular onChange={e => onSwiperIndexChange(e.detail.current)}>
           <SwiperItem>
@@ -140,7 +141,7 @@ const BookDetail: Taro.FC = () => {
           onCancel={() => closeBorrowConfirm()}
         />
       )}
-    </View>
+    </BasicPageView>
   )
 }
 

@@ -1,13 +1,17 @@
 import './index.scss'
-import Taro, { useState, useContext, useEffect, showModal } from '@tarojs/taro'
+import Taro, { useState, useContext, useEffect } from '@tarojs/taro'
 import { Button, Input, View, Text } from '@tarojs/components'
 import AppStore from '../../store/app'
+import DialogService from '../../store/dialogService'
 import { defaultErrorHandler, encodePhone, hideLoading, POST, showLoading, showToast } from '../../utils'
 import useCountDown from '../../utils/countdown-hook'
 import NumberInput from './NumberInput'
+import BasicPageView from '../../components/BasicPageView'
 
 const Page: Taro.FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
+  const { showAlert } = useContext(DialogService)
+
   const [step, setStep] = useState<0 | 1>(0)
 
   //#region step1
@@ -46,9 +50,9 @@ const Page: Taro.FC = () => {
     } catch (e) {
       showToast({ title: '短信验证码无效' })
     } finally {
+      hideLoading()
       // @ts-ignore
       start(0)
-      hideLoading()
     }
 
   }
@@ -123,11 +127,12 @@ const Page: Taro.FC = () => {
       })
       await fetchUserInfo()
       hideLoading()
-      await showModal({
-        content: `手机号更换完成，请牢记您的新账号\n${encodePhone(phone)} 用于登录`,
-        showCancel: false
+
+      await showAlert({
+        content: `手机号更换完成，请牢记您的新账号\n${encodePhone(phone)} 用于登录`
       })
       Taro.navigateBack()
+
     } catch (e) {
       // @ts-ignore
       start(0)
@@ -136,57 +141,59 @@ const Page: Taro.FC = () => {
       hideLoading()
     }
   }
-
+  //#endregion
 
   return (
-    <View className='page-section'>
-      {step === 0 && (
-        <View className='step1'>
-          <View className='title'>
-            已发送短信验证码至
-            {user && encodePhone(user.tel)}
+    <BasicPageView>
+      <View className='page-section'>
+        {step === 0 && (
+          <View className='step1'>
+            <View className='title'>
+              已发送短信验证码至
+              {user && encodePhone(user.tel)}
+            </View>
+            <View className='desc'>
+              {timeLeft
+                ? <Text>{(timeLeft as number) / 1000}s</Text>
+                : <Text onClick={() => sendSms()}>点击重发</Text>
+              }
+            </View>
+            <NumberInput
+              onChange={val => setSmsCode(val)}
+            />
+            <Button className='btn btn-primary' onClick={commitSmsCode}>下一步</Button>
           </View>
-          <View className='desc'>
-            {timeLeft
-              ? <Text>{(timeLeft as number) / 1000}s</Text>
-              : <Text onClick={() => sendSms()}>点击重发</Text>
-            }
-          </View>
-          <NumberInput
-            onChange={val => setSmsCode(val)}
-          />
-          <Button className='btn btn-primary' onClick={() => setStep(1)}>下一步</Button>
-        </View>
-      )}
+        )}
 
-      {step === 1 && (
-        <View className='step2'>
-          <View className='form'>
-            <View className='form-item'>
-              <Input className='input' placeholder='请输入您要绑定的新手机号' value={phone} onInput={e => setPhone(e.detail.value)} />
-            </View>
-            <View className='form-item'>
-              <Input type='digit' className='input' placeholder='请输入短信验证码' onInput={e => setSmsCode(e.detail.value)} />
-              <Button
-                className='btn btn--plain orange btn-send'
-                size='mini'
-                onClick={() => {
-                  if (!timeLeft) {
-                    onSendClick()
+        {step === 1 && (
+          <View className='step2'>
+            <View className='form'>
+              <View className='form-item'>
+                <Input className='input' placeholder='请输入您要绑定的新手机号' value={phone} onInput={e => setPhone(e.detail.value)} />
+              </View>
+              <View className='form-item'>
+                <Input type='digit' className='input' placeholder='请输入短信验证码' onInput={e => setSmsCode(e.detail.value)} />
+                <Button
+                  className='btn btn--plain orange btn-send'
+                  size='mini'
+                  onClick={() => {
+                    if (!timeLeft) {
+                      onSendClick()
+                    }
+                  }}
+                >
+                  {timeLeft
+                    ? `${(timeLeft as number) / 1000}s`
+                    : hasSend ? '点击重新获取' : '获取验证码'
                   }
-                }}
-              >
-                {timeLeft
-                  ? `${(timeLeft as number) / 1000}s`
-                  : hasSend ? '点击重新获取' : '获取验证码'
-                }
-              </Button>
+                </Button>
+              </View>
             </View>
+            <Button className='btn btn-primary' onClick={submit}>确认更换</Button>
           </View>
-          <Button className='btn btn-primary' onClick={submit}>确认更换</Button>
-        </View>
-      )}
-    </View>
+        )}
+      </View>
+    </BasicPageView>
   )
 }
 

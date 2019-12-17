@@ -9,6 +9,7 @@ import { observer } from '@tarojs/mobx'
 import useBookBorrow from '../../utils/borrow-hook'
 import CateTabs from './CateTabs'
 import useBindPhone from '../../utils/bind-phone-hook'
+import BasicPageView from '../../components/BasicPageView'
 
 const Index: Taro.FC = () => {
   const { scanCabinet, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
@@ -30,7 +31,7 @@ const Index: Taro.FC = () => {
   }, [scanCabinet])
 
   return (
-    <View className='page-index'>
+    <BasicPageView className='page-index'>
 
       {!isUserHasDeposit && (
         <View>
@@ -91,7 +92,7 @@ const Index: Taro.FC = () => {
           onCancel={() => closeBorrowConfirm()}
         />
       )}
-    </View>
+    </BasicPageView>
   )
 }
 

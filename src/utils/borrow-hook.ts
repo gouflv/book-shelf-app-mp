@@ -1,6 +1,7 @@
-import Taro, { useState } from '@tarojs/taro'
+import Taro, { useState, useContext } from '@tarojs/taro'
 import { CabinetBook } from '../typing'
 import { hideLoading, POST, showLoading, showToast } from './index'
+import DialogService from '../store/dialogService'
 
 const borrowErrorConfig = {
   1: { type: '需绑定手机号', text: '查看', page: '/pages/user-bind-phone/index' },
@@ -25,6 +26,8 @@ async function checkBorrowAllow() {
 }
 
 const useBookBorrow = () => {
+  const { showConfirm } = useContext(DialogService)
+
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<CabinetBook>()
   const [isBorrowSend, setIsBorrowSend] = useState(false)
@@ -37,15 +40,12 @@ const useBookBorrow = () => {
         console.error('handler undefined for', code)
         return
       }
-      Taro.showModal({
+      await showConfirm({
         title,
         content,
-        confirmText: config.text,
-      }).then(({ confirm }) => {
-        if (confirm) {
-          Taro.navigateTo({ url: config.page })
-        }
+        confirmText: config.text
       })
+      Taro.navigateTo({ url: config.page })
     } else {
       setBorrowItem(book)
       setBorrowConfirmVisible(true)
