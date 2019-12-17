@@ -79,8 +79,6 @@ const Page: Taro.FC = () => {
         Taro.navigateBack()
       }, 2000)
     } catch (e) {
-      // @ts-ignore
-      start(0)
       if (e.message === '输入的手机号已经被注册了') {
         hideLoading()
         await showModal({
@@ -89,10 +87,13 @@ const Page: Taro.FC = () => {
           showCancel: false
         })
         setPhone('')
+        setSmsCode('')
       } else {
         defaultErrorHandler(e)
       }
     } finally {
+      // @ts-ignore
+      start(0)
       hideLoading()
     }
   }
