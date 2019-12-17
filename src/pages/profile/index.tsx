@@ -7,6 +7,7 @@ import ModalWithClose from '../../components/Modal/ModalWithClose'
 import SCheckbox from '../../components/SCheckbox'
 import { observer } from '@tarojs/mobx'
 import dayjs from 'dayjs'
+import useBindPhone from '../../utils/bind-phone-hook'
 
 type UpdateProps = Partial<{ nickName, childName, childSex, childBirthday }>
 
@@ -16,6 +17,7 @@ function isString(val) {
 
 const Page: Taro.FC = () => {
   const { user, isUserBoundPhone, fetchUserInfo } = useContext(AppStore)
+  const { onGetPhoneNumber } = useBindPhone()
 
   const [nameInputVisible, setNameInputVisible] = useState(false)
   const [childNameInputVisible, setChildNameInputVisible] = useState(false)
@@ -110,9 +112,7 @@ const Page: Taro.FC = () => {
         </View>
 
         <View className='cell' onClick={() => {
-          if (!isUserBoundPhone) {
-            Taro.navigateTo({ url: '/pages/user-bind-phone/index' })
-          } else {
+          if (isUserBoundPhone) {
             Taro.navigateTo({ url: '/pages/profile-chang-phone/index' })
           }
         }}
@@ -124,7 +124,13 @@ const Page: Taro.FC = () => {
           <View className='cell__ft'>
             {isUserBoundPhone
               ? <Text>{user && encodePhone(user.tel)}</Text>
-              : <Text className='gray'>绑定手机号</Text>
+              : (
+                <Button
+                  className='btn btn-get-phone'
+                  openType='getPhoneNumber'
+                  onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+                >绑定手机号</Button>
+              )
             }
           </View>
           <View className='cell__link'>
