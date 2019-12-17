@@ -19,7 +19,7 @@ class AppStore {
   async init(params: RouterInfo['params']) {
     console.log('init', params)
     this.scene = params.scene as number
-    this.shareTicket = params.shareTicket
+    this.shareTicket = (params.query as any).memberCode
 
     if (this.scene === 1047 && params.query && (params.query as any).scene) {
       this.setScanCabinet({

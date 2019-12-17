@@ -1,9 +1,55 @@
 import './index.scss'
-import Taro, { useState } from '@tarojs/taro'
+import Taro, { useState, useContext } from '@tarojs/taro'
 import { View, Image, Text, Button } from '@tarojs/components'
+import AppStore from '../../store/app'
+import { observer } from '@tarojs/mobx'
+import { hideLoading, showLoading } from '../../utils'
 
 const Page: Taro.FC = () => {
-  const [showResult] = useState(false)
+  const { token, shareTicket, user, loginWithPhoneData } = useContext(AppStore)
+
+  const [isSelf] = useState(false)
+  const [hasRegister] = useState(false)
+  const [isShowResult, setShowResult] = useState(false)
+
+  async function onGetClick() {
+    if (!shareTicket) {
+      return
+    }
+    console.log(shareTicket)
+    showLoading()
+    hideLoading()
+  }
+
+  async function onGetPhoneNumber({ encryptedData, iv }) {
+    if (!encryptedData) {
+      return
+    }
+    console.debug(encryptedData, iv)
+    await loginWithPhoneData({ encryptedData, iv })
+    await onGetClick()
+    setShowResult(true)
+  }
+
+  // eslint-disable-next-line react/no-multi-comp
+  const renderBtn = () => {
+    if (hasRegister) {
+      return <Button className='btn btn-disabled'>你不是新用户咯，无法领取</Button>
+    }
+    if (isSelf) {
+      return <Button className='btn btn-disabled'>没有办法领取自己的优惠券哦</Button>
+    }
+    if (token) {
+      return <Button className='btn btn-primary' onClick={onGetClick}>领取免费借书卡</Button>
+    }
+    return (
+      <Button
+        className='btn btn-primary'
+        openType='getPhoneNumber'
+        onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+      >领取免费借书卡</Button>
+    )
+  }
 
   // eslint-disable-next-line react/no-multi-comp
   const renderIndex = () => (
@@ -32,7 +78,7 @@ const Page: Taro.FC = () => {
       </View>
 
       <View className='footer'>
-        <Button className='btn btn-primary'>领取免费借书卡</Button>
+        {renderBtn()}
       </View>
     </View>
   )
@@ -41,9 +87,9 @@ const Page: Taro.FC = () => {
   const renderResult = () => (
     <View>
       <View className='top'>
-        <Image src='//placehold.it/200' mode='aspectFit' className='thumb' />
+        <Image src={user ? user.image : '//placehold.it/200'} mode='aspectFit' className='thumb' />
         <View className='title2'>
-          Hi, 马里奥
+          Hi, {user && user.nickName}
         </View>
       </View>
       <View className='result-container'>
@@ -56,14 +102,14 @@ const Page: Taro.FC = () => {
         </View>
       </View>
       <View className='footer'>
-        <Button className='btn btn-primary'>去借书</Button>
+        <Button className='btn btn-primary' onClick={() => Taro.switchTab({ url: 'pages/home/introGuard' })}>去借书</Button>
       </View>
     </View>
   )
 
   return (
     <View className='page'>
-      {showResult ? renderResult() : renderIndex()}
+      {isShowResult ? renderResult() : renderIndex()}
       <Image src={require('../../assets/invite_bg@2x.png')} mode='aspectFit' className='page-bg' />
     </View>
   )
@@ -73,4 +119,4 @@ Page.config = {
   navigationBarTitleText: '葫芦弟弟借书馆'
 }
 
-export default Page
+export default observer(Page)

@@ -1,6 +1,7 @@
 import './index.scss'
 import Taro, { useEffect, useShareAppMessage, ShareAppMessageReturn } from '@tarojs/taro'
 import { View, Image, Button } from '@tarojs/components'
+import { app } from '../../store/app'
 
 const Page: Taro.FC = () => {
 
@@ -14,7 +15,7 @@ const Page: Taro.FC = () => {
     const config: ShareAppMessageReturn = {
       title: '送您5张免费借书卡，一起来葫芦弟弟借书吧',
       // imageUrl: '',
-      path: '/pages/share/land'
+      path: `/pages/share/land?memberCode=${(app.user as any).memberCode}`
     }
     return config
   })

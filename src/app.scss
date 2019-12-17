@@ -73,6 +73,13 @@ page, view {
     border: 1rpx solid $orange;
   }
 }
+
+.btn-disabled {
+  border-color: $gray;
+  background-color: $gray;
+  color: #333;
+  border-radius: 100px;
+}
 //#endregion
 
 //#region layout
