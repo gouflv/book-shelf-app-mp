@@ -2,12 +2,11 @@ import './index.scss'
 import Taro from '@tarojs/taro'
 import { ScrollView, View } from '@tarojs/components'
 import classNames from 'classnames'
-
-export type CateValue = number[] | null
+import { CateType } from '../../config'
 
 interface CateTabsProps {
-  value: CateValue
-  onChange: (value: CateValue) => void
+  value: number | null
+  onChange: (value: number | null) => void
 }
 
 const CateTabs: Taro.FC<CateTabsProps> = props => {
@@ -18,11 +17,14 @@ const CateTabs: Taro.FC<CateTabsProps> = props => {
           className={classNames('type-filter__item', { 'type-filter__item--active': !props.value })}
           onClick={() => props.onChange(null)}
         >全部</View>
-        <View
-          className={classNames('type-filter__item', { 'type-filter__item--active': props.value })}
-        >小班</View>
-        <View className='type-filter__item'>中班</View>
-        <View className='type-filter__item'>大班</View>
+
+        {CateType.map(cate => (
+          <View
+            key={cate.id}
+            className={classNames('type-filter__item', { 'type-filter__item--active': props.value === cate.id })}
+            onClick={() => props.onChange(cate.id)}
+          >{cate.name}</View>
+        ))}
       </View>
     </ScrollView>
   )

@@ -12,17 +12,20 @@ import useBindPhone from '../../utils/bind-phone-hook'
 
 const Index: Taro.FC = () => {
   const { scanCabinet, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
-  const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
   const { onGetPhoneNumber } = useBindPhone({
     success() {
       Taro.navigateTo({ url: '/pages/buy-deposit/index' })
     }
   })
+
+  //borrow
   const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
 
+  // list
+  const { cabinetBookItems, cabinetBookLoading, setEqCode, cateId, setCateId } = useCabinetBooks()
   useEffect(() => {
     if (scanCabinet) {
-      fetchCabinetBook({ eqCode: scanCabinet.eqCode })
+      setEqCode(scanCabinet.eqCode)
     }
   }, [scanCabinet])
 
@@ -62,8 +65,12 @@ const Index: Taro.FC = () => {
 
       <View className='page-section'>
         <View className='shop-book-list'>
-          <CateTabs value={null} onChange={() => {}} />
-          <BookGrid items={cabinetBookItems} onBorrowClick={item => onBorrowClick(item)} />
+          <CateTabs value={cateId} onChange={val => setCateId(val)} />
+
+          {(!cabinetBookLoading && !cabinetBookItems.length)
+            ? <View className='list-empty'>暂无图书</View>
+            : <BookGrid items={cabinetBookItems} onBorrowClick={item => onBorrowClick(item)}/>
+          }
         </View>
       </View>
 

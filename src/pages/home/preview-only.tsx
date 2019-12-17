@@ -10,11 +10,11 @@ import CateTabs from './CateTabs'
 
 const Index: Taro.FC = () => {
   const { previewSite, previewCabinet } = useContext(AppStore)
-  const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
 
+  const { cabinetBookItems, cabinetBookLoading, setEqCode, cateId, setCateId } = useCabinetBooks()
   useEffect(() => {
-    fetchCabinetBook({ eqCode: previewCabinet.eqCode })
-  }, [])
+    setEqCode(previewCabinet.eqCode)
+  }, [previewCabinet])
 
   function openNavigation() {
     if (previewSite) {
@@ -31,8 +31,12 @@ const Index: Taro.FC = () => {
     <View className='page page--has-footer'>
       <View className='page-section'>
         <View className='shop-book-list'>
-          <CateTabs value={null} onChange={() => {}} />
-          <BookGrid items={cabinetBookItems} onBorrowClick={() => {}} readonly />
+          <CateTabs value={cateId} onChange={val => setCateId(val)} />
+
+          {(!cabinetBookLoading && !cabinetBookItems.length)
+            ? <View className='list-empty'>暂无图书</View>
+            : <BookGrid items={cabinetBookItems} onBorrowClick={() => {}} />
+          }
         </View>
       </View>
 

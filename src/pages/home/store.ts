@@ -1,17 +1,52 @@
 /* eslint-disable import/prefer-default-export */
-import { useCallback, useState } from '@tarojs/taro'
-import { POST } from '../../utils'
+import { useState, useEffect, useCallback } from '@tarojs/taro'
+import { hideLoading, POST, showLoading } from '../../utils'
+import _find from 'lodash.find'
+import { CateType } from '../../config'
 
 export const useCabinetBooks = () => {
   const [items, setItems] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const fetch = useCallback(async ({ eqCode }) => {
+  const [eqCode, setEqCode] = useState()
+  const [cateId, setCateId] = useState()
+
+  const fetch = useCallback(async () => {
+    let ageRange = {}
+    if (cateId) {
+      const match = _find(CateType, { id: cateId })
+      if (match) {
+        ageRange = {
+          ageLowerLimit: match.value[0],
+          ageUpperLimit: match.value[1]
+        }
+      }
+    }
+
+    setLoading(true)
+    showLoading()
     const data = await POST('book/getEquipmentBookList', {
       data: {
-        eqCode
+        eqCode,
+        ...ageRange
       }
     })
     setItems(data)
-  }, [])
-  return { cabinetBookItems: items, fetchCabinetBook: fetch }
+    setLoading(false)
+    hideLoading()
+  }, [cateId, eqCode])
+
+  useEffect(() => {
+    fetch()
+  }, [fetch])
+
+  return {
+    cabinetBookItems: items,
+    fetchCabinetBook: fetch,
+    cabinetBookLoading: loading,
+
+    setEqCode,
+    cateId,
+    setCateId
+  }
 }
