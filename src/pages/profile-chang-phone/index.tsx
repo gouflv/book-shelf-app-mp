@@ -37,22 +37,17 @@ const Page: Taro.FC = () => {
 
     showLoading()
     try {
-      const res = await POST('base/verifyCode', {
-        returnOriginResponse: true,
+      await POST('base/verifyCode', {
         data: {
           code: smsCode
         }
       })
-      if (res && res.code === 0) {
-        // @ts-ignore
-        start(0)
-        setStep(1)
-      } else {
-        showToast({ title: '短信验证码无效' })
-      }
+      setStep(1)
     } catch (e) {
-      defaultErrorHandler(e)
+      showToast({ title: '短信验证码无效' })
     } finally {
+      // @ts-ignore
+      start(0)
       hideLoading()
     }
 

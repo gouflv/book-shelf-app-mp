@@ -4,9 +4,7 @@ import { API_BASE } from '../config'
 import { showToast } from './index'
 import { app } from '../store/app'
 
-interface AjaxOptions extends Partial<request.Param> {
-  returnOriginResponse?: boolean
-}
+interface AjaxOptions extends Partial<request.Param> {}
 
 interface AjaxError {
   handler: boolean
@@ -37,13 +35,14 @@ export const ajax = (url, options?: AjaxOptions) =>
       if (data && data.code === 999) {
         reject({ handler: true })
         app.tryFetchTokenByLocalOpenId()
+        return
       }
 
-      if (options && options.returnOriginResponse) {
-        resolve(data)
-      } else {
-        resolve(data.data || {})
+      if (data && (data.code !== 0 && data.code !== 200)) {
+        reject({ ...res.data, handler: false })
       }
+
+      resolve(data.data || {})
     } catch (e) {
       showToast({ title: '网络开小差了' })
       reject({ ...e, handler: true })
