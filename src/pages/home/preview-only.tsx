@@ -35,7 +35,7 @@ const Index: Taro.FC = () => {
 
           {(!cabinetBookLoading && !cabinetBookItems.length)
             ? <View className='list-empty'>暂无图书</View>
-            : <BookGrid items={cabinetBookItems} onBorrowClick={() => {}} />
+            : <BookGrid items={cabinetBookItems} onBorrowClick={() => {}} readonly />
           }
         </View>
       </View>

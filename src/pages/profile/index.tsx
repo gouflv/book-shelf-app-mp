@@ -77,7 +77,7 @@ const Page: Taro.FC = () => {
           <View className='cell__bd'>我的头像</View>
           <View className='cell__ft'>
             <View className='avatar'>
-              <Image src='//placehold.it/200' mode='aspectFit' />
+              <Image src={user ? user.image : '//placehold.it/200'} mode='aspectFit' />
             </View>
           </View>
           <View className='cell__link'>

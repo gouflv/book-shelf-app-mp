@@ -105,7 +105,7 @@ const Page: Taro.FC = () => {
               onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
             >补缴押金</Button>
           )}
-          {wallet && (wallet.depositTotal < app.getDepositAmount()) && (
+          {isUserBoundPhone && wallet && wallet.depositTotal < app.getDepositAmount() && (
             <Button
               key='navigateTo'
               className='btn btn--round'
