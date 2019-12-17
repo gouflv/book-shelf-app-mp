@@ -67,6 +67,9 @@ class App extends Component {
       selectedColor: '#F1B400'
     },
     permission: {
+      'scope.userInfo': {
+        desc: '获得你的公开信息'
+      },
       'scope.userLocation': {
         desc: '你的位置信息将用查找附近的借书馆'
       }

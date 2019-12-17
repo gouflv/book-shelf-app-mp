@@ -1,11 +1,12 @@
 import './index.scss'
 import { observer } from '@tarojs/mobx'
 import Taro, { useContext, useEffect } from '@tarojs/taro'
-import { Button, Image, ScrollView, View } from '@tarojs/components'
+import { Button, Image, View } from '@tarojs/components'
 import BookGrid from '../../components/BookGrid'
 import AppStore from '../../store/app'
 import { useCabinetBooks } from './store'
 import { distanceFormat } from '../../utils'
+import CateTabs from './CateTabs'
 
 const Index: Taro.FC = () => {
   const { previewSite, previewCabinet } = useContext(AppStore)
@@ -30,14 +31,7 @@ const Index: Taro.FC = () => {
     <View className='page page--has-footer'>
       <View className='page-section'>
         <View className='shop-book-list'>
-          <ScrollView scrollX>
-            <View className='type-filter'>
-              <View className='type-filter__item type-filter__item--active'>全部</View>
-              <View className='type-filter__item'>小班</View>
-              <View className='type-filter__item'>中班</View>
-              <View className='type-filter__item'>大班</View>
-            </View>
-          </ScrollView>
+          <CateTabs value={null} onChange={() => {}} />
           <BookGrid items={cabinetBookItems} onBorrowClick={() => {}} readonly />
         </View>
       </View>
