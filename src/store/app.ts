@@ -59,7 +59,11 @@ class AppStore {
       }
       console.debug('code', code, '\nencryptedData', encryptedData, '\niv', iv)
       const res = await POST('base/login', {
-        data: { code, encryptedData, iv }
+        data: {
+          code,
+          encryptedData: encodeURIComponent(encryptedData),
+          iv
+        }
       })
       console.log(res)
       this.saveToken(res.clientToken)
