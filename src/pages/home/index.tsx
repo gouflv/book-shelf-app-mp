@@ -8,10 +8,16 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import useBookBorrow from '../../utils/borrow-hook'
 import CateTabs from './CateTabs'
+import useBindPhone from '../../utils/bind-phone-hook'
 
 const Index: Taro.FC = () => {
-  const { scanCabinet, isUserHasDeposit } = useContext(AppStore)
+  const { scanCabinet, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
   const { cabinetBookItems, fetchCabinetBook } = useCabinetBooks()
+  const { onGetPhoneNumber } = useBindPhone({
+    success() {
+      Taro.navigateTo({ url: '/pages/buy-deposit/index' })
+    }
+  })
   const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
 
   useEffect(() => {
@@ -30,11 +36,25 @@ const Index: Taro.FC = () => {
               <Image src={require('../../assets/home_icon_prompt@2x.png')} mode='aspectFit' className='icon' />
               借书请先缴纳押金
             </View>
-            <Button
-              size='mini'
-              className='btn-primary'
-              onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
-            >缴纳押金</Button>
+
+            {isUserBoundPhone
+              ? (
+                <Button
+                  size='mini'
+                  className='btn-primary'
+                  onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
+                >缴纳押金</Button>
+              )
+              : (
+                <Button
+                  openType='getPhoneNumber'
+                  size='mini'
+                  className='btn-primary'
+                  onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+                >缴纳押金</Button>
+              )
+            }
+
           </View>
           <View className='space' />
         </View>

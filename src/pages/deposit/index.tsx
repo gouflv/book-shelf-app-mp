@@ -6,6 +6,7 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import { usePagination } from '../../store/usePagaination'
 import { moneyFormat } from '../../utils'
+import useBindPhone from '../../utils/bind-phone-hook'
 
 const DepositType = {
   0: '归还',
@@ -15,6 +16,11 @@ const DepositType = {
 
 const Page: Taro.FC = () => {
   const { wallet, isUserBoundPhone } = useContext(AppStore)
+  const { onGetPhoneNumber } = useBindPhone({
+    success() {
+      Taro.navigateTo({ url: '/pages/buy-deposit/index' })
+    }
+  })
 
   //#region list
   const { items, fetchStart, isEmpty, isFinish, loading } = usePagination({
@@ -37,12 +43,28 @@ const Page: Taro.FC = () => {
   }
   //#endregion
 
-  function onDepositPaymentClick() {
+  // eslint-disable-next-line react/no-multi-comp
+  const renderBuyBtn = () => {
     if (!isUserBoundPhone) {
-      Taro.navigateTo({ url: '/pages/user-bind-phone/index' })
-      return
+      return (
+        <Button
+          openType='getPhoneNumber'
+          className='btn btn--round'
+          size='mini'
+          onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+        >补缴押金</Button>
+      )
     }
-    Taro.navigateTo({ url: '/pages/buy-deposit/index' })
+    if (wallet && wallet.depositTotal < 99) {
+      return (
+        <Button
+          className='btn btn--round'
+          size='mini'
+          onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
+        >补缴押金</Button>
+      )
+    }
+    return <View />
   }
 
   // eslint-disable-next-line react/no-multi-comp
@@ -97,9 +119,7 @@ const Page: Taro.FC = () => {
             <Text className='money-unit'>¥</Text>
             {wallet && moneyFormat(wallet.depositTotal)}
           </View>
-          {(wallet && wallet.depositTotal < 99) && (
-            <Button className='btn btn--round' size='mini' onClick={onDepositPaymentClick}>补缴押金</Button>
-          )}
+          {renderBuyBtn()}
         </View>
       </View>
 

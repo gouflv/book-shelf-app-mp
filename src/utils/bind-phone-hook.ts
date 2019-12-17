@@ -2,7 +2,7 @@ import Taro, { useContext } from '@tarojs/taro'
 import AppStore from '../store/app'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from './index'
 
-const useBindPhone = () => {
+const useBindPhone = (props: { success?: () => void  } = {}) => {
   const { token, fetchUserInfo } = useContext(AppStore)
 
   async function onGetPhoneNumber({ encryptedData, iv }) {
@@ -28,8 +28,14 @@ const useBindPhone = () => {
           iv
         }
       })
-      showToast({ title: '手机号绑定成功' })
       await fetchUserInfo()
+
+      showToast({ title: '手机号绑定成功' })
+      setTimeout(() => {
+        if (props.success) {
+          props.success()
+        }
+      }, 2000)
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
