@@ -5,14 +5,14 @@ import AppStore from '../../store/app'
 
 const Page: Taro.FC = () => {
 
-  const { loginWithPhoneData } = useContext(AppStore)
+  const { loginWithData } = useContext(AppStore)
 
-  async function onGetPhoneNumber({ encryptedData, iv }) {
+  async function onGetUserInfo({ encryptedData, iv }) {
     if (!encryptedData) {
       return
     }
     console.debug(encryptedData, iv)
-    await loginWithPhoneData({ encryptedData, iv })
+    await loginWithData({ encryptedData, iv })
   }
 
   return (
@@ -23,8 +23,8 @@ const Page: Taro.FC = () => {
         <View>
           <Button
             className='btn btn--round btn-primary'
-            openType='getPhoneNumber'
-            onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+            openType='getUserInfo'
+            onGetUserInfo={e => onGetUserInfo(e.detail)}
           >
             <Image src={require('../../assets/icon-wechat@3x.png')} mode='aspectFit' />
             微信授权快捷登录

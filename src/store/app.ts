@@ -48,22 +48,17 @@ class AppStore {
   }
 
   @action.bound
-  async loginWithPhoneData({ encryptedData, iv }) {
+  async loginWithData(data: { encryptedData: string, iv: string, inviter?: string }) {
     showLoading()
-
     try {
       const { code, errMsg } = await Taro.login()
       if (!code) {
         showToast({ title: errMsg })
         return
       }
-      console.debug('code', code, '\nencryptedData', encryptedData, '\niv', iv)
+      console.debug('loginWithData', data)
       const res = await POST('base/login', {
-        data: {
-          code,
-          encryptedData: encodeURIComponent(encryptedData),
-          iv
-        }
+        data: { code, ...data, eqCode: this.scanCabinet ? this.scanCabinet.eqCode : '' }
       })
       console.log(res)
       this.saveToken(res.clientToken)
