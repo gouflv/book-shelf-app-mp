@@ -1,5 +1,5 @@
 import Taro, { useState, useContext } from '@tarojs/taro'
-import { CabinetBook } from '../typing'
+import { DeviceBook } from '../typing'
 import { hideLoading, POST, showLoading, showToast } from './index'
 import DialogService from '../store/dialogService'
 
@@ -29,10 +29,10 @@ const useBookBorrow = () => {
   const { showConfirm } = useContext(DialogService)
 
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
-  const [borrowItem, setBorrowItem] = useState<CabinetBook>()
+  const [borrowItem, setBorrowItem] = useState<DeviceBook>()
   const [isBorrowSend, setIsBorrowSend] = useState(false)
 
-  async function onBorrowClick(book: CabinetBook) {
+  async function onBorrowClick(book: DeviceBook) {
     const { error, code, title, content } = await checkBorrowAllow()
     if (error) {
       const config = borrowErrorConfig[code]

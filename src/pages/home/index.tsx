@@ -3,7 +3,7 @@ import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
-import { useCabinetBooks } from './store'
+import { useDeviceBooks } from './store'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import useBookBorrow from '../../utils/borrow-hook'
@@ -12,7 +12,7 @@ import useBindPhone from '../../utils/bind-phone-hook'
 import BasicPageView from '../../components/BasicPageView'
 
 const Index: Taro.FC = () => {
-  const { scanCabinet, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
+  const { scannedDevice, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
   const { onGetPhoneNumber } = useBindPhone({
     success() {
       Taro.navigateTo({ url: '/pages/buy-deposit/index' })
@@ -23,12 +23,12 @@ const Index: Taro.FC = () => {
   const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
 
   // list
-  const { cabinetBookItems, cabinetBookLoading, setEqCode, cateId, setCateId } = useCabinetBooks()
+  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
   useEffect(() => {
-    if (scanCabinet) {
-      setEqCode(scanCabinet.eqCode)
+    if (scannedDevice) {
+      setEqCode(scannedDevice.eqCode)
     }
-  }, [scanCabinet])
+  }, [scannedDevice])
 
   return (
     <BasicPageView className='page-index'>
@@ -68,9 +68,9 @@ const Index: Taro.FC = () => {
         <View className='shop-book-list'>
           <CateTabs value={cateId} onChange={val => setCateId(val)} />
 
-          {(!cabinetBookLoading && !cabinetBookItems.length)
+          {(!deviceBookLoading && !deviceBookItems.length)
             ? <View className='list-empty'>暂无图书</View>
-            : <BookGrid items={cabinetBookItems} onBorrowClick={item => onBorrowClick(item)}/>
+            : <BookGrid items={deviceBookItems} onBorrowClick={item => onBorrowClick(item)}/>
           }
         </View>
       </View>

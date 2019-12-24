@@ -5,11 +5,11 @@ import { distanceFormat } from '../../utils'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import queryString from 'query-string'
-import { Cabinet } from '../../typing'
+import { Device } from '../../typing'
 import ModalWithClose from '../../components/Modal/ModalWithClose'
 
 const Intro: Taro.FC = () => {
-  const { fetchSites, closestSite, setScanCabinet, setPreviewSite } = useContext(AppStore)
+  const { fetchSites, closestSite, setScannedDevice, setPreviewSite } = useContext(AppStore)
   const [errorVisible, setErrorVisible] = useState(false)
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Intro: Taro.FC = () => {
       console.debug(query)
 
       if (query && query.scene) {
-        setScanCabinet({ eqCode: query.scene } as Cabinet)
+        setScannedDevice({ eqCode: query.scene } as Device)
       } else {
         setErrorVisible(true)
         return

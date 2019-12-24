@@ -7,14 +7,14 @@ import AppStore from '../../store/app'
 import { marker } from '@tarojs/components/types/Map'
 import { distanceFormat, hideLoading, POST, showLoading, showToast } from '../../utils'
 import { AtActionSheet, AtActionSheetItem } from 'taro-ui'
-import { Cabinet } from '../../typing'
+import { Device } from '../../typing'
 
 const SiteMap: Taro.FC = () => {
-  const { location, siteList, previewSite, setPreviewSite, setPreviewCabinet } = useContext(AppStore)
+  const { location, siteList, previewSite, setPreviewSite, setPreviewDevice } = useContext(AppStore)
 
   const [markers, setMarkers] = useState<marker[]>([])
-  const [cabinets, setCabinets] = useState<Cabinet[]>([])
-  const [cabinetsSelectVisible, setCabinetsSelectVisible] = useState(false)
+  const [devices, setDevices] = useState<Device[]>([])
+  const [devicesSelectVisible, setDevicesSelectVisible] = useState(false)
 
   useEffect(() => {
     setMarkers(siteList.map(s => {
@@ -63,26 +63,25 @@ const SiteMap: Taro.FC = () => {
 
   async function openSiteDetail() {
     showLoading()
-    const items: Cabinet[] = await POST('book/getEquipmentListAll', {
+    const items: Device[] = await POST('book/getEquipmentListAll', {
       data: {
         networkCode: previewSite.netCode
       }
     })
     hideLoading()
     if (items.length === 1) {
-      setPreviewCabinet(items[0])
+      setPreviewDevice(items[0])
       Taro.navigateTo({ url: '/pages/home/preview-only' })
     } else if (items.length > 1) {
-      setCabinets(items)
-      setCabinetsSelectVisible(true)
+      setDevices(items)
+      setDevicesSelectVisible(true)
     } else {
       showToast({ title: '暂无书柜' })
     }
   }
 
-  function onCabinetClick(item: Cabinet) {
-    setPreviewCabinet(item)
-    setCabinetsSelectVisible(false)
+  function onDeviceClick(item: Device) {
+    setPreviewDevice(item)
     Taro.navigateTo({ url: '/pages/home/preview-only' })
   }
 
@@ -101,7 +100,7 @@ const SiteMap: Taro.FC = () => {
         />
       )}
 
-      {(previewSite && !cabinetsSelectVisible) && (
+      {(previewSite && !devicesSelectVisible) && (
         <View className='footer'>
           <View className='card card--shadow site-info-wrapper'>
             <View className='site-info'>
@@ -131,11 +130,11 @@ const SiteMap: Taro.FC = () => {
 
       <AtActionSheet
         title='请选择书柜'
-        isOpened={cabinetsSelectVisible}
-        onClose={() => setCabinetsSelectVisible(false)}
+        isOpened={devicesSelectVisible}
+        onClose={() => setDevicesSelectVisible(false)}
       >
-        {cabinets.map(c => (
-          <AtActionSheetItem key={c.eqId} onClick={() => onCabinetClick(c)}>
+        {devices.map(c => (
+          <AtActionSheetItem key={c.eqId} onClick={() => onDeviceClick(c)}>
             {c.eqName}
           </AtActionSheetItem>
         ))}

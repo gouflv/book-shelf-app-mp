@@ -1,7 +1,7 @@
 import Taro, { createContext, RouterInfo } from '@tarojs/taro'
 import { action, computed, observable, toJS } from 'mobx'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../utils'
-import { Cabinet, Order, Site, User, Wallet } from '../typing'
+import { Device, Order, Site, User, Wallet } from '../typing'
 import _minBy from 'lodash.minby'
 import _find from 'lodash.find'
 
@@ -24,9 +24,9 @@ class AppStore {
       : undefined
 
     if (this.scene === 1047 && params.query && (params.query as any).scene) {
-      this.setScanCabinet({
+      this.setScannedDevice({
         eqCode: (params.query as any).scene
-      } as Cabinet)
+      } as Device)
     }
   }
 
@@ -38,7 +38,7 @@ class AppStore {
   @observable wallet: Wallet | null = null
 
   @computed get isUserBoundDevice() {
-    return !!this.scanCabinet
+    return !!this.scannedDevice
   }
 
   @computed get isUserBoundPhone() {
@@ -60,7 +60,7 @@ class AppStore {
       }
       console.debug('loginWithData', data)
       const res = await POST('base/login', {
-        data: { code, ...data, eqCode: this.scanCabinet ? this.scanCabinet.eqCode : '' }
+        data: { code, ...data, eqCode: this.scannedDevice ? this.scannedDevice.eqCode : '' }
       })
       console.log(res)
       this.saveToken(res.clientToken)
@@ -131,7 +131,7 @@ class AppStore {
   /**
    * 用户扫码进入的网点设备
    */
-  @observable scanCabinet: Cabinet
+  @observable scannedDevice: Device
 
   /**
    * 网点列表
@@ -151,7 +151,7 @@ class AppStore {
   /**
    * 地图选择的网点设备
    */
-  @observable previewCabinet: Cabinet
+  @observable previewDevice: Device
 
   @action.bound
   async getUserLocation() {
@@ -162,8 +162,8 @@ class AppStore {
   }
 
   @action.bound
-  setScanCabinet(cabinet: Cabinet) {
-    this.scanCabinet = cabinet
+  setScannedDevice(cabinet: Device) {
+    this.scannedDevice = cabinet
   }
 
   @action.bound
@@ -177,8 +177,8 @@ class AppStore {
   }
 
   @action.bound
-  setPreviewCabinet(cabinet) {
-    this.previewCabinet = cabinet
+  setPreviewDevice(device: Device) {
+    this.previewDevice = device
   }
 
   @action.bound

@@ -4,17 +4,17 @@ import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import BookGrid from '../../components/BookGrid'
 import AppStore from '../../store/app'
-import { useCabinetBooks } from './store'
+import { useDeviceBooks } from './store'
 import { distanceFormat } from '../../utils'
 import CateTabs from './CateTabs'
 
 const Index: Taro.FC = () => {
-  const { previewSite, previewCabinet } = useContext(AppStore)
+  const { previewSite, previewDevice } = useContext(AppStore)
 
-  const { cabinetBookItems, cabinetBookLoading, setEqCode, cateId, setCateId } = useCabinetBooks()
+  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
   useEffect(() => {
-    setEqCode(previewCabinet.eqCode)
-  }, [previewCabinet])
+    setEqCode(previewDevice.eqCode)
+  }, [previewDevice])
 
   function openNavigation() {
     if (previewSite) {
@@ -33,9 +33,9 @@ const Index: Taro.FC = () => {
         <View className='shop-book-list'>
           <CateTabs value={cateId} onChange={val => setCateId(val)} />
 
-          {(!cabinetBookLoading && !cabinetBookItems.length)
+          {(!deviceBookLoading && !deviceBookItems.length)
             ? <View className='list-empty'>暂无图书</View>
-            : <BookGrid items={cabinetBookItems} onBorrowClick={() => {}} readonly />
+            : <BookGrid items={deviceBookItems} onBorrowClick={() => {}} readonly />
           }
         </View>
       </View>

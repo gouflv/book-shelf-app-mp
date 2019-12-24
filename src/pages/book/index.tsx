@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { useState, useRouter, useEffect, useContext } from '@tarojs/taro'
 import { View, Image, Swiper, SwiperItem, RichText, Button } from '@tarojs/components'
 import { POST } from '../../utils'
-import { Book, CabinetBook, Order } from '../../typing'
+import { Book, DeviceBook, Order } from '../../typing'
 import useBookBorrow from '../../utils/borrow-hook'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import AppStore from '../../store/app'
@@ -10,7 +10,7 @@ import BasicPageView from '../../components/BasicPageView'
 
 const BookDetail: Taro.FC = () => {
   const { params } = useRouter()
-  const { setCurrentOrder, scanCabinet, isUserBoundDevice } = useContext(AppStore)
+  const { setCurrentOrder, scannedDevice, isUserBoundDevice } = useContext(AppStore)
   const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
 
   function onBorrow() {
@@ -19,10 +19,10 @@ const BookDetail: Taro.FC = () => {
         bookId: book.booksId,
         booksImg: book.booksImg,
         booksName: book.booksName,
-        eqCode: scanCabinet.eqCode,
+        eqCode: scannedDevice.eqCode,
         eqBoxId: params.eqBoxId,
         rfidCode: params.rfidCode,
-      } as CabinetBook)
+      } as DeviceBook)
     }
   }
 

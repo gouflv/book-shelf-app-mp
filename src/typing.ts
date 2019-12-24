@@ -26,7 +26,7 @@ export interface Site {
   distance: string
 }
 
-export interface Cabinet {
+export interface Device {
   eqId: string
   eqName: string
   eqCode: string
@@ -34,7 +34,7 @@ export interface Cabinet {
   networkName: string
 }
 
-export interface CabinetBook {
+export interface DeviceBook {
   bookId: string
   booksImg: string
   booksName: string

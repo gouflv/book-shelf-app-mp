@@ -4,7 +4,7 @@ import { hideLoading, POST, showLoading } from '../../utils'
 import _find from 'lodash.find'
 import { CateType } from '../../config'
 
-export const useCabinetBooks = () => {
+export const useDeviceBooks = () => {
   const [items, setItems] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -41,9 +41,9 @@ export const useCabinetBooks = () => {
   }, [fetch])
 
   return {
-    cabinetBookItems: items,
-    fetchCabinetBook: fetch,
-    cabinetBookLoading: loading,
+    deviceBookItems: items,
+    fetchDeviceBook: fetch,
+    deviceBookLoading: loading,
 
     setEqCode,
     cateId,

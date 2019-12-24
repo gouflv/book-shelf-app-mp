@@ -2,12 +2,12 @@ import './index.scss'
 import Taro from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import ModalWithClose from '../Modal/ModalWithClose'
-import { CabinetBook } from '../../typing'
+import { DeviceBook } from '../../typing'
 import numeral from 'numeral'
 
 const BorrowBookConfirm: Taro.FC<{
   visible: boolean
-  book: CabinetBook
+  book: DeviceBook
   isBorrowSend: boolean
   onConfirm: () => void
   onCancel: () => void
