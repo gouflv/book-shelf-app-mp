@@ -63,17 +63,27 @@ const Page: Taro.FC = () => {
                   <View className='label'>
                     借书<Text>{item.effectiveNum}</Text>次
                   </View>
-                  <View className='desc gray'>
-                    {(item.startDate && item.endDate)
-                      ? `${dayjs(item.startDate).format('YYYY-MM-DD')
-                          }至${dayjs(item.endDate).format('YYYY-MM-DD')}`
-                      : '长期有效'
-                    }
+                  {dayjs(item.startDate).isAfter(dayjs(), 'day')
+                    ? (
+                      <View className='desc red'>
+                        可使用日期：`${dayjs(item.startDate).format('YYYY-MM-DD')}至${dayjs(item.endDate).format('YYYY-MM-DD')}`
+                      </View>
+                    )
+                    : (
+                      <View className='desc gray'>
+                        {(item.startDate && item.endDate)
+                          ? `${dayjs(item.startDate).format('YYYY-MM-DD')}至${dayjs(item.endDate).format('YYYY-MM-DD')}`
+                          : '长期有效'
+                        }
+                      </View>
+                    )
+                  }
+                </View>
+                {!dayjs(item.startDate).isAfter(dayjs(), 'day') && (
+                  <View className='t-card__ft' onClick={() => Taro.switchTab({ url: '/pages/home/introGuard' })}>
+                    <Text className='orange'>去使用</Text>
                   </View>
-                </View>
-                <View className='t-card__ft' onClick={() => Taro.switchTab({ url: '/pages/home/introGuard' })}>
-                  <Text className='orange'>去使用</Text>
-                </View>
+                )}
               </View>
             </View>
           ))}
@@ -87,7 +97,14 @@ const Page: Taro.FC = () => {
         <View className='t-card-list'>
           {itemsB.map(item => (
             <View key={item.orderNo} className='t-card'>
-              <Image src={require('../../assets/car_bg_expired@2x.png')} mode='aspectFit' className='t-card__bg' />
+              {item.restNum === '0'
+                ? (
+                  <Image src={require('../../assets/car_bg_used@2x.png')} mode='aspectFit' className='t-card__bg' />
+                )
+                : (
+                  <Image src={require('../../assets/car_bg_expired@2x.png')} mode='aspectFit' className='t-card__bg' />
+                )
+              }
               <View className='t-card__wrapper'>
                 <View className='t-card__bd'>
                   <View className='label gray'>

@@ -110,6 +110,7 @@ export interface UserTimesCard {
   lendingcardName: string
   // timesCard only
   effectiveNum: string
+  restNum: string
 
   // dateRangeCard only
   effectiveTimes: string
