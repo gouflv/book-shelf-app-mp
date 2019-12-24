@@ -50,7 +50,7 @@ const Page: Taro.FC = () => {
       showToast({ title: '请输入您的手机号' })
       return false
     }
-    if (!/1\d{10}/.test(phone)) {
+    if (!/1\d{10}$/.test(phone)) {
       showToast({ title: '手机号输入有误，请重新输入' })
       return false
     }

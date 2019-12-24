@@ -94,7 +94,7 @@ const SiteMap: Taro.FC = () => {
           longitude={location.longitude}
           showLocation
           markers={markers}
-          scale={14}
+          scale={13}
           style={{ width: '100vw', height: '100vh' }}
           onMarkerTap={e => onSiteSelect((e as any).markerId)}
           onCalloutTap={e => onSiteSelect((e as any).markerId)}

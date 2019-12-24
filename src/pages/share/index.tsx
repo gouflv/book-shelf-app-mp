@@ -16,7 +16,7 @@ const Page: Taro.FC = () => {
     const config: ShareAppMessageReturn = {
       title: '送您5张免费借书卡，一起来葫芦弟弟借书吧',
       // imageUrl: '',
-      path: `/pages/share/land?memberCode=${app.user.memberCode}&nickName=${app.user.nickName}&image=${app.user.image}`
+      path: `/pages/share-land/index?memberCode=${app.user.memberCode}&nickName=${app.user.nickName}&image=${app.user.image}`
     }
     return config
   })
