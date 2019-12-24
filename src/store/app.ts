@@ -209,26 +209,28 @@ class AppStore {
 
   @action.bound
   async fetchDict() {
-    await POST('dictionaries/getDictionariesList')
+    this.dict = await POST('dictionaries/getDictionariesList')
+    console.log(toJS(this.dict))
   }
 
+  @action.bound
   getDistValue(key, defaultValue) {
     const match = _find(this.dict, { nameEn: key })
     if (!match) return defaultValue
     return match.bz
   }
 
-  getOverduePrice() {
+  @computed get overduePrice() {
     const value = this.getDistValue('overduePrice',0.6)
     return parseFloat(value)
   }
 
-  getBuyBookDiscount() {
+  @computed get buyBookDiscount() {
     const value = this.getDistValue('merchandiseDiscount',0.7)
     return parseFloat(value)
   }
 
-  getDepositAmount() {
+  @computed get depositAmount() {
     const value = this.getDistValue('depositAmount',99)
     return parseFloat(value)
   }

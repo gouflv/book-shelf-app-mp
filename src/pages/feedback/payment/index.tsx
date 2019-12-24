@@ -1,5 +1,5 @@
 import '../index.scss'
-import Taro, { useState, useEffect } from '@tarojs/taro'
+import Taro, { useState, useEffect, useContext } from '@tarojs/taro'
 import { Button, Image, Input, Picker, Text, View } from '@tarojs/components'
 import ModalWithClose from '../../../components/Modal/ModalWithClose'
 import useFetchOrders from '../useFetchOrders'
@@ -9,9 +9,10 @@ import { CardType, Order, OrderStatus } from '../../../typing'
 import { MoneyFormatter } from '../../../config'
 import dayjs from 'dayjs'
 import numeral from 'numeral'
-import { app } from '../../../store/app'
+import AppStore from '../../../store/app'
 
 const Page: Taro.FC = () => {
+  const { overduePrice } = useContext(AppStore)
   const { orderOptions, isOrderEmpty, getOrderByIndex } = useFetchOrders({
     day: 7,
     status: OrderStatus.Finish,
@@ -24,7 +25,7 @@ const Page: Taro.FC = () => {
   const [amount, setAmount] = useState('')
   useEffect(() => {
     if (currentOrder) {
-      const num = numeral(currentOrder.overdueDays).multiply(app.getOverduePrice())
+      const num = numeral(currentOrder.overdueDays).multiply(overduePrice)
       setAmount(num.value() < 0 ? '0' : num.format(MoneyFormatter))
     }
   }, [currentOrder])

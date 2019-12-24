@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { useContext, useDidShow, useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import { AtModal, AtModalAction, AtModalContent } from 'taro-ui'
-import AppStore, { app } from '../../store/app'
+import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import { usePagination } from '../../store/usePagaination'
 import { moneyFormat } from '../../utils'
@@ -15,7 +15,7 @@ const DepositType = {
 }
 
 const Page: Taro.FC = () => {
-  const { wallet, isUserBoundPhone } = useContext(AppStore)
+  const { wallet, isUserBoundPhone, depositAmount } = useContext(AppStore)
   const { onGetPhoneNumber } = useBindPhone({
     success() {
       Taro.navigateTo({ url: '/pages/buy-deposit/index' })
@@ -105,7 +105,7 @@ const Page: Taro.FC = () => {
               onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
             >补缴押金</Button>
           )}
-          {isUserBoundPhone && wallet && wallet.depositTotal < app.getDepositAmount() && (
+          {isUserBoundPhone && wallet && wallet.depositTotal < depositAmount && (
             <Button
               key='navigateTo'
               className='btn btn--round'

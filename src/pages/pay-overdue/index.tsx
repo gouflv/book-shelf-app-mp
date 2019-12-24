@@ -10,7 +10,7 @@ import usePayment from '../../utils/payment-hook'
 
 const Page: Taro.FC = () => {
   const router = useRouter()
-  const { wallet, currentOrder } = useContext(AppStore)
+  const { wallet, currentOrder, overduePrice } = useContext(AppStore)
   const { submitPayment } = usePayment()
 
   const [overdueAmount, setOverdueAmount] = useState<string>()
@@ -20,7 +20,7 @@ const Page: Taro.FC = () => {
       const days = numeral(currentOrder.beOverdueNum || 0)
       const balance = wallet ? wallet.balance : '0'
 
-      const overdue = days.multiply(app.getOverduePrice())
+      const overdue = days.multiply(app.overduePrice)
       setOverdueAmount(overdue.format(MoneyFormatter))
 
       const pay = numeral(overdue).multiply(balance)
@@ -89,7 +89,7 @@ const Page: Taro.FC = () => {
         <View className='cell-group'>
           <View className='cell cell--noborder'>
             <View className='cell__bd'>
-              逾期费用<Text className='red cell-hd-ext'>（每天{app.getOverduePrice()}元）</Text>:
+              逾期费用<Text className='red cell-hd-ext'>（每天{overduePrice}元）</Text>:
             </View>
             <View className='cell__ft'>
               <Text className='money red'>
