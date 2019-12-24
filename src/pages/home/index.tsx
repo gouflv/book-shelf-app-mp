@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useContext, useEffect } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
@@ -10,6 +10,7 @@ import useBookBorrow from '../../utils/borrow-hook'
 import CateTabs from './CateTabs'
 import useBindPhone from '../../utils/bind-phone-hook'
 import BasicPageView from '../../components/BasicPageView'
+import { BookHasBorrow, BoxAllowOpen, BoxState, DeviceBook } from '../../typing'
 
 const Index: Taro.FC = () => {
   const { scannedDevice, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
@@ -24,6 +25,36 @@ const Index: Taro.FC = () => {
 
   // list
   const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
+  const [booksInbox, setBooksInbox] = useState<DeviceBook[]>([])
+  const [booksInHistory, setBooksInHistory] = useState<DeviceBook[]>([])
+
+  useEffect(() => {
+
+    setBooksInbox(deviceBookItems.filter(item => {
+      if (item.openStatus === BoxAllowOpen.TRUE) {
+        return true
+      }
+      if (item.status === BoxState.HAS_BOOK) {
+        return true
+      }
+      if (item.borrowing === BookHasBorrow.FALSE) {
+        return true
+      }
+      return false
+    }))
+
+    setBooksInHistory(deviceBookItems.filter(item => {
+      // if (item.openStatus === BoxAllowOpen.FALSE) {
+      //   return true
+      // }
+      // if (item.status === BoxState.EMPTY) {
+      //   return true
+      // }
+      return item.borrowing === BookHasBorrow.TRUE
+    }))
+
+  }, [deviceBookItems])
+
   useEffect(() => {
     if (scannedDevice) {
       setEqCode(scannedDevice.eqCode)
@@ -68,19 +99,24 @@ const Index: Taro.FC = () => {
         <View className='shop-book-list'>
           <CateTabs value={cateId} onChange={val => setCateId(val)} />
 
-          {(!deviceBookLoading && !deviceBookItems.length)
+          {(!deviceBookLoading && !booksInbox.length)
             ? <View className='list-empty'>暂无图书</View>
-            : <BookGrid items={deviceBookItems} onBorrowClick={item => onBorrowClick(item)}/>
+            : <BookGrid items={booksInbox} onBorrowClick={item => onBorrowClick(item)} />
           }
         </View>
       </View>
 
-      <View className='space space--text'>
-        <View className='text'>你已看过的书</View>
-      </View>
-      <View className='page-section'>
-        <BookGrid items={[]} onBorrowClick={() => {}} />
-      </View>
+      {booksInHistory.length && (
+        <View>
+          <View className='space space--text'>
+            <View className='text'>你已看过的书</View>
+          </View>
+          <View className='page-section'>
+            <BookGrid items={booksInHistory} onBorrowClick={() => {}} />
+          </View>
+        </View>
+      )}
+
       <View className='space' />
 
       {borrowItem && (

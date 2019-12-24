@@ -34,6 +34,22 @@ export interface Device {
   networkName: string
 }
 
+/* 是否借阅过 */
+export const enum BookHasBorrow {
+  TRUE = '0',
+  FALSE = '1'
+}
+/* 可再次开柜 */
+export const enum BoxAllowOpen {
+  FALSE = '0',
+  TRUE = '1'
+}
+/* 是否有书 */
+export const enum BoxState {
+  EMPTY = '0',
+  HAS_BOOK = '1'
+}
+
 export interface DeviceBook {
   bookId: string
   booksImg: string
@@ -44,6 +60,11 @@ export interface DeviceBook {
   eqCode: string
   eqBoxId: string
   rfidCode: string
+
+  borrowing: BookHasBorrow
+
+  openStatus: BoxAllowOpen
+  status: BoxState
 }
 
 export interface Book {

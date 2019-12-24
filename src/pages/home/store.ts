@@ -3,9 +3,10 @@ import { useState, useEffect, useCallback } from '@tarojs/taro'
 import { hideLoading, POST, showLoading } from '../../utils'
 import _find from 'lodash.find'
 import { CateType } from '../../config'
+import { DeviceBook } from '../../typing'
 
 export const useDeviceBooks = () => {
-  const [items, setItems] = useState<any[]>([])
+  const [items, setItems] = useState<DeviceBook[]>([])
   const [loading, setLoading] = useState(true)
 
   const [eqCode, setEqCode] = useState()
