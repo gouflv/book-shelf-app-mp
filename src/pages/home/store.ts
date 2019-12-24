@@ -37,8 +37,10 @@ export const useDeviceBooks = () => {
   }, [cateId, eqCode])
 
   useEffect(() => {
-    fetch()
-  }, [fetch])
+    if (eqCode) {
+      fetch()
+    }
+  }, [eqCode, fetch])
 
   return {
     deviceBookItems: items,
