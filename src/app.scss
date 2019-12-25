@@ -391,3 +391,14 @@ page, view {
     overflow: hidden;
   }
 }
+
+.gift-card-dialog {
+  .at-modal__overlay {
+    background-color: rgba(#000, 0.6);
+  }
+  .at-modal__container {
+    width: 665px;
+    height: 828px;
+    background-color: transparent;
+  }
+}

@@ -7,10 +7,11 @@ import { useDeviceBooks } from './store'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import useBookBorrow from '../../utils/borrow-hook'
-import CateTabs from './CateTabs'
+import CateTabs from './components/CateTabs'
 import useBindPhone from '../../utils/bind-phone-hook'
 import BasicPageView from '../../components/BasicPageView'
 import { BookHasBorrow, BoxOpenState, BoxState, DeviceBook } from '../../typing'
+import GiftCarDialog from '../../components/GiftCarDialog'
 
 const Index: Taro.FC = () => {
   const { scannedDevice, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
@@ -135,6 +136,8 @@ const Index: Taro.FC = () => {
           onCancel={() => closeBorrowConfirm()}
         />
       )}
+
+      <GiftCarDialog />
     </BasicPageView>
   )
 }

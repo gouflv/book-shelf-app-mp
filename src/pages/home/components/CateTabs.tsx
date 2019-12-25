@@ -1,8 +1,8 @@
-import './index.scss'
+import '../index.scss'
 import Taro from '@tarojs/taro'
 import { ScrollView, View } from '@tarojs/components'
 import classNames from 'classnames'
-import { CateType } from '../../config'
+import { CateType } from '../../../config'
 
 interface CateTabsProps {
   value: number | null

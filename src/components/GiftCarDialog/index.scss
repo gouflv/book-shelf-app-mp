@@ -1,0 +1,102 @@
+@import '../../style/var';
+
+.gift-card-dialog {
+  position: relative;
+}
+
+.bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 665px;
+  height: 828px;
+}
+
+.ft {
+  position: absolute;
+  bottom: 0;
+  left: (665px - 618px) / 2;
+  width: 618px;
+  height: 152px;
+}
+
+.dialog-container {
+  position: relative;
+  width: 665px;
+  height: 828px;
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 18px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .card-list {
+    position: absolute;
+    top: 350px;
+    left: 65px;
+    width: 530px + 20px;
+    height: 384px;
+
+    .scroller {
+      width: 530px + 20px;
+      height: 384px;
+    }
+    .cell {
+      position: relative;
+      padding: 0;
+      height: 145px;
+      margin-right: 20px;
+      background-color: transparent;
+      border: 0;
+      margin-bottom: 20px;
+
+      &:last-child {
+        margin-bottom: 78px;
+      }
+
+      &__hd, &__bd {
+        position: relative;
+      }
+      &__hd {
+        width: 126px;
+        height: 145px;
+        line-height: 145px + 4px;
+        text-align: center;
+        color: #ba8348;
+        font-size: 32px;
+        .num {
+          font-size: 60px;
+        }
+      }
+      &__bd {
+        .title {
+          margin-bottom: 8px;
+          font-size: 30px;
+        }
+        .desc {
+          color: $text-gray;
+          font-size: 20px;
+        }
+      }
+
+      .card-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 530px;
+        height: 145px;
+      }
+    }
+  }
+
+  .ft-btn {
+    position: absolute;
+    bottom: 18px;
+    left: 65px;
+    width: 530px;
+    height: 76px;
+  }
+}

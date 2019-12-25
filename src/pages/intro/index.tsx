@@ -7,6 +7,8 @@ import { observer } from '@tarojs/mobx'
 import queryString from 'query-string'
 import { Device } from '../../typing'
 import ModalWithClose from '../../components/Modal/ModalWithClose'
+import GiftCarDialog from '../../components/GiftCarDialog'
+import BasicPageView from '../../components/BasicPageView'
 
 const Intro: Taro.FC = () => {
   const { fetchSites, closestSite, setScannedDevice, setPreviewSite } = useContext(AppStore)
@@ -91,6 +93,8 @@ const Intro: Taro.FC = () => {
           <Button className='btn btn-primary' onClick={() => setErrorVisible(false)}>确认</Button>
         </View>
       </ModalWithClose>
+
+      <GiftCarDialog />
     </View>
   )
 }

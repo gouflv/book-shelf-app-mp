@@ -6,7 +6,7 @@ import BookGrid from '../../components/BookGrid'
 import AppStore from '../../store/app'
 import { useDeviceBooks } from './store'
 import { distanceFormat } from '../../utils'
-import CateTabs from './CateTabs'
+import CateTabs from './components/CateTabs'
 import { BookHasBorrow, BoxOpenState, BoxState, DeviceBook } from '../../typing'
 
 const Index: Taro.FC = () => {

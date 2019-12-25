@@ -5,7 +5,7 @@ import Taro from '@tarojs/taro'
 import numeral from 'numeral'
 import { MoneyFormatter } from '../config'
 
-export function showLoading(props?: Partial<Taro.showLoading.Param>) {
+export function showLoading(props?: Partial<Taro.showLoading.Option>) {
   Taro.showLoading({
     mask: true,
     title: '',
@@ -17,7 +17,7 @@ export function hideLoading() {
   Taro.hideLoading()
 }
 
-export function showToast(props: Taro.showToast.Param) {
+export function showToast(props: Taro.showToast.Option) {
   setTimeout(() => {
     Taro.showToast({
       icon: 'none',
