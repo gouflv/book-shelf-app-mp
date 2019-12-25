@@ -1,6 +1,6 @@
-import Taro, { useState, useContext } from '@tarojs/taro'
-import { DeviceBook } from '../typing'
-import { hideLoading, POST, showLoading, showToast } from './index'
+import Taro, { useContext, useState } from '@tarojs/taro'
+import { BoxAllowOpen, DeviceBook } from '../typing'
+import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from './index'
 import DialogService from '../store/dialogService'
 
 const borrowErrorConfig = {
@@ -25,15 +25,21 @@ async function checkBorrowAllow() {
   }
 }
 
-const useBookBorrow = () => {
+const useBookBorrow = (
+  {
+    onBorrowSuccess
+  } : {
+    onBorrowSuccess: (book: DeviceBook) => void
+  }
+) => {
   const { showConfirm } = useContext(DialogService)
 
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<DeviceBook>()
-  const [isBorrowSend, setIsBorrowSend] = useState(false)
 
   async function onBorrowClick(book: DeviceBook) {
     const { error, code, title, content } = await checkBorrowAllow()
+    //TODO debug
     if (error) {
       const config = borrowErrorConfig[code]
       if (!config) {
@@ -56,6 +62,7 @@ const useBookBorrow = () => {
     if (!borrowItem) return
     showLoading()
     try {
+      //TODO debug
       await POST('book/borrow', {
         data: {
           eqCode: borrowItem.eqCode,
@@ -64,10 +71,32 @@ const useBookBorrow = () => {
           rfidCode: borrowItem.rfidCode
         }
       })
-      setIsBorrowSend(true)
       showToast({ title: '开柜成功' })
+
+      const newState: DeviceBook = {
+        ...borrowItem,
+        openStatus: BoxAllowOpen.DIRTY_TRUE
+      }
+      setBorrowItem(newState)
+      onBorrowSuccess(newState)
     } catch (e) {
       showToast({ title: '开柜失败，如果疑问请联系客服' })
+    } finally {
+      hideLoading()
+    }
+  }
+
+  async function onBorrowOpenAgain(book: DeviceBook) {
+    showLoading()
+    try {
+      await POST('book/openTheCabinetAgain', {
+        data: {
+          eqBoxId: book.eqBoxId
+        }
+      })
+      showToast({ title: '开柜成功' })
+    } catch (e) {
+      defaultErrorHandler(e)
     } finally {
       hideLoading()
     }
@@ -76,13 +105,14 @@ const useBookBorrow = () => {
   return {
     borrowConfirmVisible,
     borrowItem,
-    isBorrowSend,
 
     onBorrowClick,
     onBorrowConfirm,
     closeBorrowConfirm() {
       setBorrowConfirmVisible(false)
-    }
+    },
+
+    onBorrowOpenAgain
   }
 }
 

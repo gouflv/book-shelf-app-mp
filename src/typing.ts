@@ -36,13 +36,12 @@ export interface Device {
 
 /* 是否借阅过 */
 export const enum BookHasBorrow {
-  TRUE = '0',
-  FALSE = '1'
+  FALSE = '0'
 }
 /* 可再次开柜 */
 export const enum BoxAllowOpen {
   FALSE = '0',
-  TRUE = '1'
+  DIRTY_TRUE = '1'
 }
 /* 是否有书 */
 export const enum BoxState {

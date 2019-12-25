@@ -11,7 +11,12 @@ import BasicPageView from '../../components/BasicPageView'
 const BookDetail: Taro.FC = () => {
   const { params } = useRouter()
   const { setCurrentOrder, scannedDevice, isUserBoundDevice } = useContext(AppStore)
-  const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
+  const {
+    borrowItem, borrowConfirmVisible, closeBorrowConfirm,
+    onBorrowClick, onBorrowConfirm
+  } = useBookBorrow({
+    onBorrowSuccess: item => {}
+  })
 
   function onBorrow() {
     if (book) {
@@ -136,7 +141,6 @@ const BookDetail: Taro.FC = () => {
         <BorrowBookConfirm
           visible={borrowConfirmVisible}
           book={borrowItem}
-          isBorrowSend={isBorrowSend}
           onConfirm={() => onBorrowConfirm()}
           onCancel={() => closeBorrowConfirm()}
         />

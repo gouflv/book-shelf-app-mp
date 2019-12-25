@@ -107,7 +107,11 @@ class AppStore {
 
   @action.bound
   async fetchUserInfo() {
-    this.user = await POST('account/myAccount')
+    const u = await POST('account/myAccount')
+    this.user = {
+      ...u,
+      nickName: decodeURIComponent(u.nickName)
+    }
     const wallet: Wallet = await POST('wallet/myWallet')
     const walletExt = await POST('wallet/myMemberAssetsParam')
     this.wallet = {

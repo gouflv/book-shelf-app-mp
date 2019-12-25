@@ -21,36 +21,38 @@ const Index: Taro.FC = () => {
   })
 
   //borrow
-  const { borrowItem, borrowConfirmVisible, closeBorrowConfirm, isBorrowSend, onBorrowClick, onBorrowConfirm } = useBookBorrow()
+  const {
+    borrowItem, borrowConfirmVisible,
+    onBorrowClick, onBorrowConfirm, closeBorrowConfirm,
+    onBorrowOpenAgain
+  } = useBookBorrow({
+    onBorrowSuccess: (item) => {
+      updateDeviceState(item)
+    }
+  })
 
   // list
-  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
+  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId, updateDeviceState } = useDeviceBooks()
   const [booksInbox, setBooksInbox] = useState<DeviceBook[]>([])
   const [booksInHistory, setBooksInHistory] = useState<DeviceBook[]>([])
 
   useEffect(() => {
 
     setBooksInbox(deviceBookItems.filter(item => {
-      if (item.openStatus === BoxAllowOpen.TRUE) {
+      if (item.openStatus !== BoxAllowOpen.FALSE) {
         return true
       }
-      if (item.status === BoxState.HAS_BOOK) {
-        return true
+      if (item.status === BoxState.EMPTY) {
+        return false
       }
-      if (item.borrowing === BookHasBorrow.FALSE) {
-        return true
-      }
-      return false
+      return item.borrowing === BookHasBorrow.FALSE
     }))
 
     setBooksInHistory(deviceBookItems.filter(item => {
-      // if (item.openStatus === BoxAllowOpen.FALSE) {
-      //   return true
-      // }
-      // if (item.status === BoxState.EMPTY) {
-      //   return true
-      // }
-      return item.borrowing === BookHasBorrow.TRUE
+      if (item.status === BoxState.EMPTY) {
+        return false
+      }
+      return item.borrowing !== BookHasBorrow.FALSE
     }))
 
   }, [deviceBookItems])
@@ -101,7 +103,11 @@ const Index: Taro.FC = () => {
 
           {(!deviceBookLoading && !booksInbox.length)
             ? <View className='list-empty'>暂无图书</View>
-            : <BookGrid items={booksInbox} onBorrowClick={item => onBorrowClick(item)} />
+            : <BookGrid
+              items={booksInbox}
+              onBorrowClick={item => onBorrowClick(item)}
+              onOpenClick={item => onBorrowOpenAgain(item)}
+            />
           }
         </View>
       </View>
@@ -112,18 +118,20 @@ const Index: Taro.FC = () => {
             <View className='text'>你已看过的书</View>
           </View>
           <View className='page-section'>
-            <BookGrid items={booksInHistory} onBorrowClick={() => {}} />
+            <BookGrid
+              items={booksInHistory}
+              onBorrowClick={item => onBorrowClick(item)}
+              onOpenClick={item => onBorrowOpenAgain(item)}
+            />
           </View>
+          <View className='space' />
         </View>
       )}
-
-      <View className='space' />
 
       {borrowItem && (
         <BorrowBookConfirm
           visible={borrowConfirmVisible}
           book={borrowItem}
-          isBorrowSend={isBorrowSend}
           onConfirm={() => onBorrowConfirm()}
           onCancel={() => closeBorrowConfirm()}
         />

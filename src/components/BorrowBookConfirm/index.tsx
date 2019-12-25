@@ -1,17 +1,21 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useEffect } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import ModalWithClose from '../Modal/ModalWithClose'
-import { DeviceBook } from '../../typing'
+import { BoxAllowOpen, DeviceBook } from '../../typing'
 import numeral from 'numeral'
 
 const BorrowBookConfirm: Taro.FC<{
   visible: boolean
   book: DeviceBook
-  isBorrowSend: boolean
   onConfirm: () => void
   onCancel: () => void
 }> = props => {
+
+  useEffect(() => {
+    console.log('BorrowBookConfirm book update', props.book)
+  }, [props.book])
+
   if (!props.book) {
     return <View />
   }
@@ -33,10 +37,10 @@ const BorrowBookConfirm: Taro.FC<{
         </View>
         <View className='desc'>
           {numeral(props.book.boxNum).format('00')}号柜
-          {props.isBorrowSend ? '柜门已开' : ''}
+          {props.book.openStatus !== BoxAllowOpen.FALSE ? '柜门已开' : ''}
         </View>
         <Button className='btn' onClick={() => props.onConfirm()}>
-          {props.isBorrowSend ? '再次开柜' : '我在书柜旁, 开柜'}
+          {props.book.openStatus === BoxAllowOpen.FALSE ? '我在书柜旁, 开柜' : '再次开柜'}
         </Button>
       </View>
     </ModalWithClose>

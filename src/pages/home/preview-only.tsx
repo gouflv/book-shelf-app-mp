@@ -11,6 +11,7 @@ import CateTabs from './CateTabs'
 const Index: Taro.FC = () => {
   const { previewSite, previewDevice } = useContext(AppStore)
 
+  //TODO split user books
   const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
   useEffect(() => {
     setEqCode(previewDevice.eqCode)
@@ -35,7 +36,12 @@ const Index: Taro.FC = () => {
 
           {(!deviceBookLoading && !deviceBookItems.length)
             ? <View className='list-empty'>暂无图书</View>
-            : <BookGrid items={deviceBookItems} onBorrowClick={() => {}} readonly />
+            : <BookGrid
+              items={deviceBookItems}
+              onBorrowClick={() => {}}
+              onOpenClick={() => {}}
+              readonly
+            />
           }
         </View>
       </View>
@@ -44,7 +50,12 @@ const Index: Taro.FC = () => {
         <View className='text'>你已看过的书</View>
       </View>
       <View className='page-section'>
-        <BookGrid items={[]} onBorrowClick={() => {}} readonly />
+        <BookGrid
+          items={[]}
+          onBorrowClick={() => {}}
+          onOpenClick={() => {}}
+          readonly
+        />
       </View>
 
       {previewSite && (
