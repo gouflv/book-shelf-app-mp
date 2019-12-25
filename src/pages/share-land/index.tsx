@@ -41,10 +41,10 @@ const Page: Taro.FC = () => {
   // eslint-disable-next-line react/no-multi-comp
   const renderBtn = () => {
     if (isSelf) {
-      return <Button className='btn btn-disabled'>没有办法领取自己的优惠券哦</Button>
+      return <Button className='btn btn-disabled' onClick={() => Taro.reLaunch({ url: '/pages/index/index' })}>没有办法领取自己的优惠券哦</Button>
     }
     if (hasRegister) {
-      return <Button className='btn btn-disabled'>你不是新用户咯，无法领取</Button>
+      return <Button className='btn btn-disabled' onClick={() => Taro.reLaunch({ url: '/pages/index/index' })}>你不是新用户咯，无法领取</Button>
     }
     return (
       <Button
