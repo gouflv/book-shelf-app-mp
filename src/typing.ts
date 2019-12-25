@@ -38,15 +38,14 @@ export interface Device {
 export const enum BookHasBorrow {
   FALSE = '0'
 }
-/* 可再次开柜 */
-export const enum BoxAllowOpen {
+/* 是否开柜 */
+export const enum BoxOpenState {
   FALSE = '0',
-  DIRTY_TRUE = '1'
+  UN_SAFE_TRUE = '1'
 }
 /* 是否有书 */
 export const enum BoxState {
-  EMPTY = '0',
-  HAS_BOOK = '1'
+  EMPTY = '0'
 }
 
 export interface DeviceBook {
@@ -62,7 +61,7 @@ export interface DeviceBook {
 
   borrowing: BookHasBorrow
 
-  openStatus: BoxAllowOpen
+  openStatus: BoxOpenState
   status: BoxState
 }
 

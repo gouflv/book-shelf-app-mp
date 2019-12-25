@@ -10,7 +10,7 @@ import useBookBorrow from '../../utils/borrow-hook'
 import CateTabs from './CateTabs'
 import useBindPhone from '../../utils/bind-phone-hook'
 import BasicPageView from '../../components/BasicPageView'
-import { BookHasBorrow, BoxAllowOpen, BoxState, DeviceBook } from '../../typing'
+import { BookHasBorrow, BoxOpenState, BoxState, DeviceBook } from '../../typing'
 
 const Index: Taro.FC = () => {
   const { scannedDevice, isUserHasDeposit, isUserBoundPhone } = useContext(AppStore)
@@ -23,23 +23,22 @@ const Index: Taro.FC = () => {
   //borrow
   const {
     borrowItem, borrowConfirmVisible,
-    onBorrowClick, onBorrowConfirm, closeBorrowConfirm,
-    onBorrowOpenAgain
+    onBorrowClick, onBorrowConfirmClick, onBorrowOpenBoxClick, closeBorrowConfirm
   } = useBookBorrow({
-    onBorrowSuccess: (item) => {
-      updateDeviceState(item)
+    onBorrowSuccess: (target) => {
+      updateDeviceStateByBoxId(target)
     }
   })
 
   // list
-  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId, updateDeviceState } = useDeviceBooks()
+  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId, updateDeviceStateByBoxId } = useDeviceBooks()
   const [booksInbox, setBooksInbox] = useState<DeviceBook[]>([])
   const [booksInHistory, setBooksInHistory] = useState<DeviceBook[]>([])
 
   useEffect(() => {
 
     setBooksInbox(deviceBookItems.filter(item => {
-      if (item.openStatus !== BoxAllowOpen.FALSE) {
+      if (item.openStatus !== BoxOpenState.FALSE) {
         return true
       }
       if (item.status === BoxState.EMPTY) {
@@ -106,7 +105,7 @@ const Index: Taro.FC = () => {
             : <BookGrid
               items={booksInbox}
               onBorrowClick={item => onBorrowClick(item)}
-              onOpenClick={item => onBorrowOpenAgain(item)}
+              onOpenClick={item => onBorrowOpenBoxClick(item)}
             />
           }
         </View>
@@ -121,7 +120,7 @@ const Index: Taro.FC = () => {
             <BookGrid
               items={booksInHistory}
               onBorrowClick={item => onBorrowClick(item)}
-              onOpenClick={item => onBorrowOpenAgain(item)}
+              onOpenClick={item => onBorrowOpenBoxClick(item)}
             />
           </View>
           <View className='space' />
@@ -132,7 +131,7 @@ const Index: Taro.FC = () => {
         <BorrowBookConfirm
           visible={borrowConfirmVisible}
           book={borrowItem}
-          onConfirm={() => onBorrowConfirm()}
+          onConfirm={() => onBorrowConfirmClick()}
           onCancel={() => closeBorrowConfirm()}
         />
       )}

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from '@tarojs/taro'
 import { hideLoading, POST, showLoading } from '../../utils'
 import _find from 'lodash.find'
 import { CateType } from '../../config'
-import { BoxAllowOpen, DeviceBook } from '../../typing'
+import { BoxOpenState, DeviceBook } from '../../typing'
 
 export const useDeviceBooks = () => {
   const [items, setItems] = useState<DeviceBook[]>([])
@@ -34,6 +34,7 @@ export const useDeviceBooks = () => {
         ...ageRange
       }
     })
+    // const data = require('./mock').default
     setItems(data)
     setLoading(false)
     hideLoading()
@@ -52,17 +53,15 @@ export const useDeviceBooks = () => {
     cateId,
     setCateId,
 
-    updateDeviceState(item: DeviceBook) {
+    updateDeviceStateByBoxId(item: DeviceBook) {
       setItems(prevState => {
         console.log(prevState)
-        const res = prevState.map(s => {
-          if (s.eqCode === item.eqCode) {
-            return { ...s, openStatus: BoxAllowOpen.DIRTY_TRUE }
+        return prevState.map(s => {
+          if (s.eqBoxId === item.eqBoxId) {
+            return { ...s, openStatus: BoxOpenState.UN_SAFE_TRUE }
           }
           return s
         })
-        console.log(res)
-        return res
       })
     }
   }

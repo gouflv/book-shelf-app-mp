@@ -1,5 +1,5 @@
 import Taro, { useContext, useState } from '@tarojs/taro'
-import { BoxAllowOpen, DeviceBook } from '../typing'
+import { BoxOpenState, DeviceBook } from '../typing'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from './index'
 import DialogService from '../store/dialogService'
 
@@ -39,7 +39,6 @@ const useBookBorrow = (
 
   async function onBorrowClick(book: DeviceBook) {
     const { error, code, title, content } = await checkBorrowAllow()
-    //TODO debug
     if (error) {
       const config = borrowErrorConfig[code]
       if (!config) {
@@ -62,7 +61,6 @@ const useBookBorrow = (
     if (!borrowItem) return
     showLoading()
     try {
-      //TODO debug
       await POST('book/borrow', {
         data: {
           eqCode: borrowItem.eqCode,
@@ -75,7 +73,7 @@ const useBookBorrow = (
 
       const newState: DeviceBook = {
         ...borrowItem,
-        openStatus: BoxAllowOpen.DIRTY_TRUE
+        openStatus: BoxOpenState.UN_SAFE_TRUE
       }
       setBorrowItem(newState)
       onBorrowSuccess(newState)
@@ -107,12 +105,12 @@ const useBookBorrow = (
     borrowItem,
 
     onBorrowClick,
-    onBorrowConfirm,
+    onBorrowConfirmClick: onBorrowConfirm,
     closeBorrowConfirm() {
       setBorrowConfirmVisible(false)
     },
 
-    onBorrowOpenAgain
+    onBorrowOpenBoxClick: onBorrowOpenAgain
   }
 }
 

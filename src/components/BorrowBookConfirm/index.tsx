@@ -2,7 +2,7 @@ import './index.scss'
 import Taro, { useEffect } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import ModalWithClose from '../Modal/ModalWithClose'
-import { BoxAllowOpen, DeviceBook } from '../../typing'
+import { BoxOpenState, DeviceBook } from '../../typing'
 import numeral from 'numeral'
 
 const BorrowBookConfirm: Taro.FC<{
@@ -37,10 +37,10 @@ const BorrowBookConfirm: Taro.FC<{
         </View>
         <View className='desc'>
           {numeral(props.book.boxNum).format('00')}号柜
-          {props.book.openStatus !== BoxAllowOpen.FALSE ? '柜门已开' : ''}
+          {props.book.openStatus !== BoxOpenState.FALSE ? '柜门已开' : ''}
         </View>
         <Button className='btn' onClick={() => props.onConfirm()}>
-          {props.book.openStatus === BoxAllowOpen.FALSE ? '我在书柜旁, 开柜' : '再次开柜'}
+          {props.book.openStatus === BoxOpenState.FALSE ? '我在书柜旁, 开柜' : '再次开柜'}
         </Button>
       </View>
     </ModalWithClose>

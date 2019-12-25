@@ -1,7 +1,7 @@
 import './index.scss'
-import Taro, { useEffect } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
-import { BoxAllowOpen, DeviceBook } from '../../typing'
+import { BoxOpenState, DeviceBook } from '../../typing'
 import numeral from 'numeral'
 
 const BookGrid: Taro.FC<{
@@ -10,10 +10,6 @@ const BookGrid: Taro.FC<{
   onBorrowClick: (item: DeviceBook) => void
   onOpenClick: (item: DeviceBook) => void
 }> = props => {
-
-  useEffect(() => {
-    console.log(props.items)
-  }, [props.items])
 
   function onItemClick(item: DeviceBook) {
     Taro.navigateTo({
@@ -38,7 +34,7 @@ const BookGrid: Taro.FC<{
               <View className='title'>{data.booksName}</View>
               <View className='action' onClick={e => e.stopPropagation()}>
                 {data.boxNum}
-                {data.openStatus === BoxAllowOpen.FALSE
+                {data.openStatus === BoxOpenState.FALSE
                   ? (
                     <Button className='btn' size='mini' onClick={() => props.onBorrowClick(data)}>
                       {numeral(data.boxNum).format('00')}号 借阅

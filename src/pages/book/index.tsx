@@ -13,7 +13,7 @@ const BookDetail: Taro.FC = () => {
   const { setCurrentOrder, scannedDevice, isUserBoundDevice } = useContext(AppStore)
   const {
     borrowItem, borrowConfirmVisible, closeBorrowConfirm,
-    onBorrowClick, onBorrowConfirm
+    onBorrowClick, onBorrowConfirmClick
   } = useBookBorrow({
     onBorrowSuccess: item => {}
   })
@@ -141,7 +141,7 @@ const BookDetail: Taro.FC = () => {
         <BorrowBookConfirm
           visible={borrowConfirmVisible}
           book={borrowItem}
-          onConfirm={() => onBorrowConfirm()}
+          onConfirm={() => onBorrowConfirmClick()}
           onCancel={() => closeBorrowConfirm()}
         />
       )}
