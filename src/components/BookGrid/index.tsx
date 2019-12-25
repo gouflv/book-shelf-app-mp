@@ -32,21 +32,23 @@ const BookGrid: Taro.FC<{
             </View>
             <View className='content'>
               <View className='title'>{data.booksName}</View>
-              <View className='action' onClick={e => e.stopPropagation()}>
-                {data.boxNum}
-                {data.openStatus === BoxOpenState.FALSE
-                  ? (
-                    <Button className='btn' size='mini' onClick={() => props.onBorrowClick(data)}>
-                      {numeral(data.boxNum).format('00')}号 借阅
-                    </Button>
-                  )
-                  : (
-                    <Button className='btn' size='mini' onClick={() => props.onOpenClick(data)}>
-                      {numeral(data.boxNum).format('00')}号 开柜
-                    </Button>
-                  )
-                }
-              </View>
+
+              {!props.readonly && (
+                <View className='action' onClick={e => e.stopPropagation()}>
+                  {data.openStatus === BoxOpenState.FALSE
+                    ? (
+                      <Button className='btn' size='mini' onClick={() => props.onBorrowClick(data)}>
+                        {numeral(data.boxNum).format('00')}号 借阅
+                      </Button>
+                    )
+                    : (
+                      <Button className='btn' size='mini' onClick={() => props.onOpenClick(data)}>
+                        {numeral(data.boxNum).format('00')}号 开柜
+                      </Button>
+                    )
+                  }
+                </View>
+              )}
             </View>
           </View>
         </View>

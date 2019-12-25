@@ -1,22 +1,49 @@
 import './index.scss'
 import { observer } from '@tarojs/mobx'
-import Taro, { useContext, useEffect } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import BookGrid from '../../components/BookGrid'
 import AppStore from '../../store/app'
 import { useDeviceBooks } from './store'
 import { distanceFormat } from '../../utils'
 import CateTabs from './CateTabs'
+import { BookHasBorrow, BoxOpenState, BoxState, DeviceBook } from '../../typing'
 
 const Index: Taro.FC = () => {
   const { previewSite, previewDevice } = useContext(AppStore)
 
-  //TODO split user books
+  // data
   const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
   useEffect(() => {
     setEqCode(previewDevice.eqCode)
   }, [previewDevice])
 
+  // vo
+  const [booksInbox, setBooksInbox] = useState<DeviceBook[]>([])
+  const [booksInHistory, setBooksInHistory] = useState<DeviceBook[]>([])
+
+  useEffect(() => {
+
+    setBooksInbox(deviceBookItems.filter(item => {
+      if (item.openStatus !== BoxOpenState.FALSE) {
+        return true
+      }
+      if (item.status === BoxState.EMPTY) {
+        return false
+      }
+      return item.borrowing === BookHasBorrow.FALSE
+    }))
+
+    setBooksInHistory(deviceBookItems.filter(item => {
+      if (item.status === BoxState.EMPTY) {
+        return false
+      }
+      return item.borrowing !== BookHasBorrow.FALSE
+    }))
+
+  }, [deviceBookItems])
+
+  // events
   function openNavigation() {
     if (previewSite) {
       Taro.openLocation({
@@ -34,10 +61,10 @@ const Index: Taro.FC = () => {
         <View className='shop-book-list'>
           <CateTabs value={cateId} onChange={val => setCateId(val)} />
 
-          {(!deviceBookLoading && !deviceBookItems.length)
+          {(!deviceBookLoading && !booksInbox.length)
             ? <View className='list-empty'>暂无图书</View>
             : <BookGrid
-              items={deviceBookItems}
+              items={booksInbox}
               onBorrowClick={() => {}}
               onOpenClick={() => {}}
               readonly
@@ -46,17 +73,21 @@ const Index: Taro.FC = () => {
         </View>
       </View>
 
-      <View className='space space--text'>
-        <View className='text'>你已看过的书</View>
-      </View>
-      <View className='page-section'>
-        <BookGrid
-          items={[]}
-          onBorrowClick={() => {}}
-          onOpenClick={() => {}}
-          readonly
-        />
-      </View>
+      {booksInHistory.length && (
+        <View>
+          <View className='space space--text'>
+            <View className='text'>你已看过的书</View>
+          </View>
+          <View className='page-section'>
+            <BookGrid
+              items={booksInHistory}
+              onBorrowClick={() => {}}
+              onOpenClick={() => {}}
+              readonly
+            />
+          </View>
+        </View>
+      )}
 
       {previewSite && (
         <View className='footer'>
