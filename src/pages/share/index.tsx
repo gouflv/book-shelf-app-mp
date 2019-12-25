@@ -61,13 +61,13 @@ const Page: Taro.FC = () => {
                     <Image src={item.image || '//placehold.it/100'} mode='aspectFit' className='thumb' />
                   </View>
                   <View className='cell__bd'>
-                    <View className='label'>{encodeURIComponent(item.nickName)}</View>
+                    <View className='label'>{decodeURIComponent(item.nickName)}</View>
                     <View className='desc gray'>邀请成功: {dayjs(item.createTime).format('YYYY-M-D')}</View>
                   </View>
                   <View className='cell__ft red bold'>
-                    +{item.lendingcardTotal}张
+                    +{5}
                     {
-                      {1: '次卡', 2: '借阅卡'}[item.lendingcardType]
+                      {1: '张次卡', 2: '天借阅卡'}[item.lendingcardType]
                     }
                   </View>
                 </View>
