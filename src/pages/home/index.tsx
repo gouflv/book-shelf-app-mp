@@ -141,7 +141,9 @@ const Index: Taro.FC = () => {
         <BorrowBookConfirm
           visible={borrowConfirmVisible}
           book={borrowItem}
-          onConfirm={() => onBorrowConfirmClick()}
+          onConfirm={isOpen => {
+            isOpen ? onBorrowOpenBoxClick(borrowItem) : onBorrowConfirmClick()
+          }}
           onCancel={() => onBorrowBookConfirmCancel()}
         />
       )}

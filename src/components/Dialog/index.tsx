@@ -11,10 +11,6 @@ export interface DialogProps extends AtModalProps {
 }
 
 const Dialog: Taro.FC<DialogProps> = props => {
-  useEffect(() => {
-    console.log('Dialog', props)
-  }, [props])
-
   return (
     <AtModal isOpened={props.isOpened} className='dialog'>
       <View className='dialog__content'>
