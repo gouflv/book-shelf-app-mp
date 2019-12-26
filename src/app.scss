@@ -170,7 +170,7 @@ page, view {
     margin-right: 16px;
   }
   &__bd {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     margin-right: 20px;
     font-size: $font-size-large;
     .desc {
@@ -182,8 +182,6 @@ page, view {
     flex: 1 1 auto;
     font-size: $font-size-large - 2;
     text-align: right;
-    white-space: nowrap;
-    @include line(1);
     button {
       vertical-align: middle;
     }
@@ -324,6 +322,8 @@ page, view {
 }
 
 .tag {
+  display: inline-block;
+  vertical-align: middle;
   padding: 4px 12px;
   background-color: $red;
   color: #fff;
