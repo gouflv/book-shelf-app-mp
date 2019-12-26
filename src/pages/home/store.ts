@@ -53,16 +53,16 @@ export const useDeviceBooks = () => {
     cateId,
     setCateId,
 
-    updateDeviceStateByBoxId(item: DeviceBook) {
-      setItems(prevState => {
-        console.log(prevState)
-        return prevState.map(s => {
-          if (s.eqBoxId === item.eqBoxId) {
-            return { ...s, openStatus: BoxOpenState.UN_SAFE_TRUE }
-          }
-          return s
-        })
-      })
-    }
+    // updateDeviceStateByBoxId(item: DeviceBook) {
+    //   setItems(prevState => {
+    //     console.log(prevState)
+    //     return prevState.map(s => {
+    //       if (s.eqBoxId === item.eqBoxId) {
+    //         return { ...s, openStatus: BoxOpenState.UN_SAFE_TRUE }
+    //       }
+    //       return s
+    //     })
+    //   })
+    // }
   }
 }

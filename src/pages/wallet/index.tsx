@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useContext } from '@tarojs/taro'
+import Taro, { useContext, useDidShow } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
@@ -7,8 +7,11 @@ import dayjs from 'dayjs'
 import { moneyFormat } from '../../utils'
 
 const Page: Taro.FC = () => {
-  const { user, wallet } = useContext(AppStore)
+  const { user, wallet, fetchUserInfo } = useContext(AppStore)
 
+  useDidShow(() => {
+    fetchUserInfo()
+  })
 
   if (!user || !wallet) {
     return <View />

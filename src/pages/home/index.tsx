@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useState, useDidShow } from '@tarojs/taro'
 import { Button, Image, View } from '@tarojs/components'
 import BorrowBookConfirm from '../../components/BorrowBookConfirm'
 import BookGrid from '../../components/BookGrid'
@@ -67,6 +67,10 @@ const Index: Taro.FC = () => {
       setEqCode(scannedDevice.eqCode)
     }
   }, [scannedDevice])
+
+  useDidShow(() => {
+    fetchDeviceBook()
+  })
 
   return (
     <BasicPageView className='page-index'>

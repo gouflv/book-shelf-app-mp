@@ -8,7 +8,6 @@ import queryString from 'query-string'
 import { Device } from '../../typing'
 import ModalWithClose from '../../components/Modal/ModalWithClose'
 import GiftCarDialog from '../../components/GiftCarDialog'
-import BasicPageView from '../../components/BasicPageView'
 
 const Intro: Taro.FC = () => {
   const { fetchSites, closestSite, setScannedDevice, setPreviewSite } = useContext(AppStore)
@@ -68,10 +67,7 @@ const Intro: Taro.FC = () => {
         <View className='card-body'>
           <Swiper className='swiper'>
             <SwiperItem>
-              <Image src='//placehold.it/660x580' mode='aspectFit' className='image' />
-            </SwiperItem>
-            <SwiperItem>
-              <Image src='//placehold.it/460x580' mode='aspectFit' className='image' />
+              <Image src={require('../../assets/intro-g1@2x.jpg')} mode="aspectFit" className='image' />
             </SwiperItem>
           </Swiper>
         </View>
