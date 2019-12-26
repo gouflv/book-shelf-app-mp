@@ -1,8 +1,14 @@
+export const enum UserIsNew {
+  TRUE = '0',
+  NO_SAFE_FALSE = '-1'
+}
+
 export interface User {
   clientToken: string
   openId: string
   unionId: string
   registerDate: string
+  newFlag: UserIsNew
 
   memberCode: string
   nickName: string

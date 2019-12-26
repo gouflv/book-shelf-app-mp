@@ -1,16 +1,18 @@
 import './index.scss'
-import Taro, { useContext, useState, useEffect } from '@tarojs/taro'
-import { Image, ScrollView, View, Text } from '@tarojs/components'
+import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
+import { Image, ScrollView, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { AtModal } from 'taro-ui'
-import { defaultErrorHandler, POST, showToast } from '../../utils'
+import { POST, showToast } from '../../utils'
 import { ChnNumChar } from '../../config'
 import dayjs from 'dayjs'
+import { UserIsNew } from '../../typing'
 
 const GiftCarDialog: Taro.FC = () => {
-  const { user } = useContext(AppStore)
+  const { user, fetchUserInfo } = useContext(AppStore)
+  const [nextShowDate] = useState(Taro.getStorageSync('gift_card_next_show_date'))
 
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   const [cards, setCards] = useState<any[]>([])
 
   useEffect(() => {
@@ -23,18 +25,24 @@ const GiftCarDialog: Taro.FC = () => {
         setVisible(true)
       }
     }
-    fetch()
-  }, [])
+
+    const isNewUser = user && user.newFlag === UserIsNew.TRUE
+    const showToday = !nextShowDate || !dayjs(nextShowDate).isAfter(dayjs(), 'day')
+    if (isNewUser && showToday) {
+      fetch()
+    }
+  }, [nextShowDate, user])
 
   function onCloseClick() {
     // Taro.showTabBar({ animation: true })
-    // TODO
+    Taro.setStorageSync('gift_card_next_show_date', dayjs().add(1, 'day').format('YYYY-MM-DD'))
     setVisible(false)
   }
 
   async function confirm() {
     try {
       await POST('base/drawNewLendingCard')
+      await fetchUserInfo()
     } catch (e) {
       // defaultErrorHandler(e)
     } finally {
