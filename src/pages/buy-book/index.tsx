@@ -15,19 +15,27 @@ const Page: Taro.FC = () => {
 
   const [price, setPrice] = useState<string>()
   const [discountAmount, setDiscountAmount] = useState<string>()
+  const [balanceCutAmount, setBalanceCutAmount] = useState<string>()
   const [amount, setAmount] = useState<string>()
 
   useEffect(() => {
     if (currentOrder && wallet) {
-      setPrice(currentOrder.booksPrice)
+      const _price = numeral(currentOrder.booksPrice)
+      const balance = numeral(wallet.balance)
 
-      const discount = numeral(currentOrder.booksPrice).multiply(1 - buyBookDiscount)
-      setDiscountAmount(discount.format(MoneyFormatter))
-
-      const val = numeral(currentOrder.booksPrice)
+      const discount = _price.multiply(1 - buyBookDiscount)
+      const val = _price
         .subtract(discount.value())
-        .subtract(wallet.balance)
-      setAmount((val.value() < 0) ? '0' : val.format(MoneyFormatter))
+        .subtract(balance)
+      const result = val.value() < 0 ? numeral('0') : val
+      const balanceCut = balance.value() > result.value()
+        ? result
+        : result.subtract(balance)
+
+      setPrice(_price.format(MoneyFormatter))
+      setDiscountAmount(discount.format(MoneyFormatter))
+      setBalanceCutAmount(balanceCut.format(MoneyFormatter))
+      setAmount(result.format(MoneyFormatter))
     }
   }, [currentOrder, wallet])
 
@@ -62,7 +70,7 @@ const Page: Taro.FC = () => {
             <View className='cell__ft'>
               <Text className='money'>
                 <Text className='money-unit money-unit--large'>¥</Text>
-                {moneyFormat(price)}
+                {price}
               </Text>
             </View>
           </View>
@@ -81,7 +89,7 @@ const Page: Taro.FC = () => {
             <View className='cell__ft'>
               <Text className='money red'>
                 -<Text className='money-unit money-unit--large'>¥</Text>
-                {wallet && moneyFormat(wallet.balance)}
+                {balanceCutAmount}
               </Text>
             </View>
           </View>
