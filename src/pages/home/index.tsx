@@ -21,18 +21,23 @@ const Index: Taro.FC = () => {
     }
   })
 
-  //borrow
+  /*
+  * borrow
+  * */
   const {
     borrowItem, borrowConfirmVisible,
     onBorrowClick, onBorrowConfirmClick, onBorrowOpenBoxClick, closeBorrowConfirm
-  } = useBookBorrow({
-    onBorrowSuccess: (target) => {
-      updateDeviceStateByBoxId(target)
-    }
-  })
+  } = useBookBorrow({})
 
-  // list
-  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId, updateDeviceStateByBoxId } = useDeviceBooks()
+  function onBorrowBookConfirmCancel() {
+    closeBorrowConfirm()
+    fetchDeviceBook()
+  }
+
+  /*
+  * list
+  * */
+  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId, fetchDeviceBook } = useDeviceBooks()
   const [booksInbox, setBooksInbox] = useState<DeviceBook[]>([])
   const [booksInHistory, setBooksInHistory] = useState<DeviceBook[]>([])
 
@@ -133,7 +138,7 @@ const Index: Taro.FC = () => {
           visible={borrowConfirmVisible}
           book={borrowItem}
           onConfirm={() => onBorrowConfirmClick()}
-          onCancel={() => closeBorrowConfirm()}
+          onCancel={() => onBorrowBookConfirmCancel()}
         />
       )}
 

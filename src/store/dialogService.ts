@@ -2,12 +2,15 @@ import { action, observable } from 'mobx'
 import { createContext } from '@tarojs/taro'
 import { DialogProps } from '../components/Dialog'
 
+interface DialogServiceOptions extends Partial<DialogProps> {
+}
+
 class DialogService {
   @observable dialogVisible = false
-  @observable dialogOptions: Partial<DialogProps> = {}
+  @observable dialogOptions: DialogServiceOptions = {}
 
   @action.bound
-  async showConfirm(options: Partial<DialogProps>) {
+  async showConfirm(options: DialogServiceOptions) {
     return new Promise((resolve, reject) => {
       this.dialogOptions = {
         onClose: () => {

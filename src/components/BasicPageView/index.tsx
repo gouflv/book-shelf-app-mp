@@ -15,13 +15,8 @@ const BasicPageView: Taro.FC<{ className?: string }> = props => {
       {dialogOptions && (
         <Dialog
           isOpened={dialogVisible}
-          title={dialogOptions.title}
-          content={dialogOptions.content}
-          confirmText={dialogOptions.confirmText}
-          onClose={dialogOptions.onClose}
-          onCancel={dialogOptions.onCancel}
-          onConfirm={dialogOptions.onConfirm}
           closeOnClickOverlay={false}
+          {...dialogOptions}
         />
       )}
     </View>

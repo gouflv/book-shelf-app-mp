@@ -1,14 +1,20 @@
 import './index.scss'
-import Taro from '@tarojs/taro'
+import Taro, { useEffect } from '@tarojs/taro'
 import { AtModal } from 'taro-ui'
 import { Button, View } from '@tarojs/components'
 import { AtModalProps } from 'taro-ui/@types/modal'
 
 export interface DialogProps extends AtModalProps {
   hideCancel?: boolean
+  confirmOpenType?: 'getPhoneNumber'
+  onGetPhoneNumber?: (e: any) => {}
 }
 
 const Dialog: Taro.FC<DialogProps> = props => {
+  useEffect(() => {
+    console.log('Dialog', props)
+  }, [props])
+
   return (
     <AtModal isOpened={props.isOpened} className='dialog'>
       <View className='dialog__content'>
@@ -23,9 +29,25 @@ const Dialog: Taro.FC<DialogProps> = props => {
             {props.cancelText || '取消'}
           </Button>
         )}
-        <Button className='btn dialog__confirm-btn' onClick={props.onConfirm}>
-          {props.confirmText || '确定'}
-        </Button>
+        {props.confirmOpenType
+          ? (
+            <Button
+              className='btn dialog__confirm-btn'
+              openType={props.confirmOpenType}
+              onGetPhoneNumber={e => {
+                props.onGetPhoneNumber && props.onGetPhoneNumber(e)
+                props.onConfirm && props.onConfirm(e)
+              }}
+            >
+              1{props.confirmText || '确定'}
+            </Button>
+          )
+          : (
+            <Button className='btn dialog__confirm-btn' onClick={props.onConfirm}>
+              {props.confirmText || '确定'}
+            </Button>
+          )
+        }
       </View>
     </AtModal>
   )

@@ -4,7 +4,7 @@ import { API_BASE } from '../config'
 import { showToast } from './index'
 import { app } from '../store/app'
 
-interface AjaxOptions extends Partial<request.Param> {}
+interface AjaxOptions extends Partial<request.Option> {}
 
 interface AjaxError {
   handler: boolean
@@ -14,7 +14,7 @@ interface AjaxError {
 
 export const ajax = (url, options?: AjaxOptions) =>
   new Promise<any | AjaxError>(async (resolve, reject) => {
-    const params: request.Param = {
+    const params: request.Option = {
       header: {
         'content-type': 'application/x-www-form-urlencoded',
         clientToken: app.token

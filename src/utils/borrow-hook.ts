@@ -2,6 +2,7 @@ import Taro, { useContext, useState } from '@tarojs/taro'
 import { BoxOpenState, DeviceBook } from '../typing'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from './index'
 import DialogService from '../store/dialogService'
+import useBindPhone from './bind-phone-hook'
 
 const borrowErrorConfig = {
   1: { type: '需绑定手机号', text: '查看', page: '/pages/user-bind-phone/index' },
@@ -29,10 +30,16 @@ const useBookBorrow = (
   {
     onBorrowSuccess
   } : {
-    onBorrowSuccess: (book: DeviceBook) => void
+    onBorrowSuccess?: (book: DeviceBook) => void
   }
 ) => {
   const { showConfirm } = useContext(DialogService)
+  const { onGetPhoneNumber } = useBindPhone({
+    success() {
+      //重新打开借阅对话框
+      setBorrowConfirmVisible(true)
+    }
+  })
 
   const [borrowConfirmVisible, setBorrowConfirmVisible] = useState(false)
   const [borrowItem, setBorrowItem] = useState<DeviceBook>()
@@ -45,12 +52,26 @@ const useBookBorrow = (
         console.error('handler undefined for', code)
         return
       }
-      await showConfirm({
-        title,
-        content,
-        confirmText: config.text
-      })
-      Taro.navigateTo({ url: config.page })
+
+      if (code === 1) {
+        setBorrowItem(book)
+        await showConfirm({
+          title,
+          content,
+          confirmText: config.text,
+          confirmOpenType: 'getPhoneNumber',
+          onGetPhoneNumber: (e) => onGetPhoneNumber(e.detail)
+        })
+
+      } else {
+        await showConfirm({
+          title,
+          content,
+          confirmText: config.text
+        })
+        Taro.navigateTo({ url: config.page })
+      }
+
     } else {
       setBorrowItem(book)
       setBorrowConfirmVisible(true)
@@ -76,7 +97,9 @@ const useBookBorrow = (
         openStatus: BoxOpenState.UN_SAFE_TRUE
       }
       setBorrowItem(newState)
-      onBorrowSuccess(newState)
+
+      onBorrowSuccess && onBorrowSuccess(newState)
+
     } catch (e) {
       showToast({ title: '开柜失败，如果疑问请联系客服' })
     } finally {
