@@ -16,9 +16,22 @@ const Page: Taro.FC = () => {
   const { submitPayment } = usePayment()
 
   const [currentChecked, setCurrentChecked] = useState<any>()
-
   const [rangeItems, setRangeItems] = useState<any[]>([])
   const [timesItems, setTimesItems] = useState<any[]>([])
+
+  const [balanceCutAmount, setBalanceCutAmount] = useState('0')
+  const [amount, setAmount] = useState('0')
+  useEffect(() => {
+    if (currentChecked && wallet) {
+      const price = currentChecked.lendingcardPrice
+      const balance = wallet.balance
+      const pay = Math.max(0, price - balance)
+      const balanceCut = Math.min(balance, price)
+
+      setBalanceCutAmount(moneyFormat(balanceCut))
+      setAmount(moneyFormat(pay))
+    }
+  },[currentChecked, wallet])
 
   async function fetch() {
     showLoading()
@@ -49,14 +62,13 @@ const Page: Taro.FC = () => {
 
   async function onPaymentClick() {
     await submitPayment({
+      amount: parseFloat(amount),
       url: 'wallet/payLendingCard',
       data: {
         [CARD_ID]: currentChecked[CARD_ID],
         lendingcardName: currentChecked.lendingcardName
       }
     })
-
-    const amount = currentChecked.lendingcardPrice - (wallet ? wallet.balance : 0)
     Taro.navigateTo({ url: `/pages/result/index?type=pay&price=${amount}` })
   }
 
@@ -87,7 +99,8 @@ const Page: Taro.FC = () => {
               </View>
               <View className='cell__ft'>
                 <View className='money red bold'>
-                  <Text className='money-unit'>¥</Text>{item.lendingcardPrice}
+                  <Text className='money-unit'>¥</Text>
+                  {moneyFormat(item.lendingcardPrice)}
                 </View>
                 <View className='money-desc'>
                   每天{
@@ -124,7 +137,8 @@ const Page: Taro.FC = () => {
               </View>
               <View className='cell__ft'>
                 <View className='money red bold'>
-                  <Text className='money-unit'>¥</Text>{item.lendingcardPrice}
+                  <Text className='money-unit'>¥</Text>
+                  {moneyFormat(item.lendingcardPrice)}
                 </View>
               </View>
             </View>
@@ -152,11 +166,12 @@ const Page: Taro.FC = () => {
             <View>
               共计：
               <Text className='money red bold'>
-                <Text className='money-unit money-unit--large'>¥</Text>{currentChecked.lendingcardPrice}
+                <Text className='money-unit money-unit--large'>¥</Text>
+                {moneyFormat(currentChecked.lendingcardPrice)}
               </Text>
             </View>
-            {wallet && wallet.balance && (
-              <View className='desc'>账户余额可抵扣: {moneyFormat(wallet.balance)}元</View>
+            {parseFloat(balanceCutAmount) > 0 && (
+              <View className='desc'>账户余额可抵扣: {balanceCutAmount}元</View>
             )}
           </View>
           <Button className='btn btn-primary' onClick={onPaymentClick}>购买</Button>

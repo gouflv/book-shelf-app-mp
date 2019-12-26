@@ -1,11 +1,9 @@
 import './index.scss'
-import Taro, { useContext, useEffect, useState, useRouter } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useRouter, useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import { moneyFormat } from '../../utils'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
-import numeral from 'numeral'
-import { MoneyFormatter } from '../../config'
 import usePayment from '../../utils/payment-hook'
 
 const Page: Taro.FC = () => {
@@ -13,34 +11,30 @@ const Page: Taro.FC = () => {
   const { wallet, currentOrder, buyBookDiscount } = useContext(AppStore)
   const { submitPayment } = usePayment()
 
-  const [price, setPrice] = useState<string>()
-  const [discountAmount, setDiscountAmount] = useState<string>()
-  const [balanceCutAmount, setBalanceCutAmount] = useState<string>()
-  const [amount, setAmount] = useState<string>()
+  const [price, setPrice] = useState('0')
+  const [discountAmount, setDiscountAmount] = useState('0')
+  const [balanceCutAmount, setBalanceCutAmount] = useState('0')
+  const [amount, setAmount] = useState('0')
 
   useEffect(() => {
     if (currentOrder && wallet) {
-      const _price = numeral(currentOrder.booksPrice)
-      const balance = numeral(wallet.balance)
+      const _price = parseFloat(currentOrder.booksPrice)
+      const balance = wallet.balance
 
-      const discount = _price.multiply(1 - buyBookDiscount)
-      const val = _price
-        .subtract(discount.value())
-        .subtract(balance)
-      const result = val.value() < 0 ? numeral('0') : val
-      const balanceCut = balance.value() > result.value()
-        ? result
-        : result.subtract(balance)
+      const discount = _price * (1 - buyBookDiscount)
+      const pay = Math.max(0, _price - discount - balance)
+      const balanceCut = Math.min(balance, _price - discount)
 
-      setPrice(_price.format(MoneyFormatter))
-      setDiscountAmount(discount.format(MoneyFormatter))
-      setBalanceCutAmount(balanceCut.format(MoneyFormatter))
-      setAmount(result.format(MoneyFormatter))
+      setPrice(moneyFormat(_price))
+      setDiscountAmount(moneyFormat(discount))
+      setBalanceCutAmount(moneyFormat(balanceCut))
+      setAmount(moneyFormat(pay))
     }
   }, [currentOrder, wallet])
 
   async function onPaymentClick() {
     await submitPayment({
+      amount: parseFloat(amount),
       url: 'book/payToSaleOrder',
       data: {
         orderNo: router.params.id

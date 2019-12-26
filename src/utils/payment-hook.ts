@@ -4,14 +4,16 @@ import { defaultErrorHandler, POST } from './ajax'
 import { hideLoading, showLoading } from './index'
 
 const usePayment = () => {
-  async function submitPayment({ url, data }) {
+  async function submitPayment({ amount, url, data }) {
     showLoading()
     try {
       const params: PaymentRequestParams = await POST(url, { data })
       if (!params) {
         return
       }
-      await Taro.requestPayment(params)
+      if (amount) {
+        await Taro.requestPayment(params)
+      }
     } catch (e) {
       defaultErrorHandler(e)
       throw e
