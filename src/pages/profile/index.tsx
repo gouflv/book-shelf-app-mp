@@ -99,6 +99,7 @@ const Page: Taro.FC = () => {
                   confirmType='done'
                   onConfirm={e => onFormChange({ nickName: e.detail.value })}
                   onBlur={e => onFormChange({ nickName: e.detail.value })}
+                  focus
                 />
               )
               : user.nickName
@@ -158,6 +159,7 @@ const Page: Taro.FC = () => {
                   confirmType='done'
                   onConfirm={e => onFormChange({ childName: e.detail.value })}
                   onBlur={e => onFormChange({ childName: e.detail.value })}
+                  focus
                 />
               )
               : user.childName
@@ -191,7 +193,12 @@ const Page: Taro.FC = () => {
             <Image src={require('../../assets/personal_icon_birthday@2x.png')} mode='aspectFit' />
           </View>
           <View className='cell__bd'>宝宝生日</View>
-          <Picker mode='date' value='2010-01-01' onChange={e => onFormChange({ childBirthday: e.detail.value })}>
+          <Picker
+            mode='date'
+            value='2010-01-01'
+            end={dayjs().format('YYYY-MM-DD')}
+            onChange={e => onFormChange({ childBirthday: e.detail.value })}
+          >
             <View className='cell__ft'>
               {user.childBirthday
                 ? <Text>{dayjs(user.childBirthday).format('YYYY-MM-DD')}</Text>

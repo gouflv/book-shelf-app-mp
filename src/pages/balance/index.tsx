@@ -70,7 +70,7 @@ const Page: Taro.FC = () => {
           <View className='top'>余额</View>
           <View className='money red'>
             <Text className='money-unit'>¥</Text>
-            {wallet && moneyFormat(wallet.depositTotal)}
+            {wallet && moneyFormat(wallet.balance)}
           </View>
         </View>
       </View>

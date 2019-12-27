@@ -83,8 +83,6 @@ const Page: Taro.FC = () => {
         Taro.navigateBack()
       }, 2000)
     } catch (e) {
-      // @ts-ignore
-      start(0)
       if (e.message === '输入的手机号已经被注册了') {
         hideLoading()
         await showConfirm({
@@ -93,6 +91,9 @@ const Page: Taro.FC = () => {
           confirmText: '更换绑定手机号'
         })
         setPhone('')
+        setSmsCode('')
+      } else if (/验证码不正确/.test(e.message)) {
+        showToast({ title: '验证码有误，请核对' })
         setSmsCode('')
       } else {
         defaultErrorHandler(e)
@@ -111,6 +112,7 @@ const Page: Taro.FC = () => {
           <View className='item'>
             <Image src={require('../../assets/phone-icon-user.png')} mode='aspectFit' className='icon' />
             <Input
+              type='number'
               className='input'
               placeholder='请输入您的手机号'
               value={phone}
@@ -126,7 +128,7 @@ const Page: Taro.FC = () => {
           </View>
           <View className='item'>
             <Image src={require('../../assets/phone-icon-lock.png')} mode='aspectFit' className='icon' />
-            <Input type='digit' className='input' placeholder='请输入短信验证码' value={smsCode} onInput={e => setSmsCode(e.detail.value)} />
+            <Input type='number' className='input' placeholder='请输入短信验证码' value={smsCode} onInput={e => setSmsCode(e.detail.value)} />
             {timeLeft && (
               <Text className='btn-sms blue'>{(timeLeft as number) / 1000}s</Text>
             )}

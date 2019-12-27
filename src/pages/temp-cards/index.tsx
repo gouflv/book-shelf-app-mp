@@ -136,7 +136,7 @@ const Page: Taro.FC = () => {
             </View>
           </View>
           <View className='footer'>
-            <Button className='btn-primary' onClick={onBuyCardClick}>购买阅读卡</Button>
+            <Button className='btn-primary' onClick={onBuyCardClick}>购买借阅卡</Button>
           </View>
         </View>
       )}

@@ -1,7 +1,6 @@
 import './index.scss'
 import Taro, { useContext, useEffect, useState, useRouter } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
-import { moneyFormat } from '../../utils'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import numeral from 'numeral'
