@@ -78,9 +78,6 @@ const Intro: Taro.FC = () => {
       </View>
 
       <ModalWithClose isOpened={errorVisible} onCancel={() => setErrorVisible(false)}>
-        <View className='message-title'>
-          该二维码信息有误
-        </View>
         <View className='message-desc'>
           <View>该二维码信息有误</View>
           请重新扫描二维码

@@ -37,7 +37,7 @@ const NumberInput: Taro.FC<NumberInputOneProps> = props => {
         )
       })}
       <Input
-        type='digit'
+        type='number'
         maxLength={6}
         focus={focus}
         className='input'

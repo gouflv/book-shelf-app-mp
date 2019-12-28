@@ -46,13 +46,14 @@ const Page: Taro.FC = () => {
           code: smsCode
         }
       })
-      setStep(1)
-    } catch (e) {
-      showToast({ title: '短信验证码无效' })
-    } finally {
-      hideLoading()
+      // reset timer
       // @ts-ignore
       start(0)
+      setStep(1)
+    } catch (e) {
+      showToast({ title: '验证码有误，请核对' })
+    } finally {
+      hideLoading()
     }
 
   }
@@ -134,8 +135,6 @@ const Page: Taro.FC = () => {
       Taro.navigateBack()
 
     } catch (e) {
-      // @ts-ignore
-      start(0)
       defaultErrorHandler(e)
     } finally {
       hideLoading()
@@ -155,7 +154,7 @@ const Page: Taro.FC = () => {
             <View className='desc'>
               {timeLeft
                 ? <Text>{(timeLeft as number) / 1000}s</Text>
-                : <Text onClick={() => sendSms()}>点击重发</Text>
+                : <Text onClick={() => sendSms()}>点击重新获取</Text>
               }
             </View>
             <NumberInput
@@ -169,10 +168,10 @@ const Page: Taro.FC = () => {
           <View className='step2'>
             <View className='form'>
               <View className='form-item'>
-                <Input className='input' placeholder='请输入您要绑定的新手机号' value={phone} onInput={e => setPhone(e.detail.value)} />
+                <Input type='number' className='input' placeholder='请输入您要绑定的新手机号' value={phone} onInput={e => setPhone(e.detail.value)} />
               </View>
               <View className='form-item'>
-                <Input type='digit' className='input' placeholder='请输入短信验证码' onInput={e => setSmsCode(e.detail.value)} />
+                <Input type='number' className='input' placeholder='请输入短信验证码' onInput={e => setSmsCode(e.detail.value)} />
                 <Button
                   className='btn btn--plain orange btn-send'
                   size='mini'

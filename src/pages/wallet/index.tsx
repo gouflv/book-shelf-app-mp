@@ -54,7 +54,7 @@ const Page: Taro.FC = () => {
                 </View>
                 <View className='cell__ft'>
                   <Button
-                    className='btn-primary'
+                    className='btn-primary btn--square'
                     size='mini'
                     onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
                   >
@@ -91,33 +91,64 @@ const Page: Taro.FC = () => {
             <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/temp-cards/index' })}>
               <View className='cell__bd'>
                 <View className='label'>借阅次卡</View>
+                {!parseFloat(wallet.lendingCardTotal) && (
+                  <View className='desc red'>暂无次卡</View>
+                )}
               </View>
               <View className='cell__ft'>
                 <View className='red'>
-                  {wallet.lendingCardTotal && parseInt(wallet.lendingCardTotal)
+                  {parseFloat(wallet.lendingCardTotal)
                     ? `${wallet.lendingCardTotal}张可用`
-                    : '暂无次卡'
+                    : (
+                      <Button
+                        className='btn-primary btn--square'
+                        size='mini'
+                        onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
+                      >
+                        去购买
+                      </Button>
+                    )
                   }
                 </View>
               </View>
-              <View className='cell__link'>
-                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
-              </View>
+              {parseFloat(wallet.lendingCardTotal) && (
+                <View className='cell__link'>
+                  <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
+                </View>
+              )}
             </View>
 
             <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/deposit/index' })}>
               <View className='cell__bd'>
                 <View className='label'>押金</View>
+                {!wallet.depositTotal && (
+                  <View className='desc red'>未缴纳</View>
+                )}
               </View>
               <View className='cell__ft'>
-                <Text className='money red'>
-                  <Text className='money-unit'>¥</Text>
-                  {moneyFormat(wallet.depositTotal)}
-                </Text>
+                {wallet.depositTotal
+                  ? (
+                    <Text className='money red'>
+                      <Text className='money-unit'>¥</Text>
+                      {moneyFormat(wallet.depositTotal)}
+                    </Text>
+                  )
+                  : (
+                    <Button
+                      className='btn-primary btn--square'
+                      size='mini'
+                      onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
+                    >
+                      去缴纳
+                    </Button>
+                  )
+                }
               </View>
-              <View className='cell__link'>
-                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
-              </View>
+              {wallet.depositTotal && (
+                <View className='cell__link'>
+                  <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
+                </View>
+              )}
             </View>
 
           </View>

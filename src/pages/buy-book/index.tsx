@@ -1,7 +1,6 @@
 import './index.scss'
 import Taro, { useContext, useEffect, useRouter, useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
-import { moneyFormat } from '../../utils'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import usePayment from '../../utils/payment-hook'

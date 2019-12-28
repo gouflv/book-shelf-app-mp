@@ -20,8 +20,27 @@ const Page: Taro.FC = () => {
     }, 2000)
   },[])
 
+  useEffect(() => {
+    switch (type) {
+      case 'pay':
+        Taro.setNavigationBarTitle({ title: '借阅卡' })
+        break
+      case 'deposit':
+        Taro.setNavigationBarTitle({ title: '缴纳押金' })
+        break
+      case 'getBackDeposit':
+        Taro.setNavigationBarTitle({ title: '退回押金' })
+        break
+      case 'buyBook':
+        Taro.setNavigationBarTitle({ title: '商品购买' })
+        break
+      case 'payOverdue':
+        Taro.setNavigationBarTitle({ title: '支付成功' })
+        break
+    }
+  }, [type])
+
   function withReload(callback) {
-    fetchUserInfo()
     callback()
   }
 
