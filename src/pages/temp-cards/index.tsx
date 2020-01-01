@@ -66,7 +66,10 @@ const Page: Taro.FC = () => {
                   {dayjs(item.startDate).isAfter(dayjs(), 'day')
                     ? (
                       <View className='desc red'>
-                        可使用日期：`${dayjs(item.startDate).format('YYYY-MM-DD')}至${dayjs(item.endDate).format('YYYY-MM-DD')}`
+                        可使用日期：
+                        {
+                          `${dayjs(item.startDate).format('YYYY-MM-DD')}至${dayjs(item.endDate).format('YYYY-MM-DD')}`
+                        }
                       </View>
                     )
                     : (
