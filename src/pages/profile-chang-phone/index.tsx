@@ -15,7 +15,7 @@ const Page: Taro.FC = () => {
   const [step, setStep] = useState<0 | 1>(0)
 
   //#region step1
-  const [timeLeft, start] = useCountDown()
+  const [timeLeft, startCountDown] = useCountDown()
   const [smsCode, setSmsCode] = useState('')
 
   async function sendSms() {
@@ -25,7 +25,7 @@ const Page: Taro.FC = () => {
         data: { phone: user && user.tel }
       })
       // @ts-ignore
-      start()
+      startCountDown()
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
@@ -48,7 +48,7 @@ const Page: Taro.FC = () => {
       })
       // reset timer
       // @ts-ignore
-      start(0)
+      startCountDown(0)
       setStep(1)
     } catch (e) {
       showToast({ title: '验证码有误，请核对' })
@@ -59,8 +59,18 @@ const Page: Taro.FC = () => {
   }
 
   useEffect(() => {
-    sendSms()
+    const prevCountDown = Taro.getStorageSync('countDown.profile-chang-phone')
+    if (prevCountDown) {
+      // @ts-ignore
+      startCountDown(+prevCountDown)
+    } else {
+      sendSms()
+    }
   }, [])
+
+  useEffect(() => {
+    Taro.setStorageSync('countDown.profile-chang-phone', timeLeft)
+  }, [timeLeft])
 
   useEffect(() => {
     if (step === 0 && smsCode.length === 6) {
@@ -86,7 +96,7 @@ const Page: Taro.FC = () => {
       setSmsCode('')
       setHasSend(true)
       // @ts-ignore
-      start()
+      startCountDown()
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
