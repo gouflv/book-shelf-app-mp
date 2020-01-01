@@ -1,8 +1,5 @@
-import Taro from '@tarojs/taro'
-
-import useEffect = Taro.useEffect
-import useCallback = Taro.useCallback
-import useState = Taro.useState
+import Taro, { useEffect, useState, useCallback } from '@tarojs/taro'
+import dayjs from 'dayjs'
 
 const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
   const [timeLeft, setTimeLeft] = useState(0)
@@ -35,3 +32,43 @@ const useCountDown = (timeToCount = 60 * 1000, interval = 1000) => {
 }
 
 export default useCountDown
+
+const CountDownValueKey = 'countDown'
+const CountDownStampKey = 'countDownStamp'
+
+export const useCountDownWithResume = (namespace: string, onStart: () => void) => {
+  const [timeLeft, startCountDown] = useCountDown()
+
+  useEffect(() => {
+    saveCountDownValue(timeLeft)
+  }, [timeLeft])
+
+  function saveCountDownValue(value) {
+    Taro.setStorageSync(`${CountDownValueKey}.${namespace}`, value)
+  }
+
+  function updateCountDownStamp() {
+    Taro.setStorageSync(`${CountDownStampKey}.${namespace}`, dayjs().format('YYYY-MM-DD HH:mm:ss'))
+  }
+
+  function start() {
+    const prevCountDown = Taro.getStorageSync(`${CountDownValueKey}.${namespace}`)
+    const countDownStamp = Taro.getStorageSync(`${CountDownStampKey}.${namespace}`)
+
+    if (prevCountDown && countDownStamp && dayjs(countDownStamp).add(60 - 1, 'second').isAfter(dayjs())) {
+      const timePass = dayjs().diff(dayjs(countDownStamp), 'second')
+      // @ts-ignore
+      startCountDown(timePass >= 60 ? 60 : (prevCountDown - timePass * 1000))
+    } else {
+      // @ts-ignore
+      startCountDown()
+      onStart()
+      updateCountDownStamp()
+    }
+  }
+
+  return {
+    timeLeft,
+    startCountDown: start
+  }
+}
