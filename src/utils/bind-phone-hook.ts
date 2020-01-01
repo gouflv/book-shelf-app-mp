@@ -35,7 +35,7 @@ const useBindPhone = (props: { success?: () => void  } = {}) => {
         if (props.success) {
           props.success()
         }
-      }, 2000)
+      }, 1000)
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
