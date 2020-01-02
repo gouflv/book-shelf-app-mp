@@ -1,11 +1,9 @@
 import './index.scss'
-import Taro, { useContext, useRouter, useState, useEffect } from '@tarojs/taro'
-import { View, Image, Text, Button } from '@tarojs/components'
+import Taro, { useContext, useEffect, useRouter, useState } from '@tarojs/taro'
+import { Button, Image, Text, View } from '@tarojs/components'
 import { moneyFormat } from '../../utils'
 import AppStore, { app } from '../../store/app'
-import numeral from 'numeral'
 import dayjs from 'dayjs'
-import { MoneyFormatter } from '../../config'
 import usePayment from '../../utils/payment-hook'
 
 const Page: Taro.FC = () => {
@@ -13,25 +11,27 @@ const Page: Taro.FC = () => {
   const { wallet, currentOrder, overduePrice } = useContext(AppStore)
   const { submitPayment } = usePayment()
 
-  const [overdueAmount, setOverdueAmount] = useState<string>()
-  const [amount, setAmount] = useState<string>()
+  const [overdueAmount, setOverdueAmount] = useState('0')
+  const [balanceCutAmount, setBalanceCutAmount] = useState('0')
+  const [amount, setAmount] = useState('0')
+
   useEffect(() => {
     if (wallet && currentOrder) {
-      const days = numeral(currentOrder.beOverdueNum || 0)
-      const balance = wallet ? wallet.balance : '0'
+      const days = parseInt(currentOrder.beOverdueNum) || 0
+      const balance = wallet.balance
+      const overdue = days * app.overduePrice
+      const pay = Math.max(0, overdue - balance)
+      const balanceCut = Math.min(balance, overdue)
 
-      const overdue = days.multiply(app.overduePrice)
-      setOverdueAmount(overdue.format(MoneyFormatter))
-
-      const pay = numeral(overdue).multiply(balance)
-      setAmount(
-        (pay.value() < 0 ) ? '0' : pay.format(MoneyFormatter)
-      )
+      setOverdueAmount(moneyFormat(overdue))
+      setBalanceCutAmount(moneyFormat(balanceCut))
+      setAmount(moneyFormat(pay))
     }
   }, [wallet, currentOrder])
 
   async function onPaymentClick() {
     await submitPayment({
+      amount: parseFloat(amount),
       url: 'book/payRenewingOrder',
       data: {
         orderNo: router.params.id
@@ -103,7 +103,7 @@ const Page: Taro.FC = () => {
             <View className='cell__ft'>
               <Text className='money red'>
                 -<Text className='money-unit'>¥</Text>
-                {wallet && moneyFormat(wallet.balance)}
+                {balanceCutAmount}
               </Text>
             </View>
           </View>

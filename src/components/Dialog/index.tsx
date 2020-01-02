@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useEffect } from '@tarojs/taro'
+import Taro from '@tarojs/taro'
 import { AtModal } from 'taro-ui'
 import { Button, View } from '@tarojs/components'
 import { AtModalProps } from 'taro-ui/@types/modal'

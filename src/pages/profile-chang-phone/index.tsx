@@ -1,10 +1,10 @@
 import './index.scss'
-import Taro, { useState, useContext, useEffect } from '@tarojs/taro'
-import { Button, Input, View, Text } from '@tarojs/components'
+import Taro, { useContext, useEffect, useState, useDidShow } from '@tarojs/taro'
+import { Button, Input, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import DialogService from '../../store/dialogService'
 import { defaultErrorHandler, encodePhone, hideLoading, POST, showLoading, showToast } from '../../utils'
-import useCountDown from '../../utils/countdown-hook'
+import useCountDown, { useCountDownWithResume } from '../../utils/countdown-hook'
 import NumberInput from './NumberInput'
 import BasicPageView from '../../components/BasicPageView'
 
@@ -15,17 +15,20 @@ const Page: Taro.FC = () => {
   const [step, setStep] = useState<0 | 1>(0)
 
   //#region step1
-  const [timeLeft, start] = useCountDown()
+  const { timeLeft, startCountDown } = useCountDownWithResume(
+    'profile-chang-phone',
+    () => {
+      sendFirstSms()
+    }
+  )
   const [smsCode, setSmsCode] = useState('')
 
-  async function sendSms() {
+  async function sendFirstSms() {
     showLoading()
     try {
       await POST('base/getMemberVerificationCode', {
         data: { phone: user && user.tel }
       })
-      // @ts-ignore
-      start()
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
@@ -33,7 +36,7 @@ const Page: Taro.FC = () => {
     }
   }
 
-  async function commitSmsCode() {
+  async function commitFirstSmsCode() {
     if (!smsCode) {
       showToast({ title: '请输入短信验证码' })
       return
@@ -46,10 +49,8 @@ const Page: Taro.FC = () => {
           code: smsCode
         }
       })
-      // reset timer
-      // @ts-ignore
-      start(0)
       setStep(1)
+      setSmsCode('')
     } catch (e) {
       showToast({ title: '验证码有误，请核对' })
     } finally {
@@ -58,19 +59,20 @@ const Page: Taro.FC = () => {
 
   }
 
-  useEffect(() => {
-    sendSms()
-  }, [])
+  useDidShow(() => {
+    startCountDown()
+  })
 
   useEffect(() => {
     if (step === 0 && smsCode.length === 6) {
-      commitSmsCode()
+      commitFirstSmsCode()
     }
   }, [smsCode, step])
   //#endregion
 
   //#region step2
   const [hasSend, setHasSend] = useState(false)
+  const [timeLeft2, startCountDown2] = useCountDown()
   const [phone, setPhone] = useState('')
 
   async function onSendClick() {
@@ -86,7 +88,7 @@ const Page: Taro.FC = () => {
       setSmsCode('')
       setHasSend(true)
       // @ts-ignore
-      start()
+      startCountDown2()
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
@@ -154,13 +156,13 @@ const Page: Taro.FC = () => {
             <View className='desc'>
               {timeLeft
                 ? <Text>{(timeLeft as number) / 1000}s</Text>
-                : <Text onClick={() => sendSms()}>点击重新获取</Text>
+                : <Text onClick={() => startCountDown()}>点击重新获取</Text>
               }
             </View>
             <NumberInput
               onChange={val => setSmsCode(val)}
             />
-            <Button className='btn btn-primary' onClick={commitSmsCode}>下一步</Button>
+            <Button className='btn btn-primary' onClick={commitFirstSmsCode}>下一步</Button>
           </View>
         )}
 
@@ -176,13 +178,13 @@ const Page: Taro.FC = () => {
                   className='btn btn--plain orange btn-send'
                   size='mini'
                   onClick={() => {
-                    if (!timeLeft) {
+                    if (!timeLeft2) {
                       onSendClick()
                     }
                   }}
                 >
-                  {timeLeft
-                    ? `${(timeLeft as number) / 1000}s`
+                  {timeLeft2
+                    ? `${(timeLeft2 as number) / 1000}s`
                     : hasSend ? '点击重新获取' : '获取验证码'
                   }
                 </Button>

@@ -6,7 +6,6 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import { usePagination } from '../../store/usePagaination'
 import { moneyFormat } from '../../utils'
-import useBindPhone from '../../utils/bind-phone-hook'
 
 const DepositType = {
   0: '归还',
@@ -15,12 +14,7 @@ const DepositType = {
 }
 
 const Page: Taro.FC = () => {
-  const { wallet, isUserBoundPhone, depositAmount } = useContext(AppStore)
-  const { onGetPhoneNumber } = useBindPhone({
-    success() {
-      Taro.navigateTo({ url: '/pages/buy-deposit/index' })
-    }
-  })
+  const { wallet, depositAmount } = useContext(AppStore)
 
   //#region list
   const { items, fetchStart, isEmpty, isFinish, loading } = usePagination({
@@ -96,16 +90,7 @@ const Page: Taro.FC = () => {
             {wallet && moneyFormat(wallet.depositTotal)}
           </View>
 
-          {!isUserBoundPhone && (
-            <Button
-              key='getPhoneNumber'
-              openType='getPhoneNumber'
-              className='btn btn--round'
-              size='mini'
-              onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
-            >补缴押金</Button>
-          )}
-          {isUserBoundPhone && wallet && wallet.depositTotal < depositAmount && (
+          {wallet && wallet.depositTotal < depositAmount && (
             <Button
               key='navigateTo'
               className='btn btn--round'

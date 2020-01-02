@@ -2,9 +2,7 @@ import './index.scss'
 import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
 import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
-import numeral from 'numeral'
 import { observer } from '@tarojs/mobx'
-import { MoneyFormatter } from '../../config'
 import { moneyFormat } from '../../utils'
 import usePayment from '../../utils/payment-hook'
 
@@ -12,21 +10,20 @@ const Page: Taro.FC = () => {
   const { wallet, depositAmount } = useContext(AppStore)
   const { submitPayment } = usePayment()
 
-  const [depositToPay, setDepositToPay] = useState('0')
+  const [payAmount, setPayAmount] = useState('0')
   useEffect(() => {
-    if (wallet && wallet.depositTotal) {
-      setDepositToPay(numeral(depositAmount).subtract(wallet.depositTotal).format(MoneyFormatter))
-    } else {
-      setDepositToPay( `${depositAmount}`)
+    if (wallet) {
+      setPayAmount(moneyFormat(depositAmount - wallet.depositTotal))
     }
-  }, [wallet])
+  }, [depositAmount, wallet])
 
   async function onPaymentClick() {
     await submitPayment({
+      amount: parseFloat(payAmount),
       url: 'wallet/payDepositCash',
       data: {}
     })
-    Taro.navigateTo({ url: `/pages/result/index?type=deposit&price=${depositToPay}` })
+    Taro.navigateTo({ url: `/pages/result/index?type=deposit&price=${payAmount}` })
   }
 
   return (
@@ -70,7 +67,7 @@ const Page: Taro.FC = () => {
                 需缴押金：
                 <Text className='money red'>
                   <Text className='money-unit'>¥</Text>
-                  {depositToPay}
+                  {payAmount}
                 </Text>
               </View>
             </View>
@@ -83,7 +80,7 @@ const Page: Taro.FC = () => {
           确认购买即视为已同意<Text className='orange'>《借阅卡卡权益及服务规则》</Text>
         </View>
         <Button className='btn-block btn-primary' onClick={onPaymentClick}>
-          确认支付{depositToPay}元押金
+          确认支付{payAmount}元押金
         </Button>
       </View>
     </View>

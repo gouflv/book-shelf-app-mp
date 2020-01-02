@@ -5,9 +5,16 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import dayjs from 'dayjs'
 import { moneyFormat } from '../../utils'
+import useBindPhone from '../../utils/bind-phone-hook'
 
 const Page: Taro.FC = () => {
-  const { user, wallet, fetchUserInfo } = useContext(AppStore)
+  const { user, wallet, fetchUserInfo, isUserBoundPhone } = useContext(AppStore)
+
+  const { onGetPhoneNumber } = useBindPhone({
+    success() {
+      Taro.navigateTo({ url: '/pages/buy-deposit/index' })
+    }
+  })
 
   useDidShow(() => {
     fetchUserInfo()
@@ -118,32 +125,53 @@ const Page: Taro.FC = () => {
               )}
             </View>
 
-            <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/deposit/index' })}>
+            <View className='cell' onClick={() => {
+              if (isUserBoundPhone && wallet.depositTotal) {
+                Taro.navigateTo({ url: '/pages/deposit/index' })
+              }
+            }}
+            >
               <View className='cell__bd'>
                 <View className='label'>押金</View>
                 {!wallet.depositTotal && (
                   <View className='desc red'>未缴纳</View>
                 )}
               </View>
-              <View className='cell__ft'>
-                {wallet.depositTotal
-                  ? (
-                    <Text className='money red'>
-                      <Text className='money-unit'>¥</Text>
-                      {moneyFormat(wallet.depositTotal)}
-                    </Text>
-                  )
-                  : (
-                    <Button
-                      className='btn-primary btn--square'
-                      size='mini'
-                      onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
-                    >
-                      去缴纳
-                    </Button>
-                  )
-                }
-              </View>
+
+              {!isUserBoundPhone && (
+                <View className='cell__ft'>
+                  <Button
+                    key='getPhoneNumber'
+                    className='btn-primary btn--square'
+                    size='mini'
+                    openType='getPhoneNumber'
+                    onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+                  >去缴纳</Button>
+                </View>
+              )}
+
+              {isUserBoundPhone && (
+                <View className='cell__ft'>
+                  {wallet.depositTotal
+                    ? (
+                      <Text className='money red'>
+                        <Text className='money-unit'>¥</Text>
+                        {moneyFormat(wallet.depositTotal)}
+                      </Text>
+                    )
+                    : (
+                      <Button
+                        className='btn-primary btn--square'
+                        size='mini'
+                        onClick={() => Taro.navigateTo({ url: '/pages/buy-deposit/index' })}
+                      >
+                        去缴纳
+                      </Button>
+                    )
+                  }
+                </View>
+              )}
+
               {wallet.depositTotal && (
                 <View className='cell__link'>
                   <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />

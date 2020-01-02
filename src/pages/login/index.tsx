@@ -32,7 +32,7 @@ const Page: Taro.FC = () => {
         </View>
 
         <View className='link gray'>
-          授权即视为已同意<Text className='orange'>《葫芦弟弟借书助手用户协议》</Text>
+          授权即视为已同意<Text className='orange'>《葫芦弟弟借书馆用户协议》</Text>
         </View>
       </View>
     </View>
