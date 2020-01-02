@@ -1,7 +1,7 @@
 export const API_HOST = '/'
 export const BG_COLOR = '#F9F9F9'
 
-export const API_BASE = 'https://app.ruijiehailiang.com/gourd/client'
+export const API_BASE = 'https://jieshu.hollobook.com/gourd/client'
 
 export const MoneyFormatter = '0[.]00'
 
