@@ -35,7 +35,7 @@ const Dialog: Taro.FC<DialogProps> = props => {
                 props.onConfirm && props.onConfirm(e)
               }}
             >
-              1{props.confirmText || '确定'}
+              {props.confirmText || '确定'}
             </Button>
           )
           : (
