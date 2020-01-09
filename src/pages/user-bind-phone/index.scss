@@ -39,8 +39,15 @@
 
     .btn-clean {
       margin-right: 4px;
-      width: 32px;
-      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      width: 80px;
+      height: 80px;
+      .icon-close {
+        width: 32px;
+        height: 32px;
+      }
     }
   }
 }

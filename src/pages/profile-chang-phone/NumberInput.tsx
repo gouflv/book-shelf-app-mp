@@ -1,6 +1,7 @@
 import { Input, View } from '@tarojs/components'
 import Taro, { useState } from '@tarojs/taro'
 import classNames from 'classnames'
+import useDidShow = Taro.useDidShow
 
 interface NumberInputOneProps {
   onChange: (val: string) => void
@@ -19,11 +20,15 @@ const NumberInput: Taro.FC<NumberInputOneProps> = props => {
     props.onChange(val)
   }
 
+  useDidShow(() => {
+    setFocus(true)
+  })
+
   return (
     <View
       className='number-input'
       onClick={() => {
-        setTimeout(() => setFocus(true), 10)
+        setFocus(true)
       }}
     >
       {Array.from({ length: 6 }).map((_, index) => {

@@ -119,12 +119,14 @@ const Page: Taro.FC = () => {
               onInput={e => setPhone(e.detail.value)}
               maxLength={11}
             />
-            <Image
-              src={require('../../assets/icon_input_clean.png')}
-              mode='aspectFit'
-              className='btn-clean'
-              onClick={() => setPhone('')}
-            />
+            <View className='btn-clean'>
+              <Image
+                className='icon-close'
+                src={require('../../assets/icon_input_clean.png')}
+                mode='aspectFit'
+                onClick={() => setPhone('')}
+              />
+            </View>
           </View>
           <View className='item'>
             <Image src={require('../../assets/phone-icon-lock.png')} mode='aspectFit' className='icon' />

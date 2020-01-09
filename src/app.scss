@@ -387,12 +387,26 @@ page, view {
 //#endregion
 
 .at-action-sheet {
+  &__header {
+    line-height: 105px;
+    height: 105px;
+    padding: 0;
+    color: $text-gray;
+    font-size: 24px;
+  }
   &__container {
     margin: 20px;
     width: calc(100% - 40px);
     background-color: #fff;
     border-radius: 20px;
     overflow: hidden;
+  }
+  &__item {
+    line-height: 105px;
+    height: 105px;
+    padding: 0;
+    font-size: 28px;
+    color: $orange;
   }
 }
 

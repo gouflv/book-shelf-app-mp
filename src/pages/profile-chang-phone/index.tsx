@@ -154,7 +154,7 @@ const Page: Taro.FC = () => {
               {user && encodePhone(user.tel)}
             </View>
             <View className='desc'>
-              {timeLeft
+              {(timeLeft && timeLeft > 0)
                 ? <Text>{(timeLeft as number) / 1000}s</Text>
                 : <Text onClick={() => startCountDown()}>点击重新获取</Text>
               }

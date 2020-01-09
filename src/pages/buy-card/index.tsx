@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import usePayment from '../../utils/payment-hook'
+import dayjs from 'dayjs'
 
 const CARD_ID = 'cfgLcId'
 
@@ -91,10 +92,23 @@ const Page: Taro.FC = () => {
                 <SCheckbox value={isChecked(item)} />
               </View>
               <View className='cell__bd'>
-                <View className='label bold'>
-                  {item.days}
-                  <Text className='label-unit'>天</Text>
-                </View>
+                {item.days
+                  ? (
+                    <View className='label bold'>
+                      {item.days}
+                      <Text className='label-unit'>天</Text>
+                    </View>
+                  )
+                  : (
+                    <View className='label bold'>
+                      <Text className='label-unit'>
+                        {dayjs(item.effectiveStarttimes).format('YYYY-MM-DD')}
+                        至
+                        {dayjs(item.effectiveEndtimes).format('YYYY-MM-DD')}
+                      </Text>
+                    </View>
+                  )
+                }
                 <View className='desc gray'>{item.lendingcardName}</View>
               </View>
               <View className='cell__ft'>
@@ -103,9 +117,24 @@ const Page: Taro.FC = () => {
                   {moneyFormat(item.lendingcardPrice)}
                 </View>
                 <View className='money-desc'>
-                  每天{
-                    numeral(item.lendingcardPrice).divide(item.days || 1).format('0[.]0')
-                  }元
+                  每天
+                  {item.days
+                    ? (
+                      <Text>
+                        {numeral(item.lendingcardPrice).divide(item.days || 1).format('0[.]0')}
+                      </Text>
+                    )
+                    : (
+                      <Text>
+                        {
+                          numeral(item.lendingcardPrice).divide(
+                            dayjs(item.effectiveEndtimes).diff(item.effectiveStarttimes, 'day')
+                          ).format('0[.]0')
+                        }
+                      </Text>
+                    )
+                  }
+                  元
                 </View>
               </View>
             </View>

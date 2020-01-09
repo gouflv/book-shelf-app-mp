@@ -15,6 +15,7 @@ const Index: Taro.FC = () => {
   // data
   const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
   useEffect(() => {
+    Taro.setNavigationBarTitle({ title: previewDevice.eqName })
     setEqCode(previewDevice.eqCode)
   }, [previewDevice])
 
@@ -89,14 +90,14 @@ const Index: Taro.FC = () => {
         </View>
       )}
 
-      {previewSite && (
+      {previewDevice && (
         <View className='footer'>
           <View className='site-info'>
             <View className='site-info__hd'>
               <Image src={require('../../assets/navigation_icon_position@2x.png')} mode='aspectFit' className='icon' />
             </View>
             <View className='site-info__bd'>
-              <View className='name'>{previewSite.netName}</View>
+              <View className='name'>{previewDevice.eqName}</View>
               <View className='more'>
                 <View className='left'>距离你{distanceFormat(parseFloat(previewSite.distance))}</View>
                 <View className='right'>
