@@ -62,3 +62,7 @@
     font-size: $font-size-base;
   }
 }
+
+.money {
+  @include money();
+}

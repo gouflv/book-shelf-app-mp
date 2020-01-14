@@ -15,9 +15,10 @@ $font-size-xlarge: 36px;
 
 $foot-shadow: 0 0 6Px rgba(#000, 0.05);
 
+$safe-button: env(safe-area-inset-bottom);
+
 @mixin safe-padding-bottom($value) {
-  padding-bottom: $value;
-  padding-bottom: calc(#{$value} + env(safe-area-inset-bottom));
+  padding-bottom: calc(#{$value} + #{$safe-button});
 }
 
 @mixin money($base: $font-size-xlarge) {

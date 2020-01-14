@@ -1,0 +1,32 @@
+@import '../../style/var';
+
+.page {
+  padding-top: 10vh;
+  text-align: center;
+}
+
+.icon {
+  width: 80px;
+  height: 80px;
+}
+
+.money {
+  @include money(56px);
+  margin-top: 5px;
+}
+
+.title {
+  font-size: 28px;
+}
+
+.desc {
+  font-size: 24px;
+  color: #999;
+}
+
+.btn {
+  width: 220px;
+  margin-top: 45px;
+  font-size: 30px;
+}
+

@@ -5,7 +5,6 @@ page {
   font-family: sans-serif;
   font-size: $font-size-base;
   color: #333;
-  line-height: 1.4;
 }
 
 page, view {
@@ -74,13 +73,23 @@ page, view {
     border: 1rpx solid $orange;
   }
 }
+
+.btn-disabled {
+  border-color: $gray;
+  background-color: $gray;
+  color: #333;
+  border-radius: 100px;
+}
+
+.btn--square {
+  border-radius: 10px;
+}
 //#endregion
 
 //#region layout
 .page {
   &--has-footer {
-    margin-bottom: 140px;
-    margin-bottom: calc(140px + env(safe-area-inset-bottom));
+    padding-bottom: calc(140px + #{$safe-button});
   }
 }
 
@@ -165,7 +174,8 @@ page, view {
     margin-right: 16px;
   }
   &__bd {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    margin-right: 20px;
     font-size: $font-size-large;
     .desc {
       margin-top: 4px;
@@ -173,7 +183,7 @@ page, view {
     }
   }
   &__ft {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
     font-size: $font-size-large - 2;
     text-align: right;
     button {
@@ -253,6 +263,9 @@ page, view {
   background-color: #fff;
 }
 
+.at-modal__container {
+  border-radius: 10Px;
+}
 .modal {
   &-close {
     position: absolute;
@@ -281,15 +294,14 @@ page, view {
     margin-top: 56px;
     margin-bottom: 28px;
     text-align: center;
-    font-weight: bold;
-    font-size: $font-size-large;
+    font-size: 30px;
   }
   &-desc {
     margin-bottom: 56px;
     padding: 0 30px;
     text-align: center;
     line-height: 1.8;
-    font-size: $font-size-small;
+    font-size: 24px;
   }
   &-foot {
   }
@@ -314,6 +326,8 @@ page, view {
 }
 
 .tag {
+  display: inline-block;
+  vertical-align: middle;
   padding: 4px 12px;
   background-color: $red;
   color: #fff;
@@ -352,11 +366,57 @@ page, view {
     width: 200px;
   }
 }
+
+.list-empty {
+  padding: 50px 0 150px;
+  text-align: center;
+}
+.list-finished {
+  padding: 30px 0;
+  text-align: center;
+  font-size: 22px;
+  color: $gray;
+}
 //#endregion
 
-//#region for
+//#region form
 .input-placeholder,
 .textarea-placeholder {
   color: $text-gray;
 }
 //#endregion
+
+.at-action-sheet {
+  &__header {
+    line-height: 105px;
+    height: 105px;
+    padding: 0;
+    color: $text-gray;
+    font-size: 24px;
+  }
+  &__container {
+    margin: 20px;
+    width: calc(100% - 40px);
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  &__item {
+    line-height: 105px;
+    height: 105px;
+    padding: 0;
+    font-size: 28px;
+    color: $orange;
+  }
+}
+
+.gift-card-dialog {
+  .at-modal__overlay {
+    background-color: rgba(#000, 0.6);
+  }
+  .at-modal__container {
+    width: 665px;
+    height: 828px;
+    background-color: transparent;
+  }
+}

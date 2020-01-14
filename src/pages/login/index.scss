@@ -1,0 +1,30 @@
+@import '../../style/var';
+
+.page {
+}
+
+.top {
+  display: block;
+  width: 80%;
+  margin: 50px auto 100px;
+}
+
+.btn {
+  width: 80%;
+  font-size: 30px;
+  line-height: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  image {
+    margin-right: 10px;
+    width: 36px;
+    height: 30px;
+  }
+}
+
+.link {
+  margin-top: 20px;
+  font-size: 20px;
+  text-align: center;
+}

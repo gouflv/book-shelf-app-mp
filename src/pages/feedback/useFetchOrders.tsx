@@ -1,23 +1,39 @@
-import { useState, useEffect } from '@tarojs/taro'
+import { useEffect, useState } from '@tarojs/taro'
+import { POST } from '../../utils'
+import { OrderStatus } from '../../typing'
 
-export default function useFetchOrders() {
+interface useFetchOrdersProps {
+  day?: number
+  status?: OrderStatus
+  emptyText: string
+}
+
+export default function useFetchOrders(
+  { day, status, emptyText }: useFetchOrdersProps
+) {
   const [items, setItems] = useState<any[]>([])
-  const [isEmpty, setEmptyState] = useState(false)
+  const [isEmpty, setEmpty] = useState(false)
   const [options, setOptions] = useState<string[]>([])
 
   useEffect(() => {
-    fetch()
-  }, [])
+    async function fetch() {
+      const data = {} as any
+      if (day) data.day = day
+      if (status) data.status = status
 
-  function fetch() {
-    const data = [{ name: 'A1' }] as any[]
-    setEmptyState(!data.length)
-    setItems(data)
-    setOptions(data.length
-      ? data.map(d => d.name)
-      : ['暂无还书记录']
-    )
-  }
+      const res = await POST('account/getOrderList', {
+        data
+      })
+      setEmpty(!res.length)
+      setItems(res)
+      setOptions(res.length
+        ? res.map(d => d.booksName)
+        : [emptyText]
+      )
+    }
+    fetch()
+  }, [day, emptyText, status])
+
 
   function getOrderByIndex(index: number) {
     return items[index] || null

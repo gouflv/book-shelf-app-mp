@@ -44,3 +44,23 @@
     border-radius: 10Px 10Px 0 0;
   }
 }
+
+.input {
+  margin-left: auto;
+  width: 120Px;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid $gray;
+  font-size: $font-size-large;
+  border-radius: 4Px;
+}
+
+.btn-get-phone {
+  display: inline-block;
+  vertical-align: middle;
+  background-color: transparent;
+  padding: 0;
+  font-size: 30px;
+  color: #333;
+  min-width: 140px;
+}

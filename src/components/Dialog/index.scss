@@ -1,0 +1,46 @@
+@import '../../style/var';
+
+.dialog {
+  &__content {
+    min-height: 120px;
+    padding: 30px 35px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__title {
+    margin-bottom: 20px;
+    font-size: 34px;
+    text-align: center;
+    font-weight: bold;
+  }
+  &__message {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  &__footer {
+    display: flex;
+    border-top: 1rpx solid $gray;
+    padding: 8px 0;
+    .btn {
+      flex: 1 1 auto;
+      max-width: 50%;
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      height: 80px - 16px;
+      line-height: 80px - 16px;
+      font-size: 30px;
+    }
+  }
+
+  &__cancel-btn {
+    color: $text-gray;
+    border-right: 1rpx solid $gray !important;
+  }
+  &__confirm-btn {
+    color: $orange;
+  }
+}

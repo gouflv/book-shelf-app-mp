@@ -1,7 +1,9 @@
 @import '../../style/var';
 
-.page-buy-card {
-  margin-bottom: 140px;
+.space {
+  height: 150px;
+  height: calc(150px + #{$safe-button});
+  background-color: #fff;
 }
 
 .page-section:first-child {
@@ -29,6 +31,8 @@
     }
   }
 
+  border: 2rpx solid transparent;
+  transition: all 250ms ease-in;
   &--checked {
     border: 2rpx solid $orange;
     box-shadow: 0 0 8Px rgba($orange, 0.1);
