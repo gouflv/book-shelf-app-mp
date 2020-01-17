@@ -4,6 +4,7 @@ import { Button, Image, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import usePayment from '../../utils/payment-hook'
+import { moneyFormat } from '../../utils'
 
 const Page: Taro.FC = () => {
   const router = useRouter()

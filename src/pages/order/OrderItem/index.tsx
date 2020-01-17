@@ -17,7 +17,6 @@ const OrderType = {
 const OrderItem: Taro.FC<{ data: Order }> = props => {
   const { setCurrentOrder, overduePrice } = useContext(AppStore)
 
-  // eslint-disable-next-line react/no-multi-comp
   const renderAction = (data: Order) => {
     const overdueAmount = numeral(data.beOverdueNum || 0).multiply(overduePrice).format(MoneyFormatter)
     return (
@@ -25,7 +24,8 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
         <View className='actions'>
           {data.status === OrderStatus.Overdue && (
             <View className='state'>
-              已逾期{data.beOverdueNum}天
+              已逾期
+              {data.beOverdueNum ? `${data.beOverdueNum}天` : ''}
               <Text className='money red bold'>
                 <Text className='money-unit'>¥</Text>{overdueAmount}
               </Text>
@@ -68,13 +68,23 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
     )
   }
 
-  // @ts-ignore
-  // eslint-disable-next-line react/no-multi-comp
   const renderBuyFlag = () => (
     <View className='flag-buy'>
       <Image src={require('../../../assets/order_icon_hasbought@2x.png')} className='icon' />
     </View>
   )
+
+  const renderDescText = (data: Order) => {
+    if (data.subStatus === '3') {
+      return <Text>到期时间: 已买下</Text>
+    }
+    if (data.status === OrderStatus.Finish) {
+      return <Text>归还时间: {dayjs(data.returnTime).format('YYYY-MM-DD')}</Text>
+    }
+    if (data.expireTime) {
+      return <Text>到期时间: {dayjs(data.expireTime).format('YYYY-MM-DD')}</Text>
+    }
+  }
 
   const { data } = props
   if (!data) {
@@ -99,6 +109,11 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             : ''
           }
         </Text>
+        {data.subStatus === '3' && (
+          <Text className='state gray'>
+            已完成
+          </Text>
+        )}
       </View>
       <View className='order-item__bd'>
         <Image className='thumb' src={data.booksImg || '//placehold.it/130x160'} mode='aspectFit' />
@@ -109,9 +124,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
               ? <Image src={require('../../../assets/order_icon_borrowcard@2x.png')} mode='aspectFit' className='icon-card-1' />
               : <Image src={require('../../../assets/order_icon_secondarycard@2x.png')} mode='aspectFit' className='icon-card-1' />
             }
-            {data.expireTime && (
-              <Text>到期时间: {dayjs(data.expireTime).format('YYYY-MM-DD')}</Text>
-            )}
+            {renderDescText(data)}
           </View>
           <View className='flex-grow' />
           {data.subStatus === '3'
