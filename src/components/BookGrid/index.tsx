@@ -13,7 +13,7 @@ const BookGrid: Taro.FC<{
 
   function onItemClick(item: DeviceBook) {
     Taro.navigateTo({
-      url: `/pages/book/index?id=${item.bookId}&eqBoxId=${item.eqBoxId}&rfidCode=${item.rfidCode}`
+      url: `/pages/book/index?id=${item.bookId}&eqBoxId=${item.eqBoxId}&rfidCode=${item.rfidCode}&boxNum=${item.boxNum}`
     })
   }
 

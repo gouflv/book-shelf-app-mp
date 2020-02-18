@@ -29,6 +29,7 @@ const BookDetail: Taro.FC = () => {
         eqCode: scannedDevice.eqCode,
         eqBoxId: params.eqBoxId,
         rfidCode: params.rfidCode,
+        boxNum: params.boxNum
       } as DeviceBook)
     }
   }
@@ -93,37 +94,37 @@ const BookDetail: Taro.FC = () => {
           </View>
         )}
       </View>
-      <View className='space' />
+      {/*<View className='space' />*/}
 
-      <View className='page-section comments'>
-        <View className='header'>
-          <View className='title'>
-            <Image src={require('../../assets/detail_icon_comment@2x.png')} mode='aspectFit' className='icon' />
-            评价
-            <View className='count'>(15)</View>
-          </View>
-          <View className='more' onClick={() => Taro.navigateTo({ url: '/pages/book/comments/index' })}>
-            查看全部 <View className='icon-more' />
-          </View>
-        </View>
-        <View className='list'>
-          {Array.from(Array(2)).map((_, i) => (
-            <View className='comment' key={i}>
-              <View className='thumb'>
-                <Image src='//placehold.it/100' mode='aspectFit' className='avatar' />
-              </View>
-              <View className='content'>
-                <View className='user'>
-                  用户{i} <View className='date'>2019-11-11</View>
-                </View>
-                <View className='text'>
-                  使用 Taro，我们可以只书写一套代码，再通过 Taro 的编译工具，将源代码分别编译出可以在不同端（微信/百度/支付宝/字节跳动/QQ小程序、快应用、H5、React-Native 等）运行的代码。
-                </View>
-              </View>
-            </View>
-          ))}
-        </View>
-      </View>
+      {/*<View className='page-section comments'>*/}
+      {/*  <View className='header'>*/}
+      {/*    <View className='title'>*/}
+      {/*      <Image src={require('../../assets/detail_icon_comment@2x.png')} mode='aspectFit' className='icon' />*/}
+      {/*      评价*/}
+      {/*      <View className='count'>(15)</View>*/}
+      {/*    </View>*/}
+      {/*    <View className='more' onClick={() => Taro.navigateTo({ url: '/pages/book/comments/index' })}>*/}
+      {/*      查看全部 <View className='icon-more' />*/}
+      {/*    </View>*/}
+      {/*  </View>*/}
+      {/*  <View className='list'>*/}
+      {/*    {Array.from(Array(2)).map((_, i) => (*/}
+      {/*      <View className='comment' key={i}>*/}
+      {/*        <View className='thumb'>*/}
+      {/*          <Image src='//placehold.it/100' mode='aspectFit' className='avatar' />*/}
+      {/*        </View>*/}
+      {/*        <View className='content'>*/}
+      {/*          <View className='user'>*/}
+      {/*            用户{i} <View className='date'>2019-11-11</View>*/}
+      {/*          </View>*/}
+      {/*          <View className='text'>*/}
+      {/*            使用 Taro，我们可以只书写一套代码，再通过 Taro 的编译工具，将源代码分别编译出可以在不同端（微信/百度/支付宝/字节跳动/QQ小程序、快应用、H5、React-Native 等）运行的代码。*/}
+      {/*          </View>*/}
+      {/*        </View>*/}
+      {/*      </View>*/}
+      {/*    ))}*/}
+      {/*  </View>*/}
+      {/*</View>*/}
 
       {book.goodsIntroduce && book.goodsIntroduce.length && (
         <View>

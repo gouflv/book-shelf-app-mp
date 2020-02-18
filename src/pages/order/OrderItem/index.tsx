@@ -18,14 +18,14 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
   const { setCurrentOrder, overduePrice } = useContext(AppStore)
 
   const renderAction = (data: Order) => {
-    const overdueAmount = numeral(data.beOverdueNum || 0).multiply(overduePrice).format(MoneyFormatter)
+    const overdueAmount = numeral(data.overdueDays || 0).multiply(overduePrice).format(MoneyFormatter)
     return (
       <View>
         <View className='actions'>
           {data.status === OrderStatus.Overdue && (
             <View className='state'>
               已逾期
-              {data.beOverdueNum ? `${data.beOverdueNum}天` : ''}
+              {data.overdueDays ? `${data.overdueDays}天` : ''}
               <Text className='money red bold'>
                 <Text className='money-unit'>¥</Text>{overdueAmount}
               </Text>
