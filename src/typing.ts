@@ -77,6 +77,9 @@ export interface Book {
   booksImg: string
   booksPrice: string
   borrowTotal: string
+  goodsSpec: string
+  goodsIntroduce: string
+
   // 用户借阅单号
   borrowOrder: string
   totalPrice: string

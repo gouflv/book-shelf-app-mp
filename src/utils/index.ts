@@ -8,7 +8,7 @@ import { MoneyFormatter } from '../config'
 export function showLoading(props?: Partial<Taro.showLoading.Option>) {
   Taro.showLoading({
     mask: true,
-    title: '',
+    title: '加载中',
     ...props
   })
 }

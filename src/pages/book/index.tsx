@@ -86,9 +86,12 @@ const BookDetail: Taro.FC = () => {
             <View className='ext'>被借了: {book.borrowTotal}次</View>
           }
         </View>
-        <View className='desc'>
-          商品信息来源于后台，评价内容来源于线上商城商品评论商品信息来源于后台，评价内容来源于线上商城商品评论
-        </View>
+
+        {book.goodsSpec && (
+          <View className='desc'>
+            {book.goodsSpec}
+          </View>
+        )}
       </View>
       <View className='space' />
 
@@ -122,13 +125,17 @@ const BookDetail: Taro.FC = () => {
         </View>
       </View>
 
-      <View className='space space--text space--large'>
-        <View className='text'>图文详情</View>
-      </View>
+      {book.goodsIntroduce && book.goodsIntroduce.length && (
+        <View>
+          <View className='space space--text space--large'>
+            <View className='text'>图文详情</View>
+          </View>
 
-      <View className='article'>
-        <RichText nodes='<h1>Hello</h5>' />
-      </View>
+          <View className='article'>
+            <RichText nodes={`<div>${book.goodsIntroduce}</div>`} />
+          </View>
+        </View>
+      )}
 
       {isUserBoundDevice && (
         <View className='footer'>

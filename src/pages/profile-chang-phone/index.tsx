@@ -156,7 +156,7 @@ const Page: Taro.FC = () => {
             <View className='desc'>
               {(timeLeft && timeLeft > 0)
                 ? <Text>{(timeLeft as number) / 1000}s</Text>
-                : <Text onClick={() => startCountDown()}>点击重新获取</Text>
+                : <Text onClick={() => startCountDown()}>获取验证码</Text>
               }
             </View>
             <NumberInput
