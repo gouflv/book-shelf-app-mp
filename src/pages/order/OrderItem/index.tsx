@@ -94,26 +94,29 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
     <View className='order-item order-item--shrink'>
       <View className='order-item__hd'>
         <Text className='date'>{data.createTime}</Text>
-        <Text className={classNames('state', {
-          'green': data.status === OrderStatus.Borrow,
-          'red': data.status === OrderStatus.Overdue,
-          'gray': data.status === OrderStatus.Finish
-        })}
-        >
-          {data.status === OrderStatus.Overdue
-            ? (data.returnTime ? '逾期' : '已逾期')
-            : OrderType[data.status]
-          }
-          {data.status === OrderStatus.Overdue
-            ? (data.returnTime ? '/已归还' : '/未归还')
-            : ''
-          }
-        </Text>
-        {data.subStatus === '3' && (
-          <Text className='state gray'>
-            已完成
-          </Text>
-        )}
+        {data.subStatus === '3' ?
+          (
+            <Text className='state gray'>
+              已完成
+            </Text>
+          ) : (
+            <Text className={classNames('state', {
+              'green': data.status === OrderStatus.Borrow,
+              'red': data.status === OrderStatus.Overdue,
+              'gray': data.status === OrderStatus.Finish
+            })}
+            >
+              {data.status === OrderStatus.Overdue
+                ? (data.returnTime ? '逾期' : '已逾期')
+                : OrderType[data.status]
+              }
+              {data.status === OrderStatus.Overdue
+                ? (data.returnTime ? '/已归还' : '/未归还')
+                : ''
+              }
+            </Text>
+          )
+        }
       </View>
       <View className='order-item__bd'>
         <Image className='thumb' src={data.booksImg || '//placehold.it/130x160'} mode='aspectFit' />
