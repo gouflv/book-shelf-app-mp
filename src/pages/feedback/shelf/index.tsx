@@ -1,6 +1,6 @@
 import '../index.scss'
 import Taro, { useState } from '@tarojs/taro'
-import { Button, Image, Picker, Textarea, View } from '@tarojs/components'
+import { Button, Image, Picker, Textarea, View, Text } from '@tarojs/components'
 import ModalWithClose from '../../../components/Modal/ModalWithClose'
 import useFetchOrders from '../useFetchOrders'
 import classNames from 'classnames'
@@ -23,7 +23,7 @@ const Page: Taro.FC = () => {
   const [resultVisible, setResultVisible] = useState(false)
   const [ currentOrder, setCurrentOrder] = useState<Order>()
   const [ problem, setProblem ] = useState<{ key, name }>()
-  const [ other, setOther ] = useState()
+  const [ other, setOther ] = useState('')
 
   async function submit() {
     if (!currentOrder) {
@@ -116,14 +116,20 @@ const Page: Taro.FC = () => {
         <View className='card'>
           <View className='cell-group cell-group--small'>
             <View className='cell'>
-              <Textarea
-                value=''
-                maxlength={100}
-                placeholder='点击填写问题说明'
-                onInput={({ detail}) => {
-                  setOther(detail.value)
-                }}
-              />
+              {!resultVisible
+                ? (
+                  <Textarea
+                    value=''
+                    maxlength={100}
+                    placeholder='点击填写问题说明'
+                    onInput={({ detail}) => {
+                      setOther(detail.value)
+                    }}
+                  />
+                ) : (
+                  <Text>{other}</Text>
+                )
+              }
             </View>
           </View>
         </View>
