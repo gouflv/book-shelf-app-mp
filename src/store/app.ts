@@ -166,8 +166,12 @@ class AppStore {
   }
 
   @action.bound
-  setScannedDevice(cabinet: Device) {
-    this.scannedDevice = cabinet
+  async setScannedDevice(cabinet: Device) {
+    this.scannedDevice = await POST('book/scanEquipmentMessage', {
+      data: {
+        eqCode: cabinet.eqCode
+      }
+    })
   }
 
   @action.bound

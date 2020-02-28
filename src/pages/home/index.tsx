@@ -64,6 +64,7 @@ const Index: Taro.FC = () => {
 
   useEffect(() => {
     if (scannedDevice) {
+      Taro.setNavigationBarTitle({ title: scannedDevice.eqName })
       setEqCode(scannedDevice.eqCode)
     }
   }, [scannedDevice])

@@ -30,7 +30,7 @@ const Intro: Taro.FC = () => {
       console.debug(query)
 
       if (query && query.scene) {
-        setScannedDevice({ eqCode: query.scene } as Device)
+        await setScannedDevice({ eqCode: query.scene } as Device)
       } else {
         setErrorVisible(true)
         return
