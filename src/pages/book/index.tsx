@@ -29,7 +29,8 @@ const BookDetail: Taro.FC = () => {
         eqCode: scannedDevice.eqCode,
         eqBoxId: params.eqBoxId,
         rfidCode: params.rfidCode,
-        boxNum: params.boxNum
+        boxNum: params.boxNum,
+        openStatus: params.openStatus
       } as DeviceBook)
     }
   }
