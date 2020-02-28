@@ -17,7 +17,7 @@ const Page: Taro.FC = () => {
 
   useEffect(() => {
     if (wallet && currentOrder) {
-      const days = parseInt(currentOrder.beOverdueNum) || 0
+      const days = parseInt(currentOrder.overdueDays) || 0
       const balance = wallet.balance
       const overdue = days * app.overduePrice
       const pay = Math.max(0, overdue - balance)
@@ -76,7 +76,7 @@ const Page: Taro.FC = () => {
               <View className='cell summary'>
                 <View className='cell__bd bold'>逾期天数:</View>
                 <View className='cell__ft red bold'>
-                  {currentOrder.beOverdueNum || 0}天
+                  {currentOrder.overdueDays || 0}天
                 </View>
               </View>
             </View>
