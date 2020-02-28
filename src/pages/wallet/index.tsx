@@ -102,7 +102,7 @@ const Page: Taro.FC = () => {
                   <View className='desc red'>暂无次卡</View>
                 )}
               </View>
-              <View className='cell__ft'>
+              <View className='cell__ft' onClick={e => e.stopPropagation()}>
                 <View className='red'>
                   {parseFloat(wallet.lendingCardTotal)
                     ? `${wallet.lendingCardTotal}张可用`
