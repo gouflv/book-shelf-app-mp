@@ -25,7 +25,6 @@ const Page: Taro.FC = () => {
   const [childGenderVisible, setChildGenderVisible] = useState(false)
 
   function setFormData() {
-    console.log('setFormData')
     if (user) {
       setChildGender(user.childSex as any || '')
     }

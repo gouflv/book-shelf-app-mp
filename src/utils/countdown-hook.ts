@@ -36,7 +36,7 @@ export default useCountDown
 const CountDownValueKey = 'countDown'
 const CountDownStampKey = 'countDownStamp'
 
-export const useCountDownWithResume = (namespace: string, onStart: () => void) => {
+export const useCountDownWithResume = (namespace: string) => {
   const [timeLeft, startCountDown] = useCountDown()
 
   useEffect(() => {
@@ -51,24 +51,24 @@ export const useCountDownWithResume = (namespace: string, onStart: () => void) =
     Taro.setStorageSync(`${CountDownStampKey}.${namespace}`, dayjs().format('YYYY-MM-DD HH:mm:ss'))
   }
 
-  function start() {
+  function getTimeRemind() {
     const prevCountDown = Taro.getStorageSync(`${CountDownValueKey}.${namespace}`)
     const countDownStamp = Taro.getStorageSync(`${CountDownStampKey}.${namespace}`)
-
-    if (prevCountDown && countDownStamp && dayjs(countDownStamp).add(60 - 1, 'second').isAfter(dayjs())) {
+    if (prevCountDown && countDownStamp &&
+      dayjs(countDownStamp).add(60 - 1, 'second').isAfter(dayjs()))
+    {
+      //距离上次标记在60s之内，才计算剩余时间
       const timePass = dayjs().diff(dayjs(countDownStamp), 'second')
-      // @ts-ignore
-      startCountDown(timePass >= 60 ? 60 : (prevCountDown - timePass * 1000))
-    } else {
-      // @ts-ignore
-      startCountDown()
-      onStart()
-      updateCountDownStamp()
+      const res = (60 - timePass) * 1000
+      return res > 0 ? res : 0
     }
+    return 0
   }
 
   return {
     timeLeft,
-    startCountDown: start
+    getTimeRemind,
+    updateCountDownStamp,
+    startCountDown
   }
 }

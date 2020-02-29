@@ -21,7 +21,7 @@ const Page: Taro.FC = () => {
         // Taro.redirectTo({ url: '/pages/deposit/index' })
         // Taro.redirectTo({ url: '/pages/order/index' })
         // Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
-        // Taro.redirectTo({ url: '/pages/profile-chang-phone/index' })
+        // Taro.redirectTo({ url: '/pages/profile/index' })
         // Taro.redirectTo({ url: '/pages/book/index?id=10043' })
         // Taro.redirectTo({ url: '/pages/feedback/shelf/index', })
       } else {
