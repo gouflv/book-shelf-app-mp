@@ -75,9 +75,6 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
   )
 
   const renderDescText = (data: Order) => {
-    if (data.subStatus === '3') {
-      return <Text>到期时间: 已买下</Text>
-    }
     if (data.status === OrderStatus.Finish) {
       return <Text>归还时间: {dayjs(data.returnTime).format('YYYY-MM-DD')}</Text>
     }
