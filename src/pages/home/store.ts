@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from '@tarojs/taro'
 import { hideLoading, POST, showLoading } from '../../utils'
 import _find from 'lodash.find'
 import { CateType } from '../../config'
-import { BoxOpenState, DeviceBook } from '../../typing'
+import { DeviceBook } from '../../typing'
 
 export const useDeviceBooks = () => {
   const [items, setItems] = useState<DeviceBook[]>([])

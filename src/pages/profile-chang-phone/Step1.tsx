@@ -83,7 +83,15 @@ const Step1: Taro.FC<{ onSuccess: () => void }> = props => {
       <View className='desc'>
         {timeLeft > 0
           ? <Text>{(timeLeft as number) / 1000}s</Text>
-          : <Text onClick={() => startCountDown()}>获取验证码</Text>
+          : (
+            <Text onClick={() => {
+              // @ts-ignore
+              startCountDown()
+            }}
+            >
+              获取验证码
+            </Text>
+          )
         }
       </View>
       <NumberInput
