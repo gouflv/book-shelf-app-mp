@@ -7,6 +7,7 @@ import { POST, showToast } from '../../utils'
 import { ChnNumChar } from '../../config'
 import dayjs from 'dayjs'
 import { UserIsNew } from '../../typing'
+import _reduce from 'lodash.reduce'
 
 const GiftCarDialog: Taro.FC = () => {
   const { user, fetchUserInfo } = useContext(AppStore)
@@ -20,7 +21,13 @@ const GiftCarDialog: Taro.FC = () => {
 
     async function fetch() {
       const res = await POST('base/getNewLendingCard')
-      setCards(res)
+      const items = _reduce<any, any[]>(res, (result, item) => {
+        Array(parseInt(item.grantNum)).fill(0).forEach(() => {
+          result.push({ ...item })
+        })
+        return result
+      }, [])
+      setCards(items)
       if (res && res.length) {
         setVisible(true)
       }
