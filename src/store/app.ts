@@ -24,9 +24,12 @@ class AppStore {
       : undefined
 
     if (this.scene === 1047 && params.query && (params.query as any).scene) {
-      this.setScannedDevice({
-        eqCode: (params.query as any).scene
-      } as Device)
+      const device = { eqCode: (params.query as any).scene } as Device
+      if (await this.checkDeviceIsRunning(device)) {
+        await this.setScannedDevice({
+          eqCode: device.eqCode
+        } as Device)
+      }
     }
   }
 
@@ -121,6 +124,11 @@ class AppStore {
     }
     console.debug(toJS(this.user))
     console.debug(toJS(this.wallet))
+
+    if (this.scannedDevice) {
+      // 保证用户登录后能绑定到设备
+      await this.setScannedDevice(this.scannedDevice)
+    }
   }
 
   //#endregion
@@ -167,11 +175,31 @@ class AppStore {
 
   @action.bound
   async setScannedDevice(cabinet: Device) {
-    this.scannedDevice = await POST('book/scanEquipmentMessage', {
+    if (this.user) {
+      try {
+        this.scannedDevice = await POST('book/callback/scanEquipmentMessage', {
+          data: {
+            eqCode: cabinet.eqCode
+          }
+        })
+      } catch (e) {
+        defaultErrorHandler(e)
+      }
+    } else {
+      // 未登录时
+      // 设备先记录本地，在 fetchUserInfo 中再绑定
+      this.scannedDevice = cabinet
+    }
+  }
+
+  @action.bound
+  async checkDeviceIsRunning(cabinet: Device) {
+    const { runStatus } = await POST('book/callback/scanEquipmentMessage', {
       data: {
         eqCode: cabinet.eqCode
       }
     })
+    return runStatus === '1'
   }
 
   @action.bound

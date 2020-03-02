@@ -1,5 +1,5 @@
 import './index.scss'
-import Taro, { useContext, useEffect, useState } from '@tarojs/taro'
+import Taro, { useContext, useEffect, useState, useRef } from '@tarojs/taro'
 import { Button, Image, Swiper, SwiperItem, View } from '@tarojs/components'
 import { distanceFormat } from '../../utils'
 import AppStore from '../../store/app'
@@ -9,9 +9,21 @@ import { Device } from '../../typing'
 import ModalWithClose from '../../components/Modal/ModalWithClose'
 import GiftCarDialog from '../../components/GiftCarDialog'
 
+const Error = {
+  INVALIDATE_CODE: {
+    title: '该二维码信息有误',
+    message: '请重新扫描二维码'
+  },
+  DEVICE_STOP: {
+    title: '该设备暂停使用',
+    message: '请扫其他设备码'
+  },
+}
+
 const Intro: Taro.FC = () => {
-  const { fetchSites, closestSite, setScannedDevice, setPreviewSite } = useContext(AppStore)
+  const { fetchSites, closestSite, setScannedDevice, setPreviewSite, checkDeviceIsRunning } = useContext(AppStore)
   const [errorVisible, setErrorVisible] = useState(false)
+  const error = useRef<any>(Error.INVALIDATE_CODE)
 
   useEffect(() => {
     fetchSites()
@@ -30,15 +42,23 @@ const Intro: Taro.FC = () => {
       console.debug(query)
 
       if (query && query.scene) {
-        await setScannedDevice({ eqCode: query.scene } as Device)
+        const device = { eqCode: query.scene } as Device
+        if (await checkDeviceIsRunning(device)) {
+          await setScannedDevice(device)
+        } else {
+          error.current = Error.DEVICE_STOP
+          setErrorVisible(true)
+        }
       } else {
+        error.current = Error.INVALIDATE_CODE
         setErrorVisible(true)
-        return
       }
     } catch (e) {
+      console.log(e)
       if (e.errMsg && !!~e.errMsg.indexOf('cancel')) {
         return
       }
+      error.current = Error.INVALIDATE_CODE
       setErrorVisible(true)
     }
   }
@@ -81,8 +101,8 @@ const Intro: Taro.FC = () => {
         <View className='message-title'>
         </View>
         <View className='message-desc'>
-          <View>该二维码信息有误</View>
-          请重新扫描二维码
+          <View>{error.current.title}</View>
+          {error.current.message}
         </View>
         <View className='message-foot'>
           <Button className='btn btn-primary' onClick={() => setErrorVisible(false)}>确认</Button>
