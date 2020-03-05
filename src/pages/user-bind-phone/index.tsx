@@ -1,9 +1,9 @@
 import './index.scss'
-import Taro, { useContext, useState, useEffect } from '@tarojs/taro'
+import Taro, { useContext, useState, useEffect, useDidShow } from '@tarojs/taro'
 import { Button, Image, Input, Text, View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import DialogService from '../../store/dialogService'
-import useCountDown from '../../utils/countdown-hook'
+import { useCountDownWithResume } from '../../utils/countdown-hook'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../../utils'
 import BasicPageView from '../../components/BasicPageView'
 import { observer } from '@tarojs/mobx'
@@ -13,7 +13,8 @@ const Page: Taro.FC = () => {
   const { showConfirm } = useContext(DialogService)
 
   const [hasSend, setHasSend] = useState(false)
-  const [timeLeft, start] = useCountDown()
+  const { timeLeft, getTimeRemind, startCountDown, updateCountDownStamp } =
+    useCountDownWithResume('user-bind-phone')
 
   const [phone, setPhone] = useState('')
   const [smsCode, setSmsCode] = useState('')
@@ -23,6 +24,14 @@ const Page: Taro.FC = () => {
       setPhone(user.tel)
     }
   }, [user])
+
+  useDidShow(() => {
+    const remind = getTimeRemind()
+    if (remind) {
+      // @ts-ignore
+      startCountDown(remind)
+    }
+  })
 
   async function onSendClick() {
     if (!validatePhone()) {
@@ -37,7 +46,8 @@ const Page: Taro.FC = () => {
       setSmsCode('')
       setHasSend(true)
       // @ts-ignore
-      start()
+      startCountDown()
+      updateCountDownStamp()
     } catch (e) {
       defaultErrorHandler(e)
     } finally {
