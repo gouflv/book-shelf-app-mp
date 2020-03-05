@@ -56,18 +56,17 @@ const Step1: Taro.FC<{ onSuccess: () => void }> = props => {
     try {
       await POST('base/verifyCode', {
         data: {
-          code: smsCode
+          code: smsCode.substr(0, 6)
         }
       })
       props.onSuccess()
-      setSmsCode('')
     } catch (e) {
       showToast({ title: '验证码有误，请核对' })
     } finally {
       hideLoading()
     }
-
   }
+
   useEffect(() => {
     if (smsCode.length === 6) {
       commitSmsCode()
@@ -85,6 +84,7 @@ const Step1: Taro.FC<{ onSuccess: () => void }> = props => {
           ? <Text>{(timeLeft as number) / 1000}s</Text>
           : (
             <Text onClick={() => {
+              sendSms()
               // @ts-ignore
               startCountDown()
             }}

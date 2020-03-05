@@ -83,7 +83,7 @@ const Page: Taro.FC = () => {
       await POST('base/phoneBinding', {
         data: {
           tel: phone,
-          code: smsCode
+          code: smsCode.substr(0, 6)
         }
       })
       await fetchUserInfo()
