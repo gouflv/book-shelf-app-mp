@@ -5,7 +5,9 @@ import { AtModal, AtModalAction, AtModalContent } from 'taro-ui'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import { usePagination } from '../../store/usePagaination'
-import { moneyFormat } from '../../utils'
+import { defaultErrorHandler, moneyFormat, POST } from '../../utils'
+import DialogService from '../../store/dialogService'
+import BasicPageView from '../../components/BasicPageView'
 
 const DepositType = {
   0: '归还',
@@ -15,6 +17,7 @@ const DepositType = {
 
 const Page: Taro.FC = () => {
   const { wallet, depositAmount } = useContext(AppStore)
+  const { showConfirm } = useContext(DialogService)
 
   //#region list
   const { items, fetchStart, isEmpty, isFinish, loading } = usePagination({
@@ -26,14 +29,30 @@ const Page: Taro.FC = () => {
   //#endregion
 
   //#region getBack
-  const [confirmVisible, setConfirmVisible] = useState(false)
-  function onGetBackClick() {
-    setConfirmVisible(true)
+  const [babyCryConfirmVisible, setBabyCryConfirmVisible] = useState(false)
+
+  async function onGetBackClick() {
+    try {
+      await POST('wallet/wxRefundPreposition')
+      setBabyCryConfirmVisible(true)
+    } catch (e) {
+      if (e.code === 1) {
+        await showConfirm({
+          title: '你还有未归还的书哦',
+          content: '归还后可退还押金',
+          confirmText: '查看详情'
+        })
+        Taro.navigateTo({ url: '/pages/order/index' })
+      }
+    }
   }
-  function onGetBackConfirm() {
-    // TODO 退款接口
-    setConfirmVisible(true)
-    Taro.navigateTo({ url: '/pages/result/index?type=getBackDeposit' })
+  async function onGetBackConfirm() {
+    try {
+      await POST('wallet/wxRefund')
+      Taro.navigateTo({ url: '/pages/result/index?type=getBackDeposit' })
+    } catch (e) {
+      defaultErrorHandler(e)
+    }
   }
   //#endregion
 
@@ -80,7 +99,7 @@ const Page: Taro.FC = () => {
   }
 
   return (
-    <View className='page page--gray'>
+    <BasicPageView className='page--gray'>
       <View className='page-banner'>
         <Image src={require('../../assets/deposit_bg@2x.png')} mode='aspectFill' className='bg' />
         <View className='content'>
@@ -127,7 +146,7 @@ const Page: Taro.FC = () => {
       )}
 
       <AtModal
-        isOpened={confirmVisible}
+        isOpened={babyCryConfirmVisible}
         className='get-back-confirm'
       >
         <AtModalContent>
@@ -138,15 +157,12 @@ const Page: Taro.FC = () => {
         <AtModalAction>
           <Button
             className='gray'
-            onClick={() => {
-              onGetBackConfirm()
-              setConfirmVisible(false)
-            }}
+            onClick={() => {onGetBackConfirm()}}
           >想好了，退押金</Button>
-          <Button className='orange' onClick={() => setConfirmVisible(false)}>不退了，留下</Button>
+          <Button className='orange' onClick={() => setBabyCryConfirmVisible(false)}>不退了，留下</Button>
         </AtModalAction>
       </AtModal>
-    </View>
+    </BasicPageView>
   )
 }
 
