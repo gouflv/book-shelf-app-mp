@@ -19,7 +19,7 @@ export const ajax = (url, options?: AjaxOptions) =>
         'content-type': 'application/x-www-form-urlencoded',
         clientToken: app.token
       },
-      url: `${API_BASE}/${url}`,
+      url: `${API_BASE()}/${url}`,
       ...options
     }
     try {

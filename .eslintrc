@@ -29,5 +29,8 @@
     },
     "useJSXTextNode": true,
     "project": "./tsconfig.json"
+  },
+  "globals": {
+    "__wxConfig": true
   }
 }

@@ -1,7 +1,10 @@
-export const API_HOST = '/'
-export const BG_COLOR = '#F9F9F9'
-
-export const API_BASE = 'https://jieshu.hollobook.com/gourd/client'
+export const API_BASE = () => {
+  //@ts-ignore
+  if (__wxConfig && ~['develop', 'trial'].indexOf(__wxConfig.envVersion)) {
+    return 'https://app.ruijiehailiang.com/gourd/client'
+  }
+  return 'https://jieshu.hollobook.com/gourd/client'
+}
 
 export const MoneyFormatter = '0[.]00'
 
