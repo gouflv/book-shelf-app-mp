@@ -36,7 +36,13 @@ const Page: Taro.FC = () => {
       await POST('wallet/wxRefundPreposition')
       setBabyCryConfirmVisible(true)
     } catch (e) {
-      if (e.code === 1) {
+      if (e.code === 2) {
+        await showConfirm({
+          title: '还有逾期费用未结算，是否使用押金抵扣？',
+          content: '系统优先使用余额抵扣费用'
+        })
+        onGetBackConfirm()
+      } else {
         await showConfirm({
           title: '你还有未归还的书哦',
           content: '归还后可退还押金',
