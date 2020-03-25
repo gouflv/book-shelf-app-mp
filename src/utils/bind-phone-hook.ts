@@ -3,7 +3,7 @@ import AppStore from '../store/app'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from './index'
 
 const useBindPhone = (props: { success?: () => void  } = {}) => {
-  const { token, fetchUserInfo } = useContext(AppStore)
+  const { token, refreshToken, fetchUserInfo } = useContext(AppStore)
 
   async function onGetPhoneNumber({ encryptedData, iv }) {
     console.debug(encryptedData, iv)
@@ -28,6 +28,7 @@ const useBindPhone = (props: { success?: () => void  } = {}) => {
           iv
         }
       })
+      await refreshToken()
       await fetchUserInfo()
 
       showToast({ title: '手机号绑定成功' })

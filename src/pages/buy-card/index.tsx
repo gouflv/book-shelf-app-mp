@@ -9,12 +9,18 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import usePayment from '../../utils/payment-hook'
 import dayjs from 'dayjs'
+import useBindPhone from '../../utils/bind-phone-hook'
 
 const CARD_ID = 'cfgLcId'
 
 const Page: Taro.FC = () => {
-  const { wallet } = useContext(AppStore)
+  const { wallet, isUserBoundPhone } = useContext(AppStore)
   const { submitPayment } = usePayment()
+  const { onGetPhoneNumber } = useBindPhone({
+    success: () => {
+      onPaymentClick()
+    }
+  })
 
   const [currentChecked, setCurrentChecked] = useState<any>()
   const [rangeItems, setRangeItems] = useState<any[]>([])
@@ -203,7 +209,19 @@ const Page: Taro.FC = () => {
               <View className='desc'>账户余额可抵扣: {balanceCutAmount}元</View>
             )}
           </View>
-          <Button className='btn btn-primary' onClick={onPaymentClick}>购买</Button>
+
+          {isUserBoundPhone && (
+            <Button className='btn btn-primary' onClick={onPaymentClick}>购买</Button>
+          )}
+
+          {!isUserBoundPhone && (
+            <Button
+              key='getPhoneNumber'
+              className='btn-primary'
+              openType='getPhoneNumber'
+              onGetPhoneNumber={e => onGetPhoneNumber(e.detail)}
+            >购买</Button>
+          )}
         </View>
       )}
     </View>

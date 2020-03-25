@@ -9,7 +9,7 @@ import BasicPageView from '../../components/BasicPageView'
 import { observer } from '@tarojs/mobx'
 
 const Page: Taro.FC = () => {
-  const { fetchUserInfo, user } = useContext(AppStore)
+  const { fetchUserInfo, refreshToken, user } = useContext(AppStore)
   const { showConfirm } = useContext(DialogService)
 
   const [hasSend, setHasSend] = useState(false)
@@ -86,6 +86,7 @@ const Page: Taro.FC = () => {
           code: smsCode.substr(0, 6)
         }
       })
+      await refreshToken()
       await fetchUserInfo()
       hideLoading()
       showToast({ title: '绑定成功' })

@@ -50,7 +50,7 @@ const Page: Taro.FC = () => {
         </View>
       </View>
 
-      {logs && (
+      {logs && logs.length && (
         <View className='page-section' style={{ paddingTop: 0 }}>
           <View className='card-group-title'>邀请记录</View>
           <View className='card card--shadow'>

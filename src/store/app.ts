@@ -98,6 +98,18 @@ class AppStore {
   }
 
   @action.bound
+  async refreshToken() {
+    const openId = Taro.getStorageSync('open_id')
+    if (!openId) return
+    const res = await POST('base/callback/getTokenByOpenId', {
+      data: { openId }
+    })
+    if (res) {
+      this.saveToken(res.clientToken)
+    }
+  }
+
+  @action.bound
   saveToken(clientToken) {
     this.token = clientToken
     Taro.setStorageSync('client_token', clientToken)

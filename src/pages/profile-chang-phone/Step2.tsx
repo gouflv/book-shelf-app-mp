@@ -6,7 +6,7 @@ import DialogService from '../../store/dialogService'
 import { Button, Input, View } from '@tarojs/components'
 
 const Step2: Taro.FC = () => {
-  const { fetchUserInfo } = useContext(AppStore)
+  const { fetchUserInfo, refreshToken } = useContext(AppStore)
   const { showAlert } = useContext(DialogService)
 
   const [smsCode, setSmsCode] = useState('')
@@ -66,6 +66,7 @@ const Step2: Taro.FC = () => {
           code: smsCode.substr(0, 6)
         }
       })
+      await refreshToken()
       await fetchUserInfo()
       hideLoading()
 
