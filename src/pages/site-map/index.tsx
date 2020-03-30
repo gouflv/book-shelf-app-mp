@@ -36,12 +36,12 @@ const SiteMap: Taro.FC = () => {
           borderColor: active ? '#f1b400' : '#fff',
           bgColor: active ? '#f1b400' : '#fff',
           padding: 6,
-          display: 'ALWAYS',
+          display: active ? 'ALWAYS' : 'BYCLICK',
           textAlign: 'center'
         } as marker['callout']
       }
     }))
-  }, [previewSite])
+  }, [previewSite, siteList])
 
   function onSiteSelect(markerId) {
     const match = _find(siteList, s => s.netCode === markerId)
@@ -93,10 +93,9 @@ const SiteMap: Taro.FC = () => {
           longitude={location.longitude}
           showLocation
           markers={markers}
-          scale={13}
+          scale={14}
           style={{ width: '100vw', height: '100vh' }}
           onMarkerTap={e => onSiteSelect((e as any).markerId)}
-          onCalloutTap={e => onSiteSelect((e as any).markerId)}
         />
       )}
 
