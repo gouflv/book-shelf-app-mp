@@ -46,7 +46,7 @@ class AppStore {
   }
 
   @computed get isUserBoundPhone() {
-    return this.user && this.user.tel
+    return !!(this.user && this.user.tel)
   }
 
   @computed get isUserHasDeposit() {
