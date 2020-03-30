@@ -4,6 +4,7 @@ import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '
 import { Device, Order, Site, User, Wallet } from '../typing'
 import _minBy from 'lodash.minby'
 import _find from 'lodash.find'
+import { ForceBindPhoneAfterRegister } from '../config'
 
 interface LocationParam {
   latitude: number
@@ -71,7 +72,9 @@ class AppStore {
       await this.fetchUserInfo()
       await this.fetchDict()
 
-      if (redirect) {
+      if (ForceBindPhoneAfterRegister && !this.isUserBoundPhone) {
+        Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
+      } else if (redirect) {
         Taro.switchTab({ url: '/pages/home/introGuard' })
       }
     } catch (e) {

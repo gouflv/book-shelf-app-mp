@@ -6,6 +6,8 @@ export const API_BASE = () => {
   return 'https://jieshu.hollobook.com/gourd/client'
 }
 
+export const ForceBindPhoneAfterRegister = true
+
 export const MoneyFormatter = '0[.]00'
 
 export const CateType = [

@@ -7,6 +7,7 @@ import { useCountDownWithResume } from '../../utils/countdown-hook'
 import { defaultErrorHandler, hideLoading, POST, showLoading, showToast } from '../../utils'
 import BasicPageView from '../../components/BasicPageView'
 import { observer } from '@tarojs/mobx'
+import { ForceBindPhoneAfterRegister } from '../../config'
 
 const Page: Taro.FC = () => {
   const { fetchUserInfo, refreshToken, user } = useContext(AppStore)
@@ -90,9 +91,15 @@ const Page: Taro.FC = () => {
       await fetchUserInfo()
       hideLoading()
       showToast({ title: '绑定成功' })
-      setTimeout(() => {
-        Taro.navigateBack()
-      }, 2000)
+
+      if (ForceBindPhoneAfterRegister) {
+        Taro.switchTab({ url: '/pages/home/introGuard' })
+      } else {
+        setTimeout(() => {
+          Taro.navigateBack()
+        }, 2000)
+      }
+
     } catch (e) {
       if (e.message === '输入的手机号已经被注册了') {
         hideLoading()

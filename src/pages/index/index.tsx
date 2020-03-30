@@ -2,10 +2,11 @@ import Taro, { useContext, useEffect } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import AppStore from '../../store/app'
 import { hideLoading, showLoading } from '../../utils'
+import { ForceBindPhoneAfterRegister } from '../../config'
 
 const Page: Taro.FC = () => {
 
-  const { token, fetchUserInfo, fetchDict } = useContext(AppStore)
+  const { token, fetchUserInfo, fetchDict, isUserBoundPhone } = useContext(AppStore)
 
   useEffect(() => {
     async function redirect() {
@@ -14,6 +15,11 @@ const Page: Taro.FC = () => {
         await fetchUserInfo()
         await fetchDict()
         hideLoading()
+
+        if (ForceBindPhoneAfterRegister && !isUserBoundPhone) {
+          Taro.redirectTo({ url: '/pages/user-bind-phone/index' })
+          return
+        }
 
         Taro.switchTab({ url: '/pages/home/introGuard' })
         // Taro.switchTab({ url: '/pages/wallet/index' })
