@@ -101,7 +101,7 @@ const Page: Taro.FC = () => {
       }
 
     } catch (e) {
-      if (e.message === '输入的手机号已经被注册了') {
+      if (e.code === 2) {
         hideLoading()
         await showConfirm({
           title: '提示',
