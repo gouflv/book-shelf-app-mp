@@ -95,29 +95,40 @@ const Page: Taro.FC = () => {
               </View>
             </View>
 
-            <View className='cell' onClick={() => Taro.navigateTo({ url: '/pages/temp-cards/index' })}>
+            <View
+              className='cell'
+              onClick={() => {
+                if (parseFloat(wallet.lendingCardTotal)) {
+                  Taro.navigateTo({ url: '/pages/temp-cards/index' })
+                }
+              }}
+            >
               <View className='cell__bd'>
                 <View className='label'>借阅次卡</View>
                 {!parseFloat(wallet.lendingCardTotal) && (
                   <View className='desc red'>暂无次卡</View>
                 )}
               </View>
-              <View className='cell__ft' onClick={e => e.stopPropagation()}>
-                <View className='red'>
-                  {parseFloat(wallet.lendingCardTotal)
-                    ? `${wallet.lendingCardTotal}张可用`
-                    : (
-                      <Button
-                        className='btn-primary btn--square'
-                        size='mini'
-                        onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
-                      >
-                        去购买
-                      </Button>
-                    )
-                  }
-                </View>
-              </View>
+              {parseFloat(wallet.lendingCardTotal)
+                ? (
+                  <View className='cell__ft'>
+                    <View className='red'>
+                      {wallet.lendingCardTotal}张可用
+                    </View>
+                  </View>
+                )
+                : (
+                  <View className='cell__ft' onClick={e => e.stopPropagation()}>
+                    <Button
+                      className='btn-primary btn--square'
+                      size='mini'
+                      onClick={() => Taro.navigateTo({ url: '/pages/buy-card/index' })}
+                    >
+                      去购买
+                    </Button>
+                  </View>
+                )
+              }
               {parseFloat(wallet.lendingCardTotal) && (
                 <View className='cell__link'>
                   <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
