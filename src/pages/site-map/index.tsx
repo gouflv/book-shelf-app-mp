@@ -23,9 +23,7 @@ const SiteMap: Taro.FC = () => {
         id: (s.netCode as any) as number,
         longitude: parseFloat(s.longitude),
         latitude: parseFloat(s.latitude),
-        iconPath: active ?
-          require('../../assets/navigation_position_selected@2x.png') :
-          require('../../assets/navigation_position_normal@2x.png'),
+        iconPath: require('../../assets/navigation_position_selected@2x.png'),
         width: 30,
         height: 30,
         callout: {
