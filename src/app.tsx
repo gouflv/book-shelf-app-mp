@@ -73,14 +73,12 @@ class App extends Component {
     }
   }
 
-  async componentWillMount() {
-    const params = this.$router.params
-    app.init(params)
-  }
+  async componentWillMount() {}
 
   componentDidMount () {}
 
   componentDidShow () {
+    app.init(this.$router.params)
     if (app.user) {
       app.fetchUserInfo()
     }

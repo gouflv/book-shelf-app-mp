@@ -19,10 +19,12 @@ class AppStore {
 
   async init(params: RouterInfo['params']) {
     console.log('init', params)
+
     this.scene = params.scene as number
-    this.shareMember = (params.query as any).memberCode
-      ? ((params.query as any) as User)
-      : undefined
+
+    if ((params.query as any).memberCode) {
+      this.shareMember = (params.query as any) as User
+    }
 
     if (this.scene === 1047 && params.query && (params.query as any).scene) {
       const device = { eqCode: (params.query as any).scene } as Device
