@@ -21,7 +21,7 @@ const Error = {
 }
 
 const Intro: Taro.FC = () => {
-  const { fetchSites, closestSite, setScannedDevice, setPreviewSite, checkDeviceIsRunning } = useContext(AppStore)
+  const { fetchSites, closestSite, setScannedDevice, checkDeviceIsRunning, setPreviewSite } = useContext(AppStore)
   const [errorVisible, setErrorVisible] = useState(false)
   const error = useRef<any>(Error.INVALIDATE_CODE)
 
@@ -30,7 +30,7 @@ const Intro: Taro.FC = () => {
   }, [])
 
   function openSiteMap() {
-    setPreviewSite(null)
+    setPreviewSite(closestSite)
     Taro.navigateTo({ url: '/pages/site-map/index' })
   }
 
@@ -76,7 +76,7 @@ const Intro: Taro.FC = () => {
             {closestSite && (
               <View className='more'>
                 <View className='left'>距离你{distanceFormat(parseFloat(closestSite.distance))}</View>
-                <View className='right' onClick={openSiteMap}>查看附近借书馆</View>
+                <View className='right' onClick={() => openSiteMap()}>查看附近借书馆</View>
               </View>
             )}
           </View>

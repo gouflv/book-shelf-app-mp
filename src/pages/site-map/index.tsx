@@ -41,7 +41,7 @@ const SiteMap: Taro.FC = () => {
         } as marker['callout']
       }
     }))
-  }, [previewSite, siteList])
+  }, [previewSite])
 
   function onSiteSelect(markerId) {
     const match = _find(siteList, s => s.netCode === markerId)
