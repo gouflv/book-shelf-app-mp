@@ -39,7 +39,15 @@
 					"id": -1,
 					"name": "share-land",
 					"pathName": "pages/share-land/index",
+					"query": "",
 					"scene": 1044
+				},
+				{
+					"id": -1,
+					"name": "scan",
+					"pathName": "pages/index/index",
+					"query": "scene=T006",
+					"scene": 1047
 				}
 			]
 		}
