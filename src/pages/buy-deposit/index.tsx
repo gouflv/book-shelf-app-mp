@@ -36,7 +36,7 @@ const Page: Taro.FC = () => {
         </View>
         <View className='title'>押金总额</View>
         <View className='desc'>
-          押金随时退, 无需舍和退款秒到账
+          押金随时退, 无需审核退款秒到账
         </View>
       </View>
 
