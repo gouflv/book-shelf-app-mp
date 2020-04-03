@@ -20,7 +20,7 @@ const Page: Taro.FC = () => {
   const { showConfirm } = useContext(DialogService)
 
   //#region list
-  const { items, fetchStart, isEmpty, isFinish, loading } = usePagination({
+  const { items, fetchStart, isEmpty, isFinish } = usePagination({
     url: 'wallet/depositRecordList'
   })
   useDidShow(() => {
@@ -71,8 +71,8 @@ const Page: Taro.FC = () => {
       <View>
         <View className='card'>
           <View className='cell-group'>
-            {items.map(item => (
-              <View className='cell'>
+            {items.map((item, index) => (
+              <View key={index} className='cell'>
                 <View className='cell__bd'>
                   <View className='label'>{DepositType[item.depositType] || item.depositType}</View>
                   <Text className='desc gray'>{item.createTime}</Text>
@@ -133,7 +133,7 @@ const Page: Taro.FC = () => {
         {renderList()}
       </View>
 
-      {!loading && !isEmpty && (
+      {wallet && wallet.depositTotal > 0 && (
         <View className='page-section' style={{ paddingTop: 0 }}>
           <View className='card'>
             <View className='cell-group'>
