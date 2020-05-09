@@ -6,14 +6,13 @@ import BookGrid from '../../components/BookGrid'
 import AppStore from '../../store/app'
 import { useDeviceBooks } from './store'
 import { distanceFormat } from '../../utils'
-import CateTabs from './components/CateTabs'
 import { BookHasBorrow, BoxOpenState, BoxState, DeviceBook } from '../../typing'
 
 const Index: Taro.FC = () => {
   const { previewSite, previewDevice } = useContext(AppStore)
 
   // data
-  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId } = useDeviceBooks()
+  const { deviceBookItems, deviceBookLoading, setEqCode } = useDeviceBooks()
   useEffect(() => {
     Taro.setNavigationBarTitle({ title: previewDevice.eqName })
     setEqCode(previewDevice.eqCode)
@@ -60,7 +59,7 @@ const Index: Taro.FC = () => {
     <View className='page page--has-footer'>
       <View className='page-section'>
         <View className='shop-book-list'>
-          <CateTabs value={cateId} onChange={val => setCateId(val)} />
+          {/*<CateTabs value={cateId} onChange={val => setCateId(val)} />*/}
 
           {(!deviceBookLoading && !booksInbox.length)
             ? <View className='list-empty'>暂无图书</View>

@@ -7,7 +7,6 @@ import { useDeviceBooks } from './store'
 import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 import useBookBorrow from '../../utils/borrow-hook'
-import CateTabs from './components/CateTabs'
 import useBindPhone from '../../utils/bind-phone-hook'
 import BasicPageView from '../../components/BasicPageView'
 import { BookHasBorrow, BoxOpenState, BoxState, DeviceBook } from '../../typing'
@@ -37,7 +36,7 @@ const Index: Taro.FC = () => {
   /*
   * list
   * */
-  const { deviceBookItems, deviceBookLoading, setEqCode, cateId, setCateId, fetchDeviceBook } = useDeviceBooks()
+  const { deviceBookItems, deviceBookLoading, setEqCode, fetchDeviceBook } = useDeviceBooks()
   const [booksInbox, setBooksInbox] = useState<DeviceBook[]>([])
   const [booksInHistory, setBooksInHistory] = useState<DeviceBook[]>([])
 
@@ -109,7 +108,7 @@ const Index: Taro.FC = () => {
 
       <View className='page-section'>
         <View className='shop-book-list'>
-          <CateTabs value={cateId} onChange={val => setCateId(val)} />
+          {/*<CateTabs value={cateId} onChange={val => setCateId(val)} />*/}
 
           {(!deviceBookLoading && !booksInbox.length)
             ? <View className='list-empty'>暂无图书</View>
