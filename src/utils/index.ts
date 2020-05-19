@@ -1,9 +1,9 @@
-/* eslint-disable import/prefer-default-export */
-export * from './ajax'
-
+import dayjs from 'dayjs'
 import Taro from '@tarojs/taro'
 import numeral from 'numeral'
-import { MoneyFormatter } from '../config'
+import {MoneyFormatter} from '../config'
+
+export * from './ajax'
 
 export function showLoading(props?: Partial<Taro.showLoading.Option>) {
   Taro.showLoading({
@@ -42,4 +42,9 @@ export function encodePhone(val: string) {
   return val.replace(/(\d{3})(\d{4})(.*)/, (_match, $1, _$2, $3) => {
     return [$1, '****', $3].join('')
   })
+}
+
+export function dateFormat(val, formatter = 'YYYY-MM-DD') {
+  if (!val) return ''
+  return dayjs(val).format(formatter)
 }

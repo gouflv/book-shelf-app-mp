@@ -11,11 +11,11 @@ const Page: Taro.FC = () => {
       const data = await POST('account/configProblemList')
       setArticles(data)
     }
-    fetch()
+    // fetch()
   }, [])
 
   function phoneCall() {
-    Taro.makePhoneCall({ phoneNumber: '114' })
+    Taro.makePhoneCall({ phoneNumber: '4009926299' })
   }
 
   return (
@@ -42,21 +42,27 @@ const Page: Taro.FC = () => {
         </View>
       </View>
 
-      <View className='card-group-title'>常见问题</View>
-      <View className='card'>
-        <View className='cell-group'>
-          {articles.map(item => (
-            <View key={item.cfgQuesId} className='cell'
-              onClick={() => Taro.navigateTo({ url: `/pages/help/article?id=${item.cfgQuesId}` })}
-            >
-              <View className='cell__bd'>{item.quesTitle}</View>
-              <View className='cell__link'>
-                <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
-              </View>
+      {articles.length &&
+        <View>
+          <View className='card-group-title'>常见问题</View>
+          <View className='card'>
+            <View className='cell-group'>
+              {articles.map(item => (
+                <View
+                  key={item.cfgQuesId}
+                  className='cell'
+                  onClick={() => Taro.navigateTo({ url: `/pages/help/article?id=${item.cfgQuesId}` })}
+                >
+                  <View className='cell__bd'>{item.quesTitle}</View>
+                  <View className='cell__link'>
+                    <Image src={require('../../assets/list_btn_more@2x.png')} mode='aspectFit' />
+                  </View>
+                </View>
+              ))}
             </View>
-          ))}
+          </View>
         </View>
-      </View>
+      }
 
       <View className='footer'>
         <Button className='btn btn-primary btn-primary--plain' onClick={phoneCall}>客服电话</Button>
@@ -67,7 +73,7 @@ const Page: Taro.FC = () => {
 }
 
 Page.config = {
-  navigationBarTitleText: ''
+  navigationBarTitleText: '客服帮助'
 }
 
 export default Page

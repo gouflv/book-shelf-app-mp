@@ -1,12 +1,12 @@
 import './index.scss'
-import Taro, { useContext } from '@tarojs/taro'
-import { Button, Image, Text, View } from '@tarojs/components'
-import { CardType, Order, OrderStatus } from '../../../typing'
-import dayjs from 'dayjs'
+import Taro, {useContext} from '@tarojs/taro'
+import {Button, Image, Text, View} from '@tarojs/components'
+import {CardType, Order, OrderStatus} from '../../../typing'
 import classNames from 'classnames'
 import numeral from 'numeral'
 import AppStore from '../../../store/app'
-import { MoneyFormatter } from '../../../config'
+import {MoneyFormatter} from '../../../config'
+import {dateFormat} from "../../../utils"
 
 const OrderType = {
   [OrderStatus.Borrow]: '借阅中',
@@ -17,6 +17,7 @@ const OrderType = {
 const OrderItem: Taro.FC<{ data: Order }> = props => {
   const { setCurrentOrder, overduePrice } = useContext(AppStore)
 
+  // eslint-disable-next-line react/no-multi-comp
   const renderAction = (data: Order) => {
     const overdueAmount = numeral(data.overdueDays || 0).multiply(overduePrice).format(MoneyFormatter)
     return (
@@ -32,7 +33,20 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
             </View>
           )}
           <View className='btns'>
-            {/*逾期归还*/}
+            {/*逾期未归还*/}
+            {data.status === OrderStatus.Overdue && !data.returnTime && (
+              <Button
+                size='mini'
+                className='btn btn-primary btn--round'
+                onClick={() => {
+                  setCurrentOrder(data)
+                  Taro.navigateTo({ url: `/pages/buy-book/index?id=${data.orderNo}` })
+                }}
+              >
+                买下
+              </Button>
+            )}
+            {/*逾期已归还*/}
             {data.status === OrderStatus.Overdue && data.returnTime && (
               <Button
                 size='mini'
@@ -43,18 +57,6 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
                 }}
               >
                 逾期支付
-              </Button>
-            )}
-            {data.status !== OrderStatus.Finish && (
-              <Button
-                size='mini'
-                className='btn btn-primary btn--round'
-                onClick={() => {
-                  setCurrentOrder(data)
-                  Taro.navigateTo({ url: `/pages/buy-book/index?id=${data.orderNo}` })
-                }}
-              >
-                买下
               </Button>
             )}
             {data.billingExceptions !== '0' && (
@@ -68,6 +70,7 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
     )
   }
 
+  // eslint-disable-next-line react/no-multi-comp
   const renderBuyFlag = () => (
     <View className='flag-buy'>
       <Image src={require('../../../assets/order_icon_hasbought@2x.png')} className='icon' />
@@ -76,10 +79,10 @@ const OrderItem: Taro.FC<{ data: Order }> = props => {
 
   const renderDescText = (data: Order) => {
     if (data.status === OrderStatus.Finish) {
-      return <Text>归还时间: {dayjs(data.returnTime).format('YYYY-MM-DD')}</Text>
+      return <Text>归还时间: {dateFormat(data.returnTime)}</Text>
     }
     if (data.expireTime) {
-      return <Text>到期时间: {dayjs(data.expireTime).format('YYYY-MM-DD')}</Text>
+      return <Text>到期时间: {dateFormat(data.expireTime)}</Text>
     }
   }
 
