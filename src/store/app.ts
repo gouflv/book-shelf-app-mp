@@ -58,6 +58,7 @@ class AppStore {
   @action.bound
   async loginWithData(data: { encryptedData: string, iv: string, inviter?: string }, redirect = true) {
     showLoading()
+    this.loading = true
     try {
       const { code, errMsg } = await Taro.login()
       if (!code) {
@@ -83,6 +84,7 @@ class AppStore {
       defaultErrorHandler(e)
     } finally {
       hideLoading()
+      this.loading = false
     }
   }
 

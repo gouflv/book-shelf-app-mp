@@ -5,7 +5,7 @@ import AppStore from '../../store/app'
 import { observer } from '@tarojs/mobx'
 
 const Page: Taro.FC = () => {
-  const { token: hasRegister, shareMember, user, fetchUserInfo, loginWithData } = useContext(AppStore)
+  const { token: hasRegister, shareMember, user, fetchUserInfo, loginWithData, loading } = useContext(AppStore)
 
   const [isSelf, setIsSelf] = useState(false)
   const [isShowResult, setShowResult] = useState(false)
@@ -40,10 +40,10 @@ const Page: Taro.FC = () => {
 
   // eslint-disable-next-line react/no-multi-comp
   const renderBtn = () => {
-    if (isSelf) {
+    if (!loading && isSelf) {
       return <Button className='btn btn-disabled' onClick={() => Taro.reLaunch({ url: '/pages/index/index' })}>没有办法领取自己的优惠券哦</Button>
     }
-    if (hasRegister) {
+    if (!loading && hasRegister) {
       return <Button className='btn btn-disabled' onClick={() => Taro.reLaunch({ url: '/pages/index/index' })}>你不是新用户咯，无法领取</Button>
     }
     return (
