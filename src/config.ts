@@ -1,8 +1,8 @@
 export const API_BASE = () => {
   //@ts-ignore
-  // if (__wxConfig && ~['develop'].indexOf(__wxConfig.envVersion)) {
-  //   return 'https://app.ruijiehailiang.com/gourd/client'
-  // }
+  if (__wxConfig && ~['develop', 'trial'].indexOf(__wxConfig.envVersion)) {
+    return 'https://jieshutest.hollobook.com/gourd/client'
+  }
   return 'https://jieshu.hollobook.com/gourd/client'
 }
 
